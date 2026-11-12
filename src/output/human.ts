@@ -44,10 +44,17 @@ export function renderHuman(
   lines.push(
     `effective chars (incl. overhead) ${b.effectiveChars.toLocaleString('en-US')} / ${b.limitChars.toLocaleString('en-US')} (${b.percentUsed.toFixed(1)}%)`,
   );
-  lines.push(`raw chars (before per-entry cap) ${b.rawChars.toLocaleString('en-US')}`);
   lines.push(
-    `per-entry cap ${b.perEntryCapChars.toLocaleString('en-US')} chars · overhead ${b.overhead.charsPerEntry} chars/entry ${pc.yellow('(uncalibrated — Phase 2)')}`,
+    `raw chars (before per-entry cap) ${b.rawChars.toLocaleString('en-US')} · commands counted: ${report.commands.length}`,
   );
+  lines.push(
+    `overhead source: ${b.overhead.calibrated ? `measured (${b.overhead.charsPerEntry} chars/entry)` : `UNcalibrated — ${b.overhead.charsPerEntry} chars/entry placeholder`}`,
+  );
+  lines.push(`per-entry cap ${b.perEntryCapChars.toLocaleString('en-US')} chars`);
+  lines.push(pc.dim(`limit: ${b.limitSource}${b.limitVerified ? '' : ' — not host-verified'}`));
+  if (!b.overhead.calibrated && b.overhead.reason) {
+    lines.push(pc.dim(`calibration unavailable: ${b.overhead.reason}`));
+  }
 
   const errors = report.findings.filter((f) => f.severity === 'error').length;
   const warnings = report.findings.filter((f) => f.severity === 'warning').length;
@@ -68,7 +75,7 @@ export function renderHuman(
   const pluginSkills = report.skills.filter((s) => s.source === 'plugin').length;
   const userSkills = report.skills.length - pluginSkills;
   lines.push(
-    `${report.skills.length} skills (${userSkills} user/project, ${pluginSkills} plugin) · 0 commands · ${errors} error${errors === 1 ? '' : 's'} · ${warnings} warning${warnings === 1 ? '' : 's'}`,
+    `${report.skills.length} skills (${userSkills} user/project, ${pluginSkills} plugin) · ${report.commands.length} command${report.commands.length === 1 ? '' : 's'} · ${errors} error${errors === 1 ? '' : 's'} · ${warnings} warning${warnings === 1 ? '' : 's'}`,
   );
   lines.push(`exit ${opts.exitCode}`);
   return lines.join('\n');

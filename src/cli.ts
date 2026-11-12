@@ -14,7 +14,8 @@ import { createRequire } from 'node:module';
 import { computeBudget, resolveContextWindow } from './budget.js';
 import { runChecks } from './checks/index.js';
 import { loadContract } from './contracts/loader.js';
-import { discoverSkills } from './discovery/walk.js';
+import { discoverCommands } from './discovery/commands.js';
+import { defaultHome, discoverSkills } from './discovery/walk.js';
 import { exitCodeFor, stringify, toJsonReport } from './output/json.js';
 import { renderHuman, renderWhy } from './output/human.js';
 
@@ -32,6 +33,8 @@ interface CommonOpts {
   quiet?: boolean;
   color?: boolean;
   host?: string;
+  /** Commander sets this to false for `--no-cache`. */
+  cache?: boolean;
 }
 
 function numberOrUndefined(value: string | undefined): number | undefined {
@@ -50,16 +53,19 @@ function addCommonOptions(cmd: Command): Command {
     .option('--context-window <tokens>', 'context window used to derive a budget (default: contract default)')
     .option('--budget <chars>', 'pin the listing budget in characters')
     .option('--quiet', 'suppress human output; exit code only')
+    .option('--no-cache', 'bypass the parse cache and re-parse every skill')
     .option('--no-color', 'disable colour')
     .option('--host <host>', 'host contract to use', 'claude-code');
 }
 
 function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const contract = loadContract(opts.host ?? 'claude-code');
-  const skills = discoverSkills({
-    ...(opts.home ? { home: opts.home } : {}),
-    ...(opts.project ? { project: opts.project } : {}),
-  });
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const skills = discoverSkills({ home, project, noCache: opts.cache === false });
+  // Commands share the listing budget, so they are discovered and counted even
+  // though Phase 1/2a does not lint them.
+  const commands = discoverCommands({ home, project });
 
   const budgetOptions = {
     ...(numberOrUndefined(opts.budget) !== undefined
@@ -70,7 +76,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
       : {}),
   };
 
-  const report = runChecks(skills, { contract, ...budgetOptions });
+  const report = runChecks(skills, { contract, ...budgetOptions, commands });
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
 
@@ -82,21 +88,25 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
       );
       return 0;
     }
-    const contributors = [...skills]
-      .map((s) => {
+    const contributors = [
+      ...skills.map((s) => {
         const name = s.name ?? s.folderName;
         const desc = typeof s.frontmatter['description'] === 'string' ? s.frontmatter['description'] : '';
         const when = typeof s.frontmatter['when_to_use'] === 'string' ? s.frontmatter['when_to_use'] : '';
         return { name, cost: name.length + Math.min(desc.length + when.length, b.perEntryCapChars) };
-      })
+      }),
+      ...commands.map((c) => ({ name: `${c.name} (command)`, cost: c.discoveryCost })),
+    ]
       .sort((a, z) => z.cost - a.cost)
       .slice(0, 15);
     const lines = [
       `skill-diag v${pkg.version} · host: ${report.host} ${report.hostVersionRange}`,
       `listing budget ${b.effectiveChars.toLocaleString('en-US')} / ${b.limitChars.toLocaleString('en-US')} chars (${b.percentUsed.toFixed(1)}%)`,
       `raw chars ${b.rawChars.toLocaleString('en-US')} · effective chars ${b.effectiveChars.toLocaleString('en-US')}`,
-      `limit from ${b.limitSource}${b.exact ? '' : ' (estimated)'}`,
-      `overhead ${b.overhead.charsPerEntry} chars/entry — uncalibrated until Phase 2`,
+      `skills ${skills.length} · commands ${commands.length}`,
+      `limit from ${b.limitSource}${b.exact ? '' : ' (estimated)'}${b.limitVerified ? '' : ' — not host-verified'}`,
+      `overhead ${b.overhead.charsPerEntry} chars/entry — ${b.overhead.calibrated ? 'calibrated' : 'uncalibrated'}`,
+      ...(b.overhead.calibrated ? [] : [`calibration unavailable: ${b.overhead.reason ?? 'reason not recorded'}`]),
       '',
       'biggest contributors:',
       ...contributors.map((c) => `  ${String(c.cost).padStart(6)}  ${c.name}`),

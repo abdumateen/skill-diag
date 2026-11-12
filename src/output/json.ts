@@ -44,11 +44,19 @@ export interface JsonReport {
     limitChars: number;
     limitSource: string;
     exact: boolean;
+    limitVerified: boolean;
+    limitNote: string;
     rawChars: number;
     effectiveChars: number;
     percentUsed: number;
     perEntryCapChars: number;
-    overhead: { charsPerEntry: number; calibrated: boolean; note: string };
+    commandCount: number;
+    overhead: {
+      charsPerEntry: number;
+      calibrated: boolean;
+      note: string;
+      reason?: string;
+    };
   };
   findings: JsonFinding[];
 }
@@ -75,7 +83,7 @@ export function toJsonReport(
     generatedAt: opts.generatedAt ?? new Date().toISOString(),
     summary: {
       skills: report.skills.length,
-      commands: 0,
+      commands: report.commands.length,
       errors,
       warnings,
       runtimeFindings: 0,
@@ -89,10 +97,13 @@ export function toJsonReport(
       limitChars: report.budget.limitChars,
       limitSource: report.budget.limitSource,
       exact: report.budget.exact,
+      limitVerified: report.budget.limitVerified,
+      limitNote: report.budget.limitNote,
       rawChars: report.budget.rawChars,
       effectiveChars: report.budget.effectiveChars,
       percentUsed: Number(report.budget.percentUsed.toFixed(1)),
       perEntryCapChars: report.budget.perEntryCapChars,
+      commandCount: report.commands.length,
       overhead: report.budget.overhead,
     },
     findings: report.findings.map((f) => ({

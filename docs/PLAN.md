@@ -380,6 +380,64 @@ Three Phase 1 deviations are real scope gaps, not style notes:
   either adds the flag or documents the field-driven behavior as the permanent
   design.
 
+### Phase 2a — budget honesty (shipped)
+
+**Runtime gate, revised to spec §24.1.** The Phase 1 gate measured 1,115 skills,
+which conflates the corpus size with our own speed and hides startup cost. The
+gate is now the 100-skill corpus:
+
+| Measure | Gate | Median | Range (5 trials) | Result |
+| --- | --- | --- | --- | --- |
+| 100 skills, cold (`--no-cache`) | < 1,000 ms hard | **755 ms** | 653–783 ms | pass |
+| 100 skills, warm (cache populated) | < 300 ms soft | **805 ms** | 717–955 ms | **miss** |
+
+1,115 skills, reported but not gated: cold **4,545 ms** (4,305–4,597), warm
+**5,408 ms** (5,338–5,850). The incumbent takes 18.3 s median on the same
+corpus, so we are ~4× faster cold and ~3.4× warm.
+
+**Soft-gate miss, with the reason measured rather than guessed.** The parse
+cache is a net *loss* on this machine. In-process, over 100 tiny skills:
+re-parsing everything takes 131 ms; a cold run that writes 100 cache files takes
+454 ms; a fully warm run that reads them back takes 332–516 ms. Reading one JSON
+file per skill costs more than reading the SKILL.md and parsing its frontmatter,
+because the files are ~500 B and Windows charges a per-file open/scan cost. The
+same inversion holds at 1,115 skills (warm 5,408 ms vs cold 4,545 ms).
+
+This is a property of the specified design (spec §4.3: a directory of per-skill
+JSON keyed by SHA-1 of the path), not a bug in it — `test/cache.test.ts` proves
+hit/miss accounting, invalidation on size change and corrupt-entry recovery. It
+is shipped as specified, with the numbers above, and the follow-up belongs to a
+later phase: either a single-file cache (one read instead of N) or a size
+threshold below which parsing is cheaper than caching.
+
+`--version` alone costs 382–541 ms on this box, of which ~290 ms is Node startup,
+so a 300 ms warm target was never reachable without removing the process launch.
+Bundling `yaml` and `picocolors` (previously external, so each run resolved them
+from `node_modules`) is what brought cold 100 from 1,027 ms to 755 ms.
+
+**Command discovery, verified against the real home.** `~/.claude/commands` does
+not exist on this machine: all 905 commands live under
+`~/.claude/plugins/**/commands/**`. Discovering only the two roots the brief
+named would have reported zero commands and no error, so plugin command
+discovery is part of the implementation.
+
+- 905 commands found, exactly the incumbent's count.
+- 75,055 chars by bare stem, against the incumbent's 75,073 — a difference of 18
+  chars (0.02%), which is the parsing disagreement we set out to find: none.
+- 83,768 chars by namespaced name (`plugin:command`), which is what the host
+  actually lists. The incumbent's figure ignores the namespace and therefore
+  understates real listing cost by 8,713 chars (11.6%).
+- All 905 names are namespaced; `foo/bar.md` renders as `foo:bar`.
+
+On the real home `effectiveChars` is 549,886 (466,118 skills + 83,768 commands).
+
+**Overhead and limit stay uncalibrated.** Calibration is impossible on this host:
+`claude -p` exits 1 with `[claude-code:unrecognized_model]`, reports
+`duration_api_ms: 0` and 0 tokens, and the install (2.1.251) is signed out. The
+constant stays `0` with `calibrated: false`, and the same reason string is
+carried in JSON (`budget.overhead.reason`, `budget.limitNote`) and in human
+output, so no reader can mistake a placeholder for a measurement.
+
 ## Non-goals
 
 Per spec §23 — no description grading by default, no security scanning, no

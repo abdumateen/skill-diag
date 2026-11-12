@@ -1,0 +1,22 @@
+{
+  "generatedAt": "2026-11-12T15:01:44.604Z",
+  "method": "calibration/overhead.mjs",
+  "purpose": "spec §11.2 — measure overheadCharsPerEntry for the Claude Code listing",
+  "skillCount": 40,
+  "descriptionLength": 200,
+  "rawChars": 8480,
+  "rawCharsPerEntry": 212,
+  "hostVersion": "2.1.251 (Claude Code)",
+  "hostAttempted": 1,
+  "calibrated": false,
+  "measuredOverheadCharsPerEntry": null,
+  "reason": "host unavailable at calibration time: `claude -p` exited 1 ([claude-code:unrecognized_model] {\"model\":\"anthropic/custom_c856aff8ba994ee69e4d21e7ef110c6e/deepseek-v4.1-flash:free\",\"query_source\":\"sdk\"})",
+  "attempts": [
+    {
+      "budgetChars": 8480,
+      "exitCode": 1,
+      "stderrFirstLine": "[claude-code:unrecognized_model] {\"model\":\"anthropic/custom_c856aff8ba994ee69e4d21e7ef110c6e/deepseek-v4.1-flash:free\",\"query_source\":\"sdk\"}"
+    }
+  ],
+  "observationGap": "Even on a working host, `--output-format json` does not expose the rendered skill listing; a transcript or debug capture of the system prompt is required to see which descriptions dropped."
+}

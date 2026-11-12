@@ -32,6 +32,13 @@ export interface Contract {
     overheadCharsPerEntry: number;
     overheadCalibrated: boolean;
     overheadNote: string;
+    /** Verbatim explanation of why calibration could not run. Surfaced in every format. */
+    calibrationUnavailableReason: string;
+    limitVerification: {
+      measured: boolean;
+      competingValue: number;
+      competingSource: string;
+    };
   };
   dropBehavior: {
     namesAlwaysListed: boolean;

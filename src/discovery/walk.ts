@@ -10,6 +10,7 @@
 import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { basename, dirname, join, resolve } from 'node:path';
+import { ParseCache } from '../parser/cache.js';
 import { parseSkillFile } from '../parser/skill.js';
 import type { Skill, SkillSource } from '../types.js';
 
@@ -18,6 +19,10 @@ export interface DiscoverOptions {
   home?: string;
   /** Project root; `.claude/skills` is read from here. */
   project?: string;
+  /** Parse cache. Pass one explicitly to observe hits/misses, or to disable it. */
+  cache?: ParseCache;
+  /** Force a cold run (spec §4.3 `--no-cache`). */
+  noCache?: boolean;
 }
 
 export function defaultHome(): string {
@@ -95,6 +100,9 @@ export function discoverSkills(options: DiscoverOptions = {}): Skill[] {
   const home = resolve(options.home ?? defaultHome());
   const project = resolve(options.project ?? process.cwd());
   const claude = join(home, '.claude');
+  const cache = options.cache ?? new ParseCache({ enabled: options.noCache !== true });
+  // `--no-cache` wins even when the caller supplied its own cache instance.
+  if (options.noCache === true) cache.enabled = false;
 
   const found: Skill[] = [];
   const seen = new Set<string>();
@@ -103,8 +111,23 @@ export function discoverSkills(options: DiscoverOptions = {}): Skill[] {
     const key = resolve(file);
     if (seen.has(key)) return;
     seen.add(key);
-    const text = read(key);
-    const skill = parseSkillFile({ path: key, text, source, ...(plugin ? { plugin } : {}) });
+
+    let meta = { path: key, mtimeMs: 0, size: 0 };
+    try {
+      const st = statSync(key);
+      meta = { path: key, mtimeMs: st.mtimeMs, size: st.size };
+    } catch {
+      /* fall through to a cold parse; parseSkillFile will surface an empty contract */
+    }
+
+    const cached = cache.get(meta);
+    if (cached) {
+      found.push(cached);
+      return;
+    }
+
+    const skill = parseSkillFile({ path: key, text: read(key), source, ...(plugin ? { plugin } : {}) });
+    cache.set(meta, skill);
     found.push(skill);
   };
 

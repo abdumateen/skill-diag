@@ -74,15 +74,20 @@ export interface Finding {
 
 export interface Overhead {
   charsPerEntry: number;
-  /** False until the §11.2 calibration harness measures it (Phase 2). */
+  /** False until the §11.2 calibration harness measures it (Phase 2a). */
   calibrated: boolean;
   note: string;
+  /** Why it is uncalibrated, when it is. Never omitted from output. */
+  reason?: string;
 }
 
 export interface Budget {
   limitChars: number;
   limitSource: string;
   exact: boolean;
+  /** True only when the limit was measured against the host, not read from docs. */
+  limitVerified: boolean;
+  limitNote: string;
   rawChars: number;
   effectiveChars: number;
   percentUsed: number;
@@ -90,11 +95,26 @@ export interface Budget {
   overhead: Overhead;
 }
 
+/** A slash-command definition: not linted, but it shares the listing budget. */
+export interface SlashCommand {
+  /** Namespaced invocation name, e.g. `foo:bar` for `commands/foo/bar.md`. */
+  readonly name: string;
+  /** Invocation name without the plugin namespace — the stem the incumbent costs. */
+  readonly stem: string;
+  readonly path: string;
+  readonly source: SkillSource;
+  readonly plugin?: string;
+  readonly description: string;
+  /** name + min(description, per-entry cap) — what it costs the listing. */
+  readonly discoveryCost: number;
+}
+
 export interface CorpusReport {
   host: string;
   hostVersionRange: string;
   contextWindow: number;
   skills: readonly Skill[];
+  commands: readonly SlashCommand[];
   findings: readonly Finding[];
   budget: Budget;
 }

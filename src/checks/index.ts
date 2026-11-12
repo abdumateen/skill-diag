@@ -35,6 +35,7 @@ export interface RunOptions extends BudgetOptions {
 
 export function runChecks(skills: readonly Skill[], options: RunOptions): CorpusReport {
   const { contract } = options;
+  const commands = options.commands ?? [];
   const budget = computeBudget(skills, contract, options);
   const contextWindow = resolveContextWindow(contract, options);
   const ctx: CheckContext = { skills, contract, budget, contextWindow };
@@ -46,6 +47,7 @@ export function runChecks(skills: readonly Skill[], options: RunOptions): Corpus
     hostVersionRange: contract.versionRange,
     contextWindow,
     skills,
+    commands,
     findings: sortFindings(findings),
     budget,
   };

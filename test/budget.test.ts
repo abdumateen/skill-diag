@@ -27,11 +27,13 @@ describe('budget accounting', () => {
     expect(b.effectiveChars).toBeGreaterThan(0);
   });
 
-  it('marks the overhead constant uncalibrated in Phase 1', () => {
+  it('marks the overhead constant uncalibrated and records why', () => {
     const b = computeBudget([skill('a-skill', 'x'.repeat(10))], contract);
     expect(b.overhead.calibrated).toBe(false);
     expect(b.overhead.charsPerEntry).toBe(0);
     expect(b.overhead.note.toLowerCase()).toContain('uncalibrated');
+    expect(b.overhead.reason).toContain('host unusable for calibration');
+    expect(b.overhead.reason).toContain('0 tokens');
   });
 
   it('applies the per-entry cap to effectiveChars but not rawChars', () => {

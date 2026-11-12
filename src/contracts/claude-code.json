@@ -53,7 +53,13 @@
     "charsPerToken": 4,
     "overheadCharsPerEntry": 0,
     "overheadCalibrated": false,
-    "overheadNote": "UNcalibrated placeholder. Effective chars therefore equal raw chars until the §11.2 calibration harness measures this (Phase 2)."
+    "overheadNote": "UNcalibrated placeholder. Effective chars therefore equal raw chars until the §11.2 harness produces a measurement.",
+    "calibrationUnavailableReason": "claude-skills-doctor: host unusable for calibration — claude -p exits 1 with [claude-code:unrecognized_model] (model: anthropic/custom-.../deepseek-v4.1-flash:free), duration_api_ms: 0, 0 tokens. Host version 2.1.251 is also signed out (~/.claude.json has no oauthAccount). Overhead constant and budget limit remain unmeasured until the host is both signed in and pointed at a working model.",
+    "limitVerification": {
+      "measured": false,
+      "competingValue": 8000,
+      "competingSource": "claude-skills-doctor 0.7.0: 1% of a 200,000-token window at 4 chars/token"
+    }
   },
   "dropBehavior": {
     "namesAlwaysListed": true,
