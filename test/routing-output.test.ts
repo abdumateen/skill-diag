@@ -53,10 +53,12 @@ describe('routing JSON', () => {
     const report = analyzeRouting(duplicateHeavy());
     const text = renderRoutingHuman(report, { version: 'test', color: false });
     expect(text).toContain('Routing health');
-    expect(text).toContain('naive');
-    expect(text).toContain('duplicate-adj');
+    expect(text).toContain('naive P_top1(N)');
+    expect(text).toContain('adjusted P_top1(N_eff)');
     expect(text).toContain('break point (0.50)');
     expect(text).toContain('warning threshold (0.60)');
+    expect(text).toContain('adjusted headroom');
+    expect(text).toContain('naive headroom');
     expect(text).toContain('Top marginal costs');
     expect(text).toContain('Mitigation ladder');
     expect(text).toContain('not-simulated');

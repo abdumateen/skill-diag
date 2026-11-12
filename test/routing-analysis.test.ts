@@ -45,6 +45,10 @@ describe('marginal cost', () => {
     expect(report.clusters.count).toBe(0);
     expect(report.nEff).toBe(50);
     expect(report.naiveTop1).toBe(report.adjustedTop1);
+    // No clusters means density 1, so adjusted headroom equals naive headroom.
+    expect(report.density).toBe(1);
+    expect(report.breakPoints.warning.adjustedHeadroom).toBe(report.breakPoints.warning.naiveHeadroom);
+    expect(report.breakPoints.critical.adjustedHeadroom).toBe(report.breakPoints.critical.naiveHeadroom);
   });
 
   it('charges a clustered skill roughly twice a singleton once adjusted', () => {

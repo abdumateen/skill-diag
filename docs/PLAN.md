@@ -190,7 +190,14 @@ machine (541,143) is a lower bound on the real listing. Our stem-based figure
 (75,055) agrees with theirs to within 18 chars, which is what makes the delta
 attributable to namespacing rather than to parsing.
 
-**6. Phase 1 acceptance, restated.** **Parity on the 13 user skills** (the set
+**6. Routing health has no incumbent equivalent.** As of 2b, `skill-diag`
+produces a scale-aware routing health estimate no incumbent produces. The
+estimate uses published parameters from the Curse of Skills study; it does not
+require the host or OTEL data; it works entirely from static description
+similarity and skill count. Nobody else reports what the 1,000th skill does to
+top-1, or how many skills of headroom remain before routing degrades.
+
+**7. Phase 1 acceptance, restated.** **Parity on the 13 user skills** (the set
 their tool checks fully, where matching them is the bar) **plus coverage on the
 1,102 plugin skills** (the set their tool reduces checks for, which is where
 `skill-diag` must be strictly better rather than equal). Parity alone is not
@@ -473,12 +480,29 @@ forced `w = 2`.
 
 **The live corpus.** N = 1,115, naive **0.633**; 77 clusters covering 177 skills
 (cross-plugin duplicates and translated copies inside `ecc`), `N_eff = 1,215`,
-adjusted **0.615**. Status OK: neither warning fires. Headroom: **187 skills** to
-the 0.60 warning line (crossing at N = 1,302, where P = 0.59996) and **831** to
-the 0.50 floor (crossing at N = 1,946, where P = 0.499998). The brief predicted
-832 for the second figure by assuming the crossing was 1,947; at these constants
-1946 is already below 0.50, so 831 is the computed answer and the test asserts
-the arithmetic rather than the round number.
+density **1.09**, adjusted **0.615**. Status OK: neither warning fires.
+
+**Headroom is reported twice, because the two numbers answer different
+questions.** Naive headroom counts raw skills; adjusted headroom counts skills at
+the corpus's current cluster density, so it is the figure to quote for "how many
+more distinct skills can I add".
+
+| Line | Naive headroom | Naive N | Adjusted headroom | Adjusted N |
+| --- | --- | --- | --- | --- |
+| warning 0.60 | 187 | 1,302 | **80** | 1,195 |
+| critical 0.50 | 831 | 1,946 | **671** | 1,786 |
+
+Naive crossings: P(1302) = 0.59996 and P(1946) = 0.499998 (the brief predicted
+832 to critical by assuming 1,947; 1946 is already below 0.50). Adjusted figures
+hold density constant: `N_eff = density · N_new`, so the line is reached at
+`ceil(N* / density)` — `ceil(1302 / 1.0897) = 1,195` and `ceil(1946 / 1.0897) =
+1,786`. Ceiling, not floor, so the tool never overstates headroom; the brief's
+79 and 670 floor the same quotients (1194.84, 1785.82). The assumption is carried
+in output as `adjustedHeadroomAssumption` and labelled an estimate. Where there
+are no clusters, density is 1 and adjusted equals naive.
+
+**Quote the adjusted number when talking to users.** 187 is the raw-skill figure
+and overstates how much room the router has by roughly 2× on this corpus.
 
 **Warnings.** `routing-health-at-risk` (warning, below 0.60) and
 `routing-health-critical` (error, below 0.50) are Tier 2 checks in the registry,
@@ -504,6 +528,37 @@ candidate pairs that share a shingle are scored. Not gated.
 **Cluster display is capped** at 12 members plus a pointer to `--json`; a raw
 corpus with hundreds of clusters otherwise buries the summary it is meant to
 support.
+
+## Bugs discovered during Phase 2
+
+Three defects surfaced while building 2a–2b. They are recorded here because two
+of them were live in earlier releases, not because they were 2b scope.
+
+**1. Subcommands ignored their own flags — live since Phase 1.** `--home`,
+`--project`, `--json`, `--quiet` and friends were declared on both the root
+program and every subcommand. Commander assigns a duplicated flag to the
+*parent*, so `subCommand.opts()` was empty: **`budget --json` has been silently
+ignored since Phase 1**, printing human output, and `budget --home <corpus>`
+scanned the real home instead. Fixed in `2b4f76a` by merging parent and
+subcommand options (child last). No earlier test failed, because none drove the
+subcommands through the CLI — `test/budget-json.test.ts` now does, against a
+schema.
+
+**2. "2,290 skills vs 1,115" was not a discovery duplication.** During 2b the
+`routing` subcommand reported N = 2,290 for the 1,115-skill corpus. The root
+cause was bug 1: `--home` was discarded, so the tool scanned the real
+`~/.claude` (2,275 plugin + 15 user/project skills, all cached plugin versions).
+There was no junction, symlink or double-walked layout — the corpus contains
+exactly 1,115 `SKILL.md` files and discovery returns 1,115 unique paths; a probe
+confirmed `N=1115 uniquePaths=1115`, and the discovery walk was not changed. The
+fix is the same option merge. This matters because 1,115 is a load-bearing claim
+in Phase 0.5 and the parity tests.
+
+**3. `init -p` wrote to the repository root.** The `-p, --project` option on
+`init` declared `process.cwd()` as its *default*, so the subcommand's option bag
+always carried the default and — merged last — overrode the path the parent had
+actually parsed. Fixed by removing the default and applying `process.cwd()` at
+the use site.
 
 ### Phase 3 pre-requisites
 

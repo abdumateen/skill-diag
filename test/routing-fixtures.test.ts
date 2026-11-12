@@ -112,14 +112,27 @@ describe.skipIf(!existsSync(CORPUS))('live corpus (N=1,115)', () => {
     expect(report.nEff).toBeGreaterThanOrEqual(1115);
   });
 
-  it('computes headroom to both lines rather than hardcoding it', () => {
+  it('computes naive headroom to both lines rather than hardcoding it', () => {
     // P(1302) = 0.59996 <= 0.60 and P(1301) = 0.60013, so 1302 is the crossing.
     expect(report.breakPoints.warning.nStar).toBe(1302);
-    expect(report.breakPoints.warning.headroom).toBe(report.breakPoints.warning.nStar - skills.length);
-    expect(report.breakPoints.warning.headroom).toBe(187);
+    expect(report.breakPoints.warning.naiveHeadroom).toBe(1302 - skills.length);
+    expect(report.breakPoints.warning.naiveHeadroom).toBe(187);
     // P(1946) = 0.499998 — already at the floor, so 1946 is the crossing, not 1947.
     expect(report.breakPoints.critical.nStar).toBe(1946);
-    expect(report.breakPoints.critical.headroom).toBe(report.breakPoints.critical.nStar - skills.length);
-    expect(report.breakPoints.critical.headroom).toBe(831);
+    expect(report.breakPoints.critical.naiveHeadroom).toBe(1946 - skills.length);
+    expect(report.breakPoints.critical.naiveHeadroom).toBe(831);
+  });
+
+  it('computes adjusted headroom at the observed cluster density', () => {
+    const density = report.nEff / report.n;
+    expect(report.density).toBeCloseTo(1215 / 1115, 6);
+    // N_eff = density · N_new, so the line is reached at ceil(N* / density).
+    expect(report.breakPoints.warning.adjustedN).toBe(Math.ceil(1302 / density));
+    expect(report.breakPoints.warning.adjustedHeadroom).toBe(Math.ceil(1302 / density) - 1115);
+    expect(report.breakPoints.warning.adjustedHeadroom).toBe(80);
+    expect(report.breakPoints.critical.adjustedN).toBe(Math.ceil(1946 / density));
+    expect(report.breakPoints.critical.adjustedHeadroom).toBe(Math.ceil(1946 / density) - 1115);
+    expect(report.breakPoints.critical.adjustedHeadroom).toBe(671);
+    expect(report.breakPoints.warning.adjustedHeadroomAssumption).toContain('cluster density held constant');
   });
 });

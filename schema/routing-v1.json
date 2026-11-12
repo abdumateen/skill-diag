@@ -28,6 +28,7 @@
         "similarityThreshold",
         "shingleSize",
         "minTokens",
+        "density",
         "breakPoints",
         "clusters",
         "marginal",
@@ -50,6 +51,7 @@
             "citation": { "type": "string" }
           }
         },
+        "density": { "type": "number", "minimum": 1 },
         "collisionWeight": { "type": "number", "minimum": 0 },
         "similarityThreshold": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
         "shingleSize": { "type": "integer", "minimum": 1 },
@@ -151,11 +153,21 @@
     "breakPoint": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["theta", "nStar", "headroom"],
+      "required": [
+        "theta",
+        "nStar",
+        "naiveHeadroom",
+        "adjustedN",
+        "adjustedHeadroom",
+        "adjustedHeadroomAssumption"
+      ],
       "properties": {
         "theta": { "type": "number" },
         "nStar": { "type": "integer", "minimum": 1 },
-        "headroom": { "type": "integer" }
+        "naiveHeadroom": { "type": "integer" },
+        "adjustedN": { "type": "integer", "minimum": 1 },
+        "adjustedHeadroom": { "type": "integer" },
+        "adjustedHeadroomAssumption": { "type": "string" }
       }
     }
   }

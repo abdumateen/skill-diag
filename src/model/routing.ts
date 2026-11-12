@@ -47,6 +47,16 @@ export interface RoutingMember {
   readonly clusterSize: number;
 }
 
+export interface ThresholdHeadroom {
+  readonly theta: number;
+  /** Smallest raw N whose naive estimate is at or below theta. */
+  readonly nStar: number;
+  readonly naiveHeadroom: number;
+  readonly adjustedN: number;
+  readonly adjustedHeadroom: number;
+  readonly adjustedHeadroomAssumption: string;
+}
+
 export interface MarginalCost {
   readonly name: string;
   readonly path: string;
@@ -92,9 +102,11 @@ export interface RoutingReport {
     readonly insufficientNote: string;
   };
   readonly breakPoints: {
-    readonly warning: { readonly theta: number; readonly nStar: number; readonly headroom: number };
-    readonly critical: { readonly theta: number; readonly nStar: number; readonly headroom: number };
+    readonly warning: ThresholdHeadroom;
+    readonly critical: ThresholdHeadroom;
   };
+  /** N_eff / N: how much duplicate clustering inflates the effective count. */
+  readonly density: number;
   readonly marginal: {
     readonly naiveDelta: number;
     readonly top: readonly MarginalCost[];
@@ -265,8 +277,31 @@ export function analyzeRouting(
       (b.estimatedGain ?? -1) - (a.estimatedGain ?? -1) || a.rung - b.rung,
   );
 
-  const warningNStar = breakPoint(ROUTING_WARNING_THRESHOLD, params);
-  const criticalNStar = breakPoint(ROUTING_CRITICAL_THRESHOLD, params);
+  const density = n > 0 ? nEff / n : 1;
+  const assumption = `cluster density held constant at N_eff/N = ${density.toFixed(2)}`;
+
+  /**
+   * Adjust a naive break point for duplicates. Holding density constant means
+   * N_eff = density · N_new, so the threshold is first reached at
+   * N_new = ceil(N* / density). Ceiling, not floor: at the floor of that
+   * quotient the adjusted estimate is still above theta, so headroom would be
+   * overstated.
+   */
+  const threshold = (theta: number): ThresholdHeadroom => {
+    const nStar = breakPoint(theta, params);
+    const adjustedN = Math.ceil(nStar / (density || 1));
+    return {
+      theta,
+      nStar,
+      naiveHeadroom: nStar - n,
+      adjustedN,
+      adjustedHeadroom: adjustedN - n,
+      adjustedHeadroomAssumption: assumption,
+    };
+  };
+
+  const warningThreshold = threshold(ROUTING_WARNING_THRESHOLD);
+  const criticalThreshold = threshold(ROUTING_CRITICAL_THRESHOLD);
 
   return {
     n,
@@ -296,17 +331,10 @@ export function analyzeRouting(
       insufficientNote: `${clusterReport.insufficient.length} skill(s) skipped: description under ${config.minTokens} tokens is too short to cluster reliably`,
     },
     breakPoints: {
-      warning: {
-        theta: ROUTING_WARNING_THRESHOLD,
-        nStar: warningNStar,
-        headroom: warningNStar - n,
-      },
-      critical: {
-        theta: ROUTING_CRITICAL_THRESHOLD,
-        nStar: criticalNStar,
-        headroom: criticalNStar - n,
-      },
+      warning: warningThreshold,
+      critical: criticalThreshold,
     },
+    density,
     marginal: { naiveDelta, top, shortDescriptionFraction },
     ladder,
     pruning,

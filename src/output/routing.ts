@@ -32,24 +32,32 @@ export function renderRoutingHuman(
     `${pc.bold('skill-diag')} v${opts.version} · routing survival model · r=${p.r} p=${p.p} (${p.source})`,
   );
   lines.push(
-    `Routing health    estimated top-1 ${pc.bold(fmt(report.adjustedTop1))}  (N=${report.n.toLocaleString('en-US')}, N_eff=${report.nEff.toLocaleString('en-US')})`,
+    `Routing health    estimated top-1 ${pc.bold(fmt(report.adjustedTop1))}  (N=${report.n.toLocaleString('en-US')}, N_eff=${report.nEff.toLocaleString('en-US')}, density ${report.density.toFixed(2)})`,
   );
-  lines.push(`  naive          ${fmt(report.naiveTop1)}`);
+  lines.push(`  naive P_top1(N)        ${fmt(report.naiveTop1)}`);
   if (report.clusters.count === 0) {
     lines.push(
-      `  duplicate-adj  ${fmt(report.adjustedTop1)}  ${pc.dim(`(no clusters detected at threshold ${report.config.similarityThreshold})`)}`,
+      `  adjusted P_top1(N_eff) ${fmt(report.adjustedTop1)}  ${pc.dim(`(no clusters at threshold ${report.config.similarityThreshold}; adjusted = naive)`)}`,
     );
   } else {
     const delta = report.naiveTop1 - report.adjustedTop1;
     lines.push(
-      `  duplicate-adj  ${fmt(report.adjustedTop1)}  ${pc.yellow(`(${report.clusters.count} cluster(s), ${report.clusters.clusteredSkills} skills, −${fmt(delta)})`)}`,
+      `  adjusted P_top1(N_eff) ${fmt(report.adjustedTop1)}  ${pc.yellow(`(${report.clusters.count} cluster(s), ${report.clusters.clusteredSkills} skills, −${fmt(delta)})`)}`,
     );
   }
+
+  const bp = report.breakPoints;
+  lines.push(`  warning threshold (0.60)`);
   lines.push(
-    `  break point (0.50) at N ≈ ${report.breakPoints.critical.nStar.toLocaleString('en-US')}   headroom: ${report.breakPoints.critical.headroom.toLocaleString('en-US')} skills`,
+    `    naive headroom      ${bp.warning.naiveHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.warning.nStar.toLocaleString('en-US')})`,
   );
   lines.push(
-    `  warning threshold (0.60) at N ≈ ${report.breakPoints.warning.nStar.toLocaleString('en-US')}   headroom: ${report.breakPoints.warning.headroom.toLocaleString('en-US')} skills`,
+    `    adjusted headroom   ${bp.warning.adjustedHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.warning.adjustedN.toLocaleString('en-US')}, given density ${report.density.toFixed(2)})`,
+  );
+  lines.push(`  break point (0.50)`);
+  lines.push(`    naive headroom      ${bp.critical.naiveHeadroom.toLocaleString('en-US')} skills`);
+  lines.push(
+    `    adjusted headroom   ${bp.critical.adjustedHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.critical.adjustedN.toLocaleString('en-US')})`,
   );
   lines.push(`  current status  ${statusLabel}`);
 
@@ -127,17 +135,10 @@ export function toRoutingJson(
       similarityThreshold: report.config.similarityThreshold,
       shingleSize: report.config.shingleSize,
       minTokens: report.config.minTokens,
+      density: Number(report.density.toFixed(4)),
       breakPoints: {
-        warning: {
-          theta: report.breakPoints.warning.theta,
-          nStar: report.breakPoints.warning.nStar,
-          headroom: report.breakPoints.warning.headroom,
-        },
-        critical: {
-          theta: report.breakPoints.critical.theta,
-          nStar: report.breakPoints.critical.nStar,
-          headroom: report.breakPoints.critical.headroom,
-        },
+        warning: { ...report.breakPoints.warning },
+        critical: { ...report.breakPoints.critical },
       },
       clusters: {
         count: report.clusters.count,
