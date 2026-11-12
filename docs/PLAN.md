@@ -229,6 +229,22 @@ grouping yields 257 groups; namespaced yields 255. The two extra are names that
 only repeat across different plugins (`design-system`, `handoff`, `tdd`, `teach`),
 which do not shadow each other in the host.
 
+#### Phase 1 headline disclosure
+
+- **544 incumbent-blind findings on the 1,102 plugin skills.**
+- Of those: **499 are a single `origin` provenance key** that the `ecc` bundler
+  injects (values like `ECC`, `community`, `ECC direct-port adaptation`) — not
+  user-actionable; exclusion leaves **45 actionable findings**.
+- 11 `name-folder-mismatch` findings collapse to **6 distinct skill defects**
+  (`ecc` ships each in two layouts: `skills/` and `docs/ja-JP/skills/`); one of
+  the 6 also produces the single `name-invalid` finding.
+- Field distribution for the 532 `unknown-field`: `origin` 499, `homepage` 27,
+  `tools` 26, `author` 7, `repo` 3, `tags` 3, `category` 3, `icon` 1, `color` 1.
+
+**Standing rule.** 544 must never appear without the 45-actionable figure in the
+same paragraph. README, marketing, release notes, and commit messages must all
+cite both numbers or neither.
+
 ### Phase 0.5 — Corpus deduplication
 
 Measured on `~/.claude/plugins` and `~/.claude/skills`:
@@ -345,6 +361,24 @@ The remaining Phase 1 criteria, all met:
 **Warm runtime on 100-skill corpus: 718–749 ms, vs spec target <200 ms.**
 Deferred to Phase 2 profiling. Likely YAML parse; profile before optimizing.
 Not optimized in Phase 1.
+
+### Phase 2 scope additions
+
+Three Phase 1 deviations are real scope gaps, not style notes:
+
+- **Command discovery** (deviation 7) — `summary.commands: 0`; the incumbent
+  counts 905 commands contributing 75,073 chars to the same budget; our
+  `effectiveChars` understates total listing cost by that amount. Phase 2 either
+  implements command discovery or explicitly declares `effectiveChars` as
+  "skills-only, commands excluded" in every output format. Silence is not
+  acceptable.
+- **`description-capped` severity inconsistency** (deviation 1) — spec §7.1 says
+  error, §6.2 says warning. Zero occurrences on the corpus so no live impact, but
+  pin the severity in contract data before it fires. Phase 2.
+- **Upload-path escalation** (deviation 3) — currently driven by
+  `rejectedOnUploadPath` field, not a `--upload` flag Phase 1 lacks. Phase 2
+  either adds the flag or documents the field-driven behavior as the permanent
+  design.
 
 ## Non-goals
 
