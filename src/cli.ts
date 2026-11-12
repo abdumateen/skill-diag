@@ -33,8 +33,6 @@ interface CommonOpts {
   quiet?: boolean;
   color?: boolean;
   host?: string;
-  /** Commander sets this to false for `--no-cache`. */
-  cache?: boolean;
 }
 
 function numberOrUndefined(value: string | undefined): number | undefined {
@@ -53,7 +51,6 @@ function addCommonOptions(cmd: Command): Command {
     .option('--context-window <tokens>', 'context window used to derive a budget (default: contract default)')
     .option('--budget <chars>', 'pin the listing budget in characters')
     .option('--quiet', 'suppress human output; exit code only')
-    .option('--no-cache', 'bypass the parse cache and re-parse every skill')
     .option('--no-color', 'disable colour')
     .option('--host <host>', 'host contract to use', 'claude-code');
 }
@@ -62,7 +59,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const contract = loadContract(opts.host ?? 'claude-code');
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
-  const skills = discoverSkills({ home, project, noCache: opts.cache === false });
+  const skills = discoverSkills({ home, project });
   // Commands share the listing budget, so they are discovered and counted even
   // though Phase 1/2a does not lint them.
   const commands = discoverCommands({ home, project });

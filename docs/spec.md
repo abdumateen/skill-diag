@@ -116,7 +116,7 @@ Claude Code resolves skills in priority order: **Enterprise → Personal → Pro
 
 ### 4.3 Caching
 
-Cache parsed ASTs keyed by `(absolute_path, mtime, size)`. A repeated run in watch mode or pre-commit should skip re-parsing unchanged files. Cache location: `~/.cache/skill-diag/` (respect `XDG_CACHE_HOME`). Cache is invalidated automatically on mtime change; a `--no-cache` flag forces a cold run.
+Per-file parse cache (measured net loss — removed). Spec §4.3 originally designed a per-skill JSON cache keyed by (path, mtime, size). Measurement on the 100-skill and 1,115-skill corpora showed the cache is a regression: cold 100-skill 755 ms vs warm 805 ms; cold 1,115 4,545 ms vs warm 5,408 ms. Root cause — reading one JSON file per skill costs more than reading a ~500 B SKILL.md and parsing its frontmatter, because filesystem round-trips dominate for tiny files. The cache was removed in phase-2a-1. Cold-run performance is achieved by bundling yaml and picocolors (this reduced cold 100-skill from 1,027 ms → 755 ms). A single-file cache (one JSON blob, atomic writes, ~50 KB for 1,000 skills) may revisit this in a future phase if 1,115-skill cold runtime becomes a bottleneck; it is not currently justified.
 
 ---
 
@@ -522,7 +522,6 @@ Binary name: `skill-diag`. Package name: `skill-diag`. `npx skill-diag` runs wit
 | `--host ` | auto-detect | Restrict to one host contract |
 | `--context-window ` | contract default (200000) | Override context window for budget derivation |
 | `--budget ` | env/contract | Pin the listing budget in characters |
-| `--no-cache` | off | Bypass parse cache |
 | `--no-state` | off | Do not write `capability-surface.json` |
 | `--quiet` | off | Suppress human output; exit code only |
 | `--color` / `--no-color` | auto | Force color on/off |
@@ -931,7 +930,7 @@ The coding agent must follow this order. Do not build later stages before earlie
 
 The project is ready for a v1.0 release when **all** of the following are true:
 
-1. `npx skill-diag` runs on a clean machine with Node 20+ in **under one second** on a 100-skill directory (cold cache) and under 200 ms warm.
+1. `npx skill-diag` runs on a clean machine with Node 20+ in **under one second** on a 100-skill directory. (The original wording also asked for under 200 ms warm; §4.3 records why there is no warm path — the per-file parse cache was a measured net loss and was removed.)
 2. On the fixture corpus, it finds **every** Tier 1 error that claude-skills-doctor finds, plus `description-capped`, `context-pressure`, and `budget-exceeded` with drop simulation.
 3. The GitHub Action produces SARIF that GitHub Code Scanning accepts without schema errors.
 4. The routing health model reproduces the published top-1 calibration point within ±0.05 on the synthetic 2,029-skill fixture.

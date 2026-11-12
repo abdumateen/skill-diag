@@ -182,7 +182,15 @@ total. Our 1,115-skill baseline counts skills only (`commands: 0`), so its
 than a like-for-like comparison, but the gap is large enough that warm-run cost
 stays a design constraint, not a detail.
 
-**5. Phase 1 acceptance, restated.** **Parity on the 13 user skills** (the set
+**5. Command cost is understated by the `plugin:` namespace.** They cost each
+command by its bare stem: 905 commands, **75,073 chars**. The host lists plugin
+commands namespaced (`plugin:command`), so the same 905 commands cost
+**83,768 chars**. **Delta 8,713 chars (11.6%)** — their budget total for this
+machine (541,143) is a lower bound on the real listing. Our stem-based figure
+(75,055) agrees with theirs to within 18 chars, which is what makes the delta
+attributable to namespacing rather than to parsing.
+
+**6. Phase 1 acceptance, restated.** **Parity on the 13 user skills** (the set
 their tool checks fully, where matching them is the bar) **plus coverage on the
 1,102 plugin skills** (the set their tool reduces checks for, which is where
 `skill-diag` must be strictly better rather than equal). Parity alone is not
@@ -388,32 +396,30 @@ gate is now the 100-skill corpus:
 
 | Measure | Gate | Median | Range (5 trials) | Result |
 | --- | --- | --- | --- | --- |
-| 100 skills, cold (`--no-cache`) | < 1,000 ms hard | **755 ms** | 653–783 ms | pass |
-| 100 skills, warm (cache populated) | < 300 ms soft | **805 ms** | 717–955 ms | **miss** |
+| 100 skills, cold | < 1,000 ms hard | **544 ms** | 512–754 ms | pass |
+| 1,115 skills, cold | reported, not gated | **3,572 ms** | 3,539–3,718 ms | — |
 
-1,115 skills, reported but not gated: cold **4,545 ms** (4,305–4,597), warm
-**5,408 ms** (5,338–5,850). The incumbent takes 18.3 s median on the same
-corpus, so we are ~4× faster cold and ~3.4× warm.
+Warm concept removed, see §4.3.
 
-**Soft-gate miss, with the reason measured rather than guessed.** The parse
-cache is a net *loss* on this machine. In-process, over 100 tiny skills:
-re-parsing everything takes 131 ms; a cold run that writes 100 cache files takes
-454 ms; a fully warm run that reads them back takes 332–516 ms. Reading one JSON
-file per skill costs more than reading the SKILL.md and parsing its frontmatter,
-because the files are ~500 B and Windows charges a per-file open/scan cost. The
-same inversion holds at 1,115 skills (warm 5,408 ms vs cold 4,545 ms).
+The incumbent takes 18.3 s median on the same 1,115 corpus, so a full cold run
+is ~5× faster.
 
-This is a property of the specified design (spec §4.3: a directory of per-skill
-JSON keyed by SHA-1 of the path), not a bug in it — `test/cache.test.ts` proves
-hit/miss accounting, invalidation on size change and corrupt-entry recovery. It
-is shipped as specified, with the numbers above, and the follow-up belongs to a
-later phase: either a single-file cache (one read instead of N) or a size
-threshold below which parsing is cheaper than caching.
+**Per-file parse cache removed as a measured net loss (2a.1).** Spec §4.3
+originally specified a per-skill JSON cache keyed by `(path, mtime, size)`. It
+was built, measured, and withdrawn: cold 100-skill **755 ms** against warm
+**805 ms**; cold 1,115 **4,545 ms** against warm **5,408 ms**. Reading one JSON
+file per skill costs more than reading a ~500 B SKILL.md and parsing its
+frontmatter, because filesystem round-trips dominate at that file size. Removing
+the cache also removed the `stat()` that fed the lookup, so cold improved past
+the old cold figure: **755 → 544 ms** at 100 skills, **4,545 → 3,572 ms** at
+1,115.
 
-`--version` alone costs 382–541 ms on this box, of which ~290 ms is Node startup,
-so a 300 ms warm target was never reachable without removing the process launch.
-Bundling `yaml` and `picocolors` (previously external, so each run resolved them
-from `node_modules`) is what brought cold 100 from 1,027 ms to 755 ms.
+Cold performance comes from bundling `yaml` and `picocolors`, previously external
+so every run resolved them from `node_modules` — that change alone took cold
+100-skill from 1,027 ms to 755 ms. `--version` still costs 382–541 ms on this
+box, of which ~290 ms is Node startup. A single-file cache (one JSON blob, atomic
+writes, ~50 KB for 1,000 skills) may revisit this if 1,115-skill cold runtime
+becomes a bottleneck; it is not currently justified.
 
 **Command discovery, verified against the real home.** `~/.claude/commands` does
 not exist on this machine: all 905 commands live under
@@ -437,6 +443,16 @@ On the real home `effectiveChars` is 549,886 (466,118 skills + 83,768 commands).
 constant stays `0` with `calibrated: false`, and the same reason string is
 carried in JSON (`budget.overhead.reason`, `budget.limitNote`) and in human
 output, so no reader can mistake a placeholder for a measurement.
+
+### Phase 3 pre-requisites
+
+**Cached plugin versions are counted for commands but deduplicated for skills.**
+Command discovery matches the incumbent: every cached plugin version counts (905
+on this machine, not one per enabled plugin). Skill discovery is deduplicated to
+live/enabled installs (1,115). The inconsistency is deliberate for now — matching
+the incumbent's command count is what makes those numbers comparable — and is a
+Phase 3 pre-requisite. Routing health depends on `N` (the skill count), not on
+the command count, so it does not block 2b.
 
 ## Non-goals
 
