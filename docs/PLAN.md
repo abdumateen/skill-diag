@@ -188,6 +188,47 @@ their tool checks fully, where matching them is the bar) **plus coverage on the
 `skill-diag` must be strictly better rather than equal). Parity alone is not
 acceptance; it is the floor.
 
+#### Classification of the 22 silent finding ids
+
+The baseline run left 22 of their 28 ids silent. Silent is not the same as
+withheld: only six per-skill checks run for plugin-source skills before
+`check_all` returns (`frontmatter-invalid`, `missing-name`, `empty-name`,
+`missing-description`, `empty-description`, `yaml-truthy-key`), plus the
+corpus-level `duplicate-name`/`budget-exceeded`, `scan_security` and
+`check_description_cap`. The rest are structurally unreachable for the 1,102
+plugin skills.
+
+| Bucket | Count | Ids |
+|---|---|---|
+| **(a)** Semantically valid on plugin skills | **18** | `missing-name`, `empty-name`, `missing-description`, `empty-description`, `name-format`, `name-folder-mismatch`, `description-angle-brackets`, `description-too-long`, `description-capped`, `budget-near`, `compatibility-too-long`, `body-empty`, `absolute-path`, `human-docs`, `allowed-tools-body`, `yaml-truthy-key`, `unexpected-frontmatter-key`, `description-collision` |
+| **(b)** Needs plugin-specific context | **1** | `internal-error` — a tool-internal crash sentinel, not a property of a skill |
+| **(c)** Out of scope | **3** | `hidden-instruction` (security), `description-vague`, `description-is-workflow` (Tier 3 semantic — `skill-issue`'s job per §23) |
+
+**The coverage gap is 11 of the 18.** Those are the bucket-(a) ids the incumbent
+withholds from plugin skills: `name-format`, `name-folder-mismatch`,
+`description-angle-brackets`, `description-too-long`, `description-collision`,
+`compatibility-too-long`, `body-empty`, `absolute-path`, `human-docs`,
+`allowed-tools-body`, `unexpected-frontmatter-key`. The other seven in (a) it
+already runs on plugins, so matching them is parity, not coverage.
+
+| Split of the 11 | Count | Where |
+|---|---|---|
+| Tier 1 — shipped in Phase 1 (`name-format`→`name-invalid`, `name-folder-mismatch`, `description-too-long`, `unexpected-frontmatter-key`→`unknown-field`) | 4 | Phase 1 |
+| Tier 2 or outside §7.1 (`description-collision`, `description-angle-brackets`, `compatibility-too-long`, `body-empty`, `absolute-path`, `human-docs`, `allowed-tools-body`) | 7 | Phase 3 |
+
+Measured on the 1,115 corpus: the four shipped checks produce **544 findings on
+plugin skills** the incumbent cannot produce — `unknown-field` 532,
+`name-folder-mismatch` 11, `name-invalid` 1. That 544 is the coverage number; the
+remaining 256 plugin findings (`exact-name-collision` 255, `yaml-invalid` 1) are
+checks the incumbent also reaches, and `yaml-invalid` matches it on the same
+skill (`mem-search`) for parity.
+
+One deliberate divergence, not a defect: collisions are grouped by resolved
+command name, and plugin skills are namespaced `plugin:skill` (§4.2). Global
+grouping yields 257 groups; namespaced yields 255. The two extra are names that
+only repeat across different plugins (`design-system`, `handoff`, `tdd`, `teach`),
+which do not shadow each other in the host.
+
 ### Phase 0.5 — Corpus deduplication
 
 Measured on `~/.claude/plugins` and `~/.claude/skills`:
@@ -276,8 +317,34 @@ Per Override 4, `--why <skill>` ships in Phase 1. It is the primary
 individual-developer workflow (spec §18.1) and the tool's own headline question:
 *why isn't my skill firing?* A v0.1 without it does not answer its own pitch.
 
-Acceptance for Phase 1 is **deferred** until the `claude-skills-doctor` baseline
-question is resolved.
+### Phase 1 acceptance (revised)
+
+Parity is **Tier 1 parity**, not all-findings parity. Phase 1 is done when every
+incumbent finding that maps to a Tier 1 check is reproduced — **1 of 1**
+(`budget-exceeded`). The other nine findings on the 13 user skills are not a
+Phase 1 obligation: `body-too-large` (×2) and `reference-chain` (×5) are Tier 2,
+deferred to Phase 3, and `script-network-call` (×2) is security, out of scope by
+§23. Criterion 1: **PASS**.
+
+The remaining Phase 1 criteria, all met:
+
+- **Coverage on the 1,102 plugin skills.** Every Tier 1 bucket-(a) check runs on
+  plugin sources — 544 findings the incumbent cannot produce. Each shipped check
+  has a passing and a failing golden fixture under `test/fixtures/tier1/`.
+- **Extras on both sources.** `description-capped` and `context-pressure` are not
+  filtered by source; `test/source-coverage.test.ts` proves each fires for a user
+  skill and a plugin skill.
+- **`--why <skill>`** resolves both user and plugin (namespaced `plugin:skill`)
+  skills from spec §18.1, and states plainly which parts it cannot answer yet
+  (drop-set membership, runtime activation).
+- **Budget accounting** reports `rawChars` and `effectiveChars` separately, with
+  `overhead.charsPerEntry = 0` marked `calibrated: false`.
+
+### Deferred to Phase 2
+
+**Warm runtime on 100-skill corpus: 718–749 ms, vs spec target <200 ms.**
+Deferred to Phase 2 profiling. Likely YAML parse; profile before optimizing.
+Not optimized in Phase 1.
 
 ## Non-goals
 

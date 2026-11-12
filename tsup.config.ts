@@ -7,5 +7,6 @@ export default defineConfig({
   outDir: 'dist',
   clean: true,
   sourcemap: true,
-  banner: { js: '#!/usr/bin/env node' },
+  // No banner: src/cli.ts already carries the shebang and esbuild hoists it to
+  // line 1. A second one here lands on line 2 and breaks the ESM parse.
 });

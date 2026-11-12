@@ -1,0 +1,65 @@
+{
+  "host": "claude-code",
+  "versionRange": ">=2.0.70",
+  "skillRoots": ["~/.claude/skills", ".claude/skills"],
+  "commandRoots": [".claude/commands", "~/.claude/commands"],
+  "frontmatter": {
+    "required": [],
+    "recommended": ["description"],
+    "namePattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+    "nameMaxLength": 64,
+    "nameMustMatchDirectory": true,
+    "descriptionMaxLength": 1024,
+    "allowedFields": [
+      "name",
+      "description",
+      "when_to_use",
+      "argument-hint",
+      "arguments",
+      "disable-model-invocation",
+      "user-invocable",
+      "allowed-tools",
+      "disallowed-tools",
+      "model",
+      "effort",
+      "context",
+      "agent",
+      "background",
+      "hooks",
+      "paths",
+      "shell",
+      "license",
+      "compatibility",
+      "metadata",
+      "version"
+    ],
+    "openStandardFields": [
+      "name",
+      "description",
+      "license",
+      "compatibility",
+      "metadata",
+      "allowed-tools"
+    ],
+    "rejectedOnUploadPath": ["argument-hint"]
+  },
+  "listingBudget": {
+    "mode": "absolute_with_context_override",
+    "fraction": 0.01,
+    "absoluteDefaultChars": 15000,
+    "envOverride": "SLASH_COMMAND_TOOL_CHAR_BUDGET",
+    "perEntryCapChars": 1536,
+    "defaultContextWindow": 200000,
+    "charsPerToken": 4,
+    "overheadCharsPerEntry": 0,
+    "overheadCalibrated": false,
+    "overheadNote": "UNcalibrated placeholder. Effective chars therefore equal raw chars until the §11.2 calibration harness measures this (Phase 2)."
+  },
+  "dropBehavior": {
+    "namesAlwaysListed": true,
+    "dropTarget": "descriptions",
+    "dropOrder": "unknown",
+    "dropOrderConfidence": "experimental"
+  },
+  "priorityOrder": ["enterprise", "personal", "project", "plugin"]
+}
