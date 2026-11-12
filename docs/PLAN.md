@@ -6,15 +6,30 @@ behaviour and this plan wins on sequencing.
 
 ## v0.1 — ship target
 
-v0.1 ships **Phases 0–4**. Phase 4 (SARIF + GitHub Action) is the distribution
-multiplier: without it the tool is a `curl` with no marketplace.
+v0.1 is **static linter + routing survival model**, and ships **Phases 0–4 plus
+Phase 5a**.
 
-## v0.2 — differentiator
+- **Static linter — parity.** Phases 1–3 rebuild the mechanical layer
+  `claude-skills-doctor` v0.7.0 already ships: frontmatter / name / description
+  validity, the 1,536-char per-entry cap, the listing budget against 1% of
+  context, `duplicate-name`, `description-collision`, the `budget` and
+  `collisions` commands, and `--json` / `--strict` / `--fix`. This is **parity,
+  not a differentiator** — a replacement for an incumbent, not an invention. It
+  earns the right to be installed; it does not win the argument. Phase 4 (SARIF
+  + GitHub Action) is the distribution multiplier: without it the tool is a
+  `curl` with no marketplace.
+- **Routing survival model — differentiator.** Phase 5a ships `P̂_top-1(N)`, the
+  break point `N*(p)`, and `routing-health-at-risk` — the analysis no incumbent
+  has, in any form. It is static and offline, so it does not have to wait for
+  runtime evidence and it belongs in v0.1 rather than behind the OTEL work.
 
-Phases 5–7 are **not** "expansion work" bolted onto v0.1. They are the actual
-differentiator and are scoped as **v0.2**, a separate release with its own
-acceptance criteria. Do not let v0.1 scope absorb them, and do not describe them
-as optional polish.
+## v0.2 — differentiator (runtime + reach)
+
+Phases 5b–7 are **not** "expansion work" bolted onto v0.1. They carry the
+evidence the static model can only predict: the OTEL runtime join, the MCP
+surface, and multi-host contracts. Scoped as **v0.2**, a separate release with
+its own acceptance criteria. Do not let v0.1 scope absorb them, and do not
+describe them as optional polish.
 
 ## Roadmap
 
@@ -26,7 +41,8 @@ as optional polish.
 | 2 | v0.1 | Budget + drop simulation | Effective-char budget, overhead, per-entry cap, `budget`/`collisions` commands |
 | 3 | v0.1 | Tier 2 | Heuristic warnings incl. `description-collision`, `zero-activation` |
 | 4 | v0.1 | Distribution | SARIF output + GitHub Action |
-| 5 | **v0.2** | Runtime join | `runtime ingest --otel`, `runtime report`, static-to-runtime join |
+| 5a | **v0.1** | Routing survival model | `P̂_top-1(N)`, break-point `N*(p)`, `routing-health-at-risk`; static only, no runtime evidence |
+| 5b | **v0.2** | Runtime join | `runtime ingest --otel`, `runtime report`, static-to-runtime join |
 | 6 | **v0.2** | MCP surface | `mcp` server exposing the capability model to coding agents |
 | 7 | **v0.2** | Cross-host + `--fix` | Codex/Cursor/Gemini/OpenClaw contracts, `--fix`, `--llm`, `graph` |
 
@@ -38,7 +54,11 @@ as optional polish.
 - [x] `package.json`, `tsconfig.json`, `tsup.config.ts`, `vitest.config.ts`, `.gitignore`
 - [x] Dependencies installed from spec §20
 - [x] `tsc --noEmit` clean
-- [ ] `claude-skills-doctor` baseline — **verified on PyPI; install pending approval**
+- [x] `claude-skills-doctor` baseline — run via `uvx` against the deduplicated
+      1,115 corpus. Artifact: `test/baselines/claude-skills-doctor-1115.json`.
+      Exit 1 (errors present); 18.3 s median of three byte-identical runs;
+      259 errors / 21 warnings / 0 info; `budget-exceeded` (220,423 chars vs an
+      8,000-char limit); 0 `description-collision`. Detail below.
 
 ### Phase 0 findings — `claude-skills-doctor`
 
@@ -82,10 +102,10 @@ and a GitHub Action. It reads real settings (`skillListingBudgetFraction`,
 Where it does **not** reach, and where `skill-diag` still has a reason to exist:
 
 - No routing-survival model. It reports the budget as a bar, not `P̂_top-1(N)`,
-  and has no break-point analysis. This is `skill-diag` Phase 5's core, and the
-  model is not present in any form.
+  and has no break-point analysis. This is `skill-diag` Phase 5a's core — the
+  routing survival model — and it is not present in any form.
 - No runtime join. No OTEL ingest, no `runtime report`, no static-to-runtime
-  reconciliation. Phase 5.
+  reconciliation. Phase 5b.
 - No MCP surface. Phase 6.
 - Single host. Claude Code only — no Codex/Cursor/Gemini/OpenClaw contracts and
   no contracts-as-data. Phase 7.
@@ -93,15 +113,80 @@ Where it does **not** reach, and where `skill-diag` still has a reason to exist:
   `script-network-call`), explicitly not an audit. `skill-diag` deliberately
   does not compete here.
 
-Consequence: **Phase 1 acceptance stays deferred** until the install is done and
-its report output is diffed against `skill-diag`'s Tier 1 set. No spec-derived
-fixture set is substituted for the baseline. Substitution happens only on
-explicit approval after the failure is seen.
+Consequence: **Phase 1 acceptance stays deferred** until its report output is
+diffed against `skill-diag`'s Tier 1 set. No spec-derived fixture set is
+substituted for the baseline. Substitution happens only on explicit approval
+after the failure is seen.
 
 The tool is Python, so it does not enter `skill-diag`'s npm dependency graph and
-does not consume the ≤6 runtime-dependency budget. Recommended runner:
-`uvx claude-skills-doctor` (no permanent install) or `pip install`. **Nothing is
-installed until the user says so.**
+does not consume the ≤6 runtime-dependency budget. It is run with
+`uvx claude-skills-doctor` — ephemeral, no permanent install, no Python
+environment mutated.
+
+### Phase 0 baseline — `claude-skills-doctor` v0.7.0 on 1,115 live skills
+
+The tool's own discovery walks `~/.claude/plugins/**/skills/*/SKILL.md` with no
+version dedupe and no enabled-plugin filter, so run against the real home it
+scans 2,290 skills (every cached version) and counts 905 slash-commands. To
+measure the corpus the plan actually uses, the 1,115 live skills were materialised
+as hardlinks into a synthetic home preserving source kind (1,102 plugin, 13 user)
+and linted with `--home`. Its discovery then reports exactly 1,115 skills.
+
+| Measure | Value |
+|---|---|
+| Exit code | `1` (errors present; `ok: false`) |
+| Runtime | 13.4 / 18.3 / 20.7 s, three byte-identical runs (median 18.3 s) |
+| Skills / commands scanned | 1,115 / 0 |
+| Errors / warnings / info | 259 / 21 / 0 (280 findings) |
+| `budget-exceeded` | yes — 220,423 chars against 8,000 (2755%) |
+| `description-collision` | 0 |
+| `budget` subcommand | 220,423 / 8,000 chars (2755%), 1,115 contributors |
+
+Check ids actually emitted: `duplicate-name` 257, `script-network-call` 14,
+`reference-chain` 5, `body-too-large` 2, `frontmatter-invalid` 1,
+`budget-exceeded` 1. All 28 ids enumerated from source were reproduced by AST
+extraction — no drift. Reproduce with the `--home` corpus described above.
+
+### Competitive findings — where `claude-skills-doctor` stops
+
+Measured, not assumed. Each item is checkable against the committed baseline and
+the package source.
+
+**1. The full check set is withheld from plugin skills.** `check_all` sets
+`full = s.source != SOURCE_PLUGIN`; plugin skills get `check_skill(full=False)`
+(load-breakers only), `scan_security` and `check_description_cap`, and skip
+`check_reference_chain`. On the 1,115 corpus that silences **22 of the 28 ids** —
+only 6 fired. `check_collisions` is called with
+`[s for s in skills if s.source != SOURCE_PLUGIN]`, so **`description-collision`
+structurally cannot fire on plugin skills** (0 reported against 1,102 of them),
+and `name-folder-mismatch` is unreachable for them because the function returns
+before that check. Plugin skills are the overwhelming majority of a real install:
+1,102 of 1,115 here (2,275 of 2,290 on the raw home scan). This is the blind spot
+v0.1 covers.
+
+**2. The budget limit itself is ambiguous.** Their tool derives **8,000 chars**
+(1% of a 200,000-token window at 4 chars/token, `exact: false`). Spec §2.1 states
+the Claude Code default is **15,000 chars (~4,000 tokens)**, controlled by
+`SLASH_COMMAND_TOOL_CHAR_BUDGET`. Both numbers are defensible under different
+model and setting assumptions, which is exactly why neither should be hard-coded
+silently. **Phase 2 calibration resolves this** — report the limit with its
+provenance and prefer the measured path.
+
+**3. Commands share the discovery budget.** On the real machine, 905
+slash-commands contribute **75,073 chars** against 466,070 for skills — 541,143
+total. Our 1,115-skill baseline counts skills only (`commands: 0`), so its
+**220,423 chars is a lower bound** on what this machine actually lists.
+
+**4. Runtime.** 18.3 s median warm on 1,115 skills. The spec's target is under
+200 ms warm, stated for a 100-skill directory — so this is directional rather
+than a like-for-like comparison, but the gap is large enough that warm-run cost
+stays a design constraint, not a detail.
+
+**5. Phase 1 acceptance, restated.** **Parity on the 13 user skills** (the set
+their tool checks fully, where matching them is the bar) **plus coverage on the
+1,102 plugin skills** (the set their tool reduces checks for, which is where
+`skill-diag` must be strictly better rather than equal). Parity alone is not
+acceptance; it is the floor.
 
 ### Phase 0.5 — Corpus deduplication
 
