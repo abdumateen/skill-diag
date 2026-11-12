@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://skill-diag.dev/schema/routing-v1.json",
+  "title": "skill-diag routing report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tool", "generatedAt", "routing"],
+  "properties": {
+    "version": { "type": "string" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": { "name": { "type": "string" }, "version": { "type": "string" } }
+    },
+    "generatedAt": { "type": "string" },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n",
+        "nEff",
+        "naiveTop1",
+        "adjustedTop1",
+        "status",
+        "parameters",
+        "collisionWeight",
+        "similarityThreshold",
+        "shingleSize",
+        "minTokens",
+        "breakPoints",
+        "clusters",
+        "marginal",
+        "mitigation"
+      ],
+      "properties": {
+        "n": { "type": "integer", "minimum": 0 },
+        "nEff": { "type": "number", "minimum": 0 },
+        "naiveTop1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "adjustedTop1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "status": { "enum": ["ok", "at-risk", "critical"] },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["r", "p", "source", "citation"],
+          "properties": {
+            "r": { "type": "number" },
+            "p": { "type": "number" },
+            "source": { "type": "string" },
+            "citation": { "type": "string" }
+          }
+        },
+        "collisionWeight": { "type": "number", "minimum": 0 },
+        "similarityThreshold": { "type": "number", "exclusiveMinimum": 0, "maximum": 1 },
+        "shingleSize": { "type": "integer", "minimum": 1 },
+        "minTokens": { "type": "integer", "minimum": 1 },
+        "breakPoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["warning", "critical"],
+          "properties": {
+            "warning": { "$ref": "#/definitions/breakPoint" },
+            "critical": { "$ref": "#/definitions/breakPoint" }
+          }
+        },
+        "clusters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "clusteredSkills", "sizes", "insufficient", "members", "pairs"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 0 },
+            "clusteredSkills": { "type": "integer", "minimum": 0 },
+            "sizes": { "type": "array", "items": { "type": "integer", "minimum": 2 } },
+            "insufficient": { "type": "integer", "minimum": 0 },
+            "members": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "path", "plugin", "clusterSize", "descriptionChars"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "path": { "type": "string" },
+                  "plugin": { "type": ["string", "null"] },
+                  "clusterSize": { "type": "integer", "minimum": 2 },
+                  "descriptionChars": { "type": "integer", "minimum": 0 }
+                }
+              }
+            },
+            "pairs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["a", "b", "similarity"],
+                "properties": {
+                  "a": { "type": "string" },
+                  "b": { "type": "string" },
+                  "similarity": { "type": "number", "minimum": 0, "maximum": 1 }
+                }
+              }
+            }
+          }
+        },
+        "marginal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["naiveDelta", "shortDescriptionFraction", "top"],
+          "properties": {
+            "naiveDelta": { "type": "number" },
+            "shortDescriptionFraction": { "type": "number", "minimum": 0, "maximum": 1 },
+            "top": {
+              "type": "array",
+              "maxItems": 10,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["name", "path", "plugin", "clusterSize", "naiveDelta", "adjustedDelta"],
+                "properties": {
+                  "name": { "type": "string" },
+                  "path": { "type": "string" },
+                  "plugin": { "type": ["string", "null"] },
+                  "clusterSize": { "type": "integer", "minimum": 1 },
+                  "naiveDelta": { "type": "number" },
+                  "adjustedDelta": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "mitigation": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["rung", "name", "estimatedGain", "confidence", "basis"],
+            "properties": {
+              "rung": { "type": "integer", "minimum": 1, "maximum": 4 },
+              "name": { "type": "string" },
+              "estimatedGain": { "type": ["number", "null"] },
+              "confidence": { "enum": ["estimated", "not-simulated"] },
+              "basis": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "breakPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["theta", "nStar", "headroom"],
+      "properties": {
+        "theta": { "type": "number" },
+        "nStar": { "type": "integer", "minimum": 1 },
+        "headroom": { "type": "integer" }
+      }
+    }
+  }
+}

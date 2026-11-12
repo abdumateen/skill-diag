@@ -1,0 +1,7 @@
+{
+  "routing": {
+    "r": 0.45,
+    "p": 0.000283,
+    "source": "fixture: lowered r so a 2-skill corpus crosses the 0.50 critical line"
+  }
+}

@@ -16,8 +16,11 @@ import { runChecks } from './checks/index.js';
 import { loadContract } from './contracts/loader.js';
 import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills } from './discovery/walk.js';
+import { resolveRoutingConfig, writeDefaultConfig } from './model/config.js';
+import { analyzeRouting } from './model/routing.js';
 import { exitCodeFor, stringify, toJsonReport } from './output/json.js';
 import { renderHuman, renderWhy } from './output/human.js';
+import { renderRoutingHuman, toRoutingJson } from './output/routing.js';
 
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json') as { version: string };
@@ -33,6 +36,17 @@ interface CommonOpts {
   quiet?: boolean;
   color?: boolean;
   host?: string;
+  routingParams?: string;
+}
+
+/**
+ * Commander hands a flag declared on both the program and a subcommand to the
+ * *parent*, so a subcommand's own `opts()` silently lacks `--json`, `--home`,
+ * `-p` and friends. Merge both, child last: before this, `budget --json` printed
+ * human output and every subcommand ignored `--home`.
+ */
+function mergedOpts(cmd: Command): CommonOpts {
+  return { ...program.opts<CommonOpts>(), ...cmd.opts<CommonOpts>() };
 }
 
 function numberOrUndefined(value: string | undefined): number | undefined {
@@ -52,6 +66,7 @@ function addCommonOptions(cmd: Command): Command {
     .option('--budget <chars>', 'pin the listing budget in characters')
     .option('--quiet', 'suppress human output; exit code only')
     .option('--no-color', 'disable colour')
+    .option('--routing-params <r,p>', 'override the published survival parameters (e.g. 0.867,0.000283)')
     .option('--host <host>', 'host contract to use', 'claude-code');
 }
 
@@ -73,7 +88,8 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
       : {}),
   };
 
-  const report = runChecks(skills, { contract, ...budgetOptions, commands });
+  const routing = resolveRoutingConfig(project, { routingParams: opts.routingParams });
+  const report = runChecks(skills, { contract, ...budgetOptions, commands, routing });
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
 
@@ -138,13 +154,49 @@ program
 
 addCommonOptions(program);
 program.action(() => {
-  process.exitCode = execute(program.opts<CommonOpts>(), 'lint');
+  process.exitCode = execute(mergedOpts(program), 'lint');
 });
 
 const budgetCommand = program.command('budget').description('Show the listing budget and its biggest contributors');
 addCommonOptions(budgetCommand);
 budgetCommand.action(() => {
-  process.exitCode = execute(budgetCommand.opts<CommonOpts>(), 'budget');
+  process.exitCode = execute(mergedOpts(budgetCommand), 'budget');
+});
+
+function executeRouting(opts: CommonOpts): number {
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const skills = discoverSkills({ home, project });
+  const config = resolveRoutingConfig(project, { routingParams: opts.routingParams });
+  const report = analyzeRouting(skills, config);
+
+  if (opts.quiet) return 0;
+  if (opts.json) {
+    process.stdout.write(`${JSON.stringify(toRoutingJson(report, { version: pkg.version }), null, 2)}\n`);
+    return 0;
+  }
+  process.stdout.write(renderRoutingHuman(report, { version: pkg.version, color: opts.color !== false }));
+  return 0;
+}
+
+const routingCommand = program
+  .command('routing')
+  .description('Estimate top-1 routing health, duplicate clusters, marginal cost and mitigation');
+addCommonOptions(routingCommand);
+routingCommand.action(() => {
+  process.exitCode = executeRouting(mergedOpts(routingCommand));
+});
+
+const initCommand = program
+  .command('init')
+  .description('Write .skill-diag.json with the default routing parameters');
+initCommand.option('-p, --project <path>', 'project root to write into');
+initCommand.action(() => {
+  const dir = mergedOpts(initCommand).project ?? process.cwd();
+  const result = writeDefaultConfig(dir);
+  process.stdout.write(
+    result.created ? `wrote ${result.path}\n` : `${result.path} already exists — left unchanged\n`,
+  );
 });
 
 try {

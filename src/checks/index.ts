@@ -9,6 +9,7 @@
 import { computeBudget, resolveContextWindow } from '../budget.js';
 import type { BudgetOptions } from '../budget.js';
 import type { Contract } from '../contracts/loader.js';
+import { analyzeRouting, DEFAULT_ROUTING_CONFIG, type RoutingConfig } from '../model/routing.js';
 import type { CorpusReport, Finding, Skill } from '../types.js';
 import { TIER1_CHECKS, type Check, type CheckContext } from './tier1.js';
 import { TIER2_CHECKS } from './tier2.js';
@@ -31,6 +32,8 @@ export function sortFindings(findings: readonly Finding[]): Finding[] {
 export interface RunOptions extends BudgetOptions {
   contract: Contract;
   checks?: readonly Check[];
+  /** Routing parameters for the Phase 2b warnings; defaults are published values. */
+  routing?: RoutingConfig;
 }
 
 export function runChecks(skills: readonly Skill[], options: RunOptions): CorpusReport {
@@ -38,7 +41,8 @@ export function runChecks(skills: readonly Skill[], options: RunOptions): Corpus
   const commands = options.commands ?? [];
   const budget = computeBudget(skills, contract, options);
   const contextWindow = resolveContextWindow(contract, options);
-  const ctx: CheckContext = { skills, contract, budget, contextWindow };
+  const routing = analyzeRouting(skills, options.routing ?? DEFAULT_ROUTING_CONFIG);
+  const ctx: CheckContext = { skills, contract, budget, contextWindow, routing };
   const checks = options.checks ?? ALL_CHECKS;
   const findings: Finding[] = [];
   for (const check of checks) findings.push(...check.run(ctx));

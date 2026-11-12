@@ -16,6 +16,8 @@ export interface CheckContext {
   contract: Contract;
   budget: Budget;
   contextWindow: number;
+  /** Routing analysis (Phase 2b); absent only for checks run outside the runner. */
+  routing?: import('../model/routing.js').RoutingReport;
 }
 
 export interface Check {

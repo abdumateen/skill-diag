@@ -444,6 +444,67 @@ constant stays `0` with `calibrated: false`, and the same reason string is
 carried in JSON (`budget.overhead.reason`, `budget.limitNote`) and in human
 output, so no reader can mistake a placeholder for a measurement.
 
+### Phase 2b — routing survival model (shipped)
+
+This is the differentiator: `claude-skills-doctor` has no routing model in any
+form, and no incumbent reports what adding the 1,000th skill does to top-1.
+
+**The model.** `P_top1(N) = r · exp(−p · (N−1))`, with `r = 0.867` and
+`p = 2.83e-4`, source `curse-of-skills-2026`. The break point for a threshold θ is
+the smallest integer N whose estimate is at or below θ, computed by checking the
+boundary rather than trusting the continuous formula's rounding. Parameters,
+source and citation are printed with every estimate, in both human and JSON
+output; `.skill-diag.json` and `--routing-params r,p` override them, and an
+override changes the provenance label so a hand-supplied number is never
+reported as the published one.
+
+**Calibration.** The published point is `P_top1(2029) = 0.488`. Measured on the
+2,029-skill fixture with distinct descriptions: **0.488** — inside the ±0.05
+tolerance, so nothing is retuned.
+
+**Duplicate adjustment.** Descriptions are tokenised, shingled at width 3, and
+compared by Jaccard at 0.72; connected components become clusters; every extra
+member adds `w = 1.0` effective entries, so `N_eff = N + Σ(k_i − 1)·w`. Both
+estimates are always printed, because the gap between them is the finding.
+On the duplicate-heavy fixture (500 descriptions × 4 copies, N = 2,000) the naive
+estimate is **0.493** and the adjusted one is **0.322** (`N_eff = 3,500`) — the
+adjustment moves the answer by 0.17, well past the 0.10 bar that would have
+forced `w = 2`.
+
+**The live corpus.** N = 1,115, naive **0.633**; 77 clusters covering 177 skills
+(cross-plugin duplicates and translated copies inside `ecc`), `N_eff = 1,215`,
+adjusted **0.615**. Status OK: neither warning fires. Headroom: **187 skills** to
+the 0.60 warning line (crossing at N = 1,302, where P = 0.59996) and **831** to
+the 0.50 floor (crossing at N = 1,946, where P = 0.499998). The brief predicted
+832 for the second figure by assuming the crossing was 1,947; at these constants
+1946 is already below 0.50, so 831 is the computed answer and the test asserts
+the arithmetic rather than the round number.
+
+**Warnings.** `routing-health-at-risk` (warning, below 0.60) and
+`routing-health-critical` (error, below 0.50) are Tier 2 checks in the registry,
+mutually exclusive so one corpus cannot produce both. Golden fixtures live under
+`test/fixtures/tier2/`; because a two-skill fixture cannot reach a 1,300-skill
+threshold, those fixtures carry their own `.skill-diag.json` parameters, and the
+scale cases (1,400 and 2,000 generated skills) are exercised in
+`test/routing-warnings.test.ts`.
+
+**Marginal cost and the ladder.** The naive per-skill cost is identical for every
+skill — the model sees only N — and output says so rather than manufacturing a
+ranking; the adjusted column separates clustered skills (which cost two effective
+entries) from singletons. The ladder reports `namespace-gating` as an *estimated*
+directional gain from cross-plugin pairs, `lexical-pre-filter` as a fraction-of-
+top-10 estimate, `curated-negatives` as **not-simulated** (it needs activation
+data, Phase 4), and `duplicate-pruning` as per-cluster gains with the top three
+listed.
+
+**Cost.** Lint now computes the routing analysis on every run: 1,115 skills went
+from 3.57 s to ~4.7 s. Pair generation uses an inverted shingle index, so only
+candidate pairs that share a shingle are scored. Not gated.
+
+**Cluster display is capped** at 12 members plus a pointer to `--json`; a raw
+corpus with hundreds of clusters otherwise buries the summary it is meant to
+support.
+
 ### Phase 3 pre-requisites
 
 **Cached plugin versions are counted for commands but deduplicated for skills.**
