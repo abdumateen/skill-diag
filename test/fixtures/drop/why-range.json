@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "tool": { "name": "skill-diag", "version": "0.1.0" },
+  "skills": [
+    {
+      "skill": {
+        "name": "alpha",
+        "path": "/tmp/home/.claude/skills/alpha/SKILL.md",
+        "source": "user"
+      },
+      "findings": [],
+      "listingCost": 640,
+      "dropSimulation": {
+        "kind": "range",
+        "min": 2,
+        "max": 6,
+        "excessChars": 2000,
+        "reason": "unknown-drop-order"
+      }
+    }
+  ]
+}

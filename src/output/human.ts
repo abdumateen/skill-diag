@@ -1,11 +1,11 @@
 /**
- * Human output (spec §12.4), minus the lines Phase 1 does not implement:
- * routing health, drop simulation and runtime findings. Printing a routing
- * estimate here would imply a model that does not exist yet.
+ * Human output (spec §12.4) — Phase 1 surface plus the Phase 2c drop simulation.
+ * Routing health lives in `output/routing.ts`; runtime findings wait for v0.2.
  */
 
 import pc from 'picocolors';
-import type { CorpusReport, Finding } from '../types.js';
+import { simulateDrop, type DropBehavior } from '../model/drop.js';
+import { displayName, matchSkills, type CorpusReport, type Finding } from '../types.js';
 
 const BAR_WIDTH = 32;
 
@@ -85,15 +85,12 @@ export function renderHuman(
 export function renderWhy(
   report: CorpusReport,
   target: string,
-  opts: { color: boolean },
+  opts: { color: boolean; dropBehavior?: DropBehavior },
 ): string {
   if (!opts.color) process.env['NO_COLOR'] = '1';
-  const matches = report.skills.filter(
-    (s) =>
-      s.name === target ||
-      s.folderName === target ||
-      (s.plugin ? `${s.plugin}:${s.name ?? s.folderName}` === target : false),
-  );
+  const matches = matchSkills(report.skills, target);
+  const dropBehavior = opts.dropBehavior ?? { namesAlwaysListed: true, dropOrder: 'unknown' };
+  const simulation = simulateDrop(report.skills, report.budget, dropBehavior);
 
   if (matches.length === 0) {
     return `no skill matches ${target}\n`;
@@ -101,7 +98,9 @@ export function renderWhy(
 
   const out: string[] = [];
   for (const skill of matches) {
-    const label = skill.plugin ? `${skill.plugin}:${skill.name ?? skill.folderName}` : (skill.name ?? skill.folderName);
+    const label = skill.plugin
+      ? `${skill.plugin}:${displayName(skill)}`
+      : displayName(skill);
     out.push(`${pc.bold(label)}  ${pc.dim(skill.source)} ${skill.path}`);
 
     const findings = report.findings.filter((f) => f.skillPath === skill.path);
@@ -127,17 +126,28 @@ export function renderWhy(
     out.push(
       `  budget: ${report.budget.effectiveChars.toLocaleString('en-US')} / ${report.budget.limitChars.toLocaleString('en-US')} chars (${report.budget.percentUsed.toFixed(1)}%)`,
     );
-    // Drop simulation is Phase 2: dropOrder is `unknown` in the contract, so the
-    // only honest statement is which mechanism would cut this entry.
     const perEntryOver = desc.length + when.length - report.budget.perEntryCapChars;
     out.push(
       perEntryOver > 0
         ? `  ${pc.yellow(`description exceeds the per-entry cap by ${perEntryOver} chars — the tail never reaches the model`)}`
         : `  description fits the per-entry cap (${desc.length + when.length} / ${report.budget.perEntryCapChars})`,
     );
-    out.push(
-      pc.dim('  drop-set membership: not simulated (drop order unknown until Phase 2)'),
-    );
+
+    if (!simulation) {
+      out.push(pc.dim('  drop simulation: listing is within budget — no description is dropped'));
+    } else if (simulation.kind === 'range') {
+      out.push(
+        pc.yellow(
+          `  drop simulation: if the budget is exceeded by ${simulation.excessChars.toLocaleString('en-US')} chars, between ${simulation.min} and ${simulation.max} skill descriptions will be dropped. Exact skill cannot be predicted without calibration. Run \`calibration/manual-drop-order.sh\` with a working host to enable precise simulation.`,
+        ),
+      );
+    } else {
+      out.push(
+        pc.yellow(
+          `  drop simulation: rule ${simulation.rule} drops ${simulation.skills.length} description${simulation.skills.length === 1 ? '' : 's'}: ${simulation.skills.join(', ')}`,
+        ),
+      );
+    }
     out.push(pc.dim('  runtime activation: not available (OTEL ingest is v0.2)'));
   }
   return `${out.join('\n')}\n`;

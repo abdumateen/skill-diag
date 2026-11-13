@@ -43,8 +43,13 @@ export interface Contract {
   dropBehavior: {
     namesAlwaysListed: boolean;
     dropTarget: string;
+    /** `unknown` until a 5-trial harness observes the host's real drop order. */
     dropOrder: string;
-    dropOrderConfidence: string;
+    confidence: string;
+    calibrationMethod: string;
+    /** Result file a calibration run would write. */
+    evidence: string;
+    reason?: string;
   };
   priorityOrder: readonly string[];
 }

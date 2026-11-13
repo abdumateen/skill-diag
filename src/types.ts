@@ -50,6 +50,16 @@ export function displayName(skill: Skill): string {
   return skill.name ?? skill.folderName;
 }
 
+/** Match a `--why` target against name, folder name, or namespaced command name. */
+export function matchSkills(skills: readonly Skill[], target: string): Skill[] {
+  return skills.filter(
+    (s) =>
+      s.name === target ||
+      s.folderName === target ||
+      (s.plugin ? `${s.plugin}:${s.name ?? s.folderName}` === target : false),
+  );
+}
+
 export interface Fix {
   kind: string;
   field?: string;

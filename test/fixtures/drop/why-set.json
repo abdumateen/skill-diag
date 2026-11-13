@@ -1,0 +1,33 @@
+{
+  "version": "1",
+  "tool": { "name": "skill-diag", "version": "0.1.0" },
+  "skills": [
+    {
+      "skill": {
+        "name": "beta",
+        "path": "/tmp/home/.claude/plugins/acme/skills/beta/SKILL.md",
+        "source": "plugin",
+        "plugin": "acme"
+      },
+      "findings": [
+        {
+          "checkId": "name-invalid",
+          "tier": 1,
+          "severity": "error",
+          "skill": "beta",
+          "source": "plugin",
+          "path": "/tmp/home/.claude/plugins/acme/skills/beta/SKILL.md",
+          "message": "name does not match the directory",
+          "fix": { "kind": "rename", "field": "name", "to": "beta", "confidence": "certain" }
+        }
+      ],
+      "listingCost": 700,
+      "dropSimulation": {
+        "kind": "set",
+        "skills": ["beta", "alpha"],
+        "rule": "reverse-alphabetical",
+        "excessChars": 700
+      }
+    }
+  ]
+}

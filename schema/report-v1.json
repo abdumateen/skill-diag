@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://skill-diag.dev/schema/report-v1.json",
+  "title": "skill-diag per-skill report (--why --json)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "tool", "skills"],
+  "properties": {
+    "version": { "type": "string" },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": { "name": { "type": "string" }, "version": { "type": "string" } }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["skill", "findings", "listingCost", "dropSimulation"],
+        "properties": {
+          "skill": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "path", "source"],
+            "properties": {
+              "name": { "type": "string" },
+              "path": { "type": "string" },
+              "source": { "enum": ["user", "project", "plugin"] },
+              "plugin": { "type": "string" }
+            }
+          },
+          "findings": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
+          "listingCost": { "type": "number", "minimum": 0 },
+          "dropSimulation": {
+            "oneOf": [
+              { "type": "null" },
+              { "$ref": "#/definitions/dropRange" },
+              { "$ref": "#/definitions/dropSet" }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkId", "tier", "severity", "skill", "source", "path", "message"],
+      "properties": {
+        "checkId": { "type": "string" },
+        "tier": { "enum": [1, 2] },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "skill": { "type": "string" },
+        "source": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 },
+        "message": { "type": "string" },
+        "fix": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "confidence"],
+          "properties": {
+            "kind": { "type": "string" },
+            "field": { "type": "string" },
+            "from": { "type": "string" },
+            "to": { "type": "string" },
+            "confidence": { "enum": ["certain", "likely", "heuristic", "diagnostic"] }
+          }
+        }
+      }
+    },
+    "dropRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "min", "max", "excessChars", "reason"],
+      "properties": {
+        "kind": { "const": "range" },
+        "min": { "type": "integer", "minimum": 0 },
+        "max": { "type": "integer", "minimum": 0 },
+        "excessChars": { "type": "number" },
+        "reason": { "const": "unknown-drop-order" }
+      }
+    },
+    "dropSet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "skills", "rule", "excessChars"],
+      "properties": {
+        "kind": { "const": "set" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "rule": { "type": "string" },
+        "excessChars": { "type": "number" }
+      }
+    }
+  }
+}

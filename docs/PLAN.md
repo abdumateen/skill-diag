@@ -260,6 +260,9 @@ which do not shadow each other in the host.
 same paragraph. README, marketing, release notes, and commit messages must all
 cite both numbers or neither.
 
+**Drop simulation is a range, not a set, until the host is available for
+calibration. Do not market a specific "you will lose these skills" claim.**
+
 ### Phase 0.5 — Corpus deduplication
 
 Measured on `~/.claude/plugins` and `~/.claude/skills`:
@@ -528,6 +531,47 @@ candidate pairs that share a shingle are scored. Not gated.
 **Cluster display is capped** at 12 members plus a pointer to `--json`; a raw
 corpus with hundreds of clusters otherwise buries the summary it is meant to
 support.
+
+### Phase 2c — drop-order calibration attempt (shipped: unknown)
+
+**What was asked.** Discover the host's real drop order so `--why` could name
+the exact skills an over-budget listing loses: 40 synthetic skills, a pinned
+`SLASH_COMMAND_TOOL_CHAR_BUDGET=10000` that forces 20 drops, and 5 trials with
+shuffled install order compared against four candidate rules.
+
+**What happened.** The host is unusable, exactly as in 2a: `claude -p` exits 1
+with `Not logged in · Please run /login`, and the configured model reports
+`[claude-code:unrecognized_model]`. All 5 trials failed on exit code 1 with zero
+observations, so no rule could be fitted. `calibration/drop-order-result.json`
+records `hostAvailable: false`, `winner: null`, `confidence: "none"`, and the
+verbatim failure in `observedFailure`. The contract says the same thing:
+`dropOrder: "unknown"`, `calibrationMethod: "unverified"`, with a `reason`
+pointing at `calibrationUnavailableReason`.
+
+**Harness arithmetic.** 40 skills × (64-char name + 372-char description) =
+17,440 chars against a 10,000-char budget: excess 7,440 = exactly 20 × 372, so
+exactly 20 descriptions must drop. Names sit at the contract's 64-char maximum
+and each folder equals its frontmatter name, because `nameMustMatchDirectory`
+is true. The brief's 200-char descriptions were arithmetically impossible:
+40 × 200 = 8,000 is *below* the 10,000 budget, so nothing would drop.
+
+**Escape hatch.** `calibration/manual-drop-order.sh` performs the same
+experiment from a working host and prints the result JSON; redirect it to
+`calibration/drop-order-result.json`, then set the contract's `dropOrder` from
+that evidence rather than guesswork.
+
+**Simulation ships as a range.** `--why <skill>` cannot name a set without a
+verified order, so it reports the honest bracket `[floor(excess / max
+description), ceil(excess / min description)]`, clamped to the entries that can
+free chars at all. When a rule *is* calibrated the output names the exact set
+with the rule that produced it. Both shapes are schema-backed
+(`schema/report-v1.json`; `dropSimulation` is `null`, `range`, or `set`), and
+`--why <skill> --json` emits them for CI.
+
+**v0.1 marketing constraint.** Drop simulation cannot be a headline. The v0.1
+headline is the routing survival model, plugin-skill coverage, and honest budget
+labels; a specific "you will lose these skills" claim needs a calibrated host
+and stays "coming when you have a working host", not a promise.
 
 ## Bugs discovered during Phase 2
 

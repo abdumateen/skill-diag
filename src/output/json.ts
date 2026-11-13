@@ -8,7 +8,9 @@
  * uncalibrated rather than silently zero).
  */
 
-import type { CorpusReport, Finding } from '../types.js';
+import type { DropBehavior, DropSimulation } from '../model/drop.js';
+import { simulateDrop } from '../model/drop.js';
+import { displayName, matchSkills, type CorpusReport, type Finding } from '../types.js';
 
 export const REPORT_VERSION = '1';
 
@@ -106,21 +108,73 @@ export function toJsonReport(
       commandCount: report.commands.length,
       overhead: report.budget.overhead,
     },
-    findings: report.findings.map((f) => ({
-      checkId: f.checkId,
-      tier: f.tier,
-      severity: f.severity,
-      skill: f.skillName,
-      source: f.skillSource,
-      path: f.skillPath,
-      ...(f.line !== undefined ? { line: f.line } : {}),
-      ...(f.column !== undefined ? { column: f.column } : {}),
-      message: f.message,
-      ...(f.fix ? { fix: f.fix } : {}),
-    })),
+    findings: report.findings.map(toJsonFinding),
   };
 }
 
-export function stringify(json: JsonReport): string {
+function toJsonFinding(f: Finding): JsonFinding {
+  return {
+    checkId: f.checkId,
+    tier: f.tier,
+    severity: f.severity,
+    skill: f.skillName,
+    source: f.skillSource,
+    path: f.skillPath,
+    ...(f.line !== undefined ? { line: f.line } : {}),
+    ...(f.column !== undefined ? { column: f.column } : {}),
+    message: f.message,
+    ...(f.fix ? { fix: f.fix } : {}),
+  };
+}
+
+export interface JsonWhySkill {
+  skill: { name: string; path: string; source: string; plugin?: string };
+  findings: JsonFinding[];
+  listingCost: number;
+  dropSimulation: DropSimulation | null;
+}
+
+export interface JsonWhyReport {
+  version: string;
+  tool: { name: string; version: string };
+  skills: JsonWhySkill[];
+}
+
+/** `--why <skill> --json` (schema/report-v1.json). */
+export function toWhyJson(
+  report: CorpusReport,
+  target: string,
+  opts: { version: string; dropBehavior: DropBehavior },
+): JsonWhyReport {
+  const dropSimulation = simulateDrop(report.skills, report.budget, opts.dropBehavior);
+  return {
+    version: REPORT_VERSION,
+    tool: { name: 'skill-diag', version: opts.version },
+    skills: matchSkills(report.skills, target).map((skill) => {
+      const name = displayName(skill);
+      const desc =
+        typeof skill.frontmatter['description'] === 'string'
+          ? skill.frontmatter['description']
+          : '';
+      const when =
+        typeof skill.frontmatter['when_to_use'] === 'string'
+          ? skill.frontmatter['when_to_use']
+          : '';
+      return {
+        skill: {
+          name,
+          path: skill.path,
+          source: skill.source,
+          ...(skill.plugin ? { plugin: skill.plugin } : {}),
+        },
+        findings: report.findings.filter((f) => f.skillPath === skill.path).map(toJsonFinding),
+        listingCost: name.length + Math.min(desc.length + when.length, report.budget.perEntryCapChars),
+        dropSimulation,
+      };
+    }),
+  };
+}
+
+export function stringify(json: unknown): string {
   return `${JSON.stringify(json, null, 2)}\n`;
 }

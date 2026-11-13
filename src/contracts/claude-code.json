@@ -65,7 +65,10 @@
     "namesAlwaysListed": true,
     "dropTarget": "descriptions",
     "dropOrder": "unknown",
-    "dropOrderConfidence": "experimental"
+    "confidence": "none",
+    "calibrationMethod": "unverified",
+    "evidence": "calibration/drop-order-result.json",
+    "reason": "host unusable — see calibrationUnavailableReason"
   },
   "priorityOrder": ["enterprise", "personal", "project", "plugin"]
 }

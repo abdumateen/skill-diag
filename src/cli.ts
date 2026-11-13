@@ -18,7 +18,7 @@ import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills } from './discovery/walk.js';
 import { resolveRoutingConfig, writeDefaultConfig } from './model/config.js';
 import { analyzeRouting } from './model/routing.js';
-import { exitCodeFor, stringify, toJsonReport } from './output/json.js';
+import { exitCodeFor, stringify, toJsonReport, toWhyJson } from './output/json.js';
 import { renderHuman, renderWhy } from './output/human.js';
 import { renderRoutingHuman, toRoutingJson } from './output/routing.js';
 
@@ -129,7 +129,16 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   }
 
   if (opts.why) {
-    process.stdout.write(renderWhy(report, opts.why, { color: opts.color !== false }));
+    const dropBehavior = contract.dropBehavior;
+    if (opts.json) {
+      process.stdout.write(
+        stringify(toWhyJson(report, opts.why, { version: pkg.version, dropBehavior })),
+      );
+      return exitCode;
+    }
+    process.stdout.write(
+      renderWhy(report, opts.why, { color: opts.color !== false, dropBehavior }),
+    );
     return exitCode;
   }
 
