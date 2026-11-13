@@ -1,13 +1,28 @@
 node_modules/
+package-lock.json
 dist/
+build/
 coverage/
 *.tsbuildinfo
-package-lock.json
-
-# tool runtime state
-.skill-diag/
+*.log
 *.sarif
-
-# os
+.env
+.env.*
+.env.local
+.skill-diag/
+.skill-diag.json
 .DS_Store
 Thumbs.db
+*.swp
+*.tmp
+tmp/
+temp/
+.cache/
+.vscode/settings.local.json
+.idea/
+*.pid
+*.seed
+.nyc_output/
+.calibration/
+calibration/drop-order-result.local.json
+calibration/overhead-result.local.json

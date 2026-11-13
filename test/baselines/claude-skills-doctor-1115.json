@@ -29,7 +29,7 @@
       "severity": "error",
       "target": "accessibility",
       "message": "3 skills share `name: accessibility` (plugin:accessibility, plugin:accessibility, plugin:accessibility)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\accessibility\\skills\\accessibility\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\accessibility\\skills\\accessibility\\SKILL.md",
       "suggestion": null
     },
     {
@@ -37,7 +37,7 @@
       "severity": "error",
       "target": "agent-architecture-audit",
       "message": "2 skills share `name: agent-architecture-audit` (plugin:agent-architecture-audit, plugin:agent-architecture-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-architecture-audit\\skills\\agent-architecture-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-architecture-audit\\skills\\agent-architecture-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -45,7 +45,7 @@
       "severity": "error",
       "target": "agent-eval",
       "message": "3 skills share `name: agent-eval` (plugin:agent-eval, plugin:agent-eval, plugin:agent-eval)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-eval\\skills\\agent-eval\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-eval\\skills\\agent-eval\\SKILL.md",
       "suggestion": null
     },
     {
@@ -53,7 +53,7 @@
       "severity": "error",
       "target": "agent-harness-construction",
       "message": "3 skills share `name: agent-harness-construction` (plugin:agent-harness-construction, plugin:agent-harness-construction, plugin:agent-harness-construction)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-harness-construction\\skills\\agent-harness-construction\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-harness-construction\\skills\\agent-harness-construction\\SKILL.md",
       "suggestion": null
     },
     {
@@ -61,7 +61,7 @@
       "severity": "error",
       "target": "agent-introspection-debugging",
       "message": "4 skills share `name: agent-introspection-debugging` (plugin:agent-introspection-debugging, plugin:agent-introspection-debugging, plugin:agent-introspection-debugging, plugin:agent-introspection-debugging)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\agent-introspection-debugging\\skills\\agent-introspection-debugging\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\agent-introspection-debugging\\skills\\agent-introspection-debugging\\SKILL.md",
       "suggestion": null
     },
     {
@@ -69,7 +69,7 @@
       "severity": "error",
       "target": "agent-payment-x402",
       "message": "3 skills share `name: agent-payment-x402` (plugin:agent-payment-x402, plugin:agent-payment-x402, plugin:agent-payment-x402)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-payment-x402\\skills\\agent-payment-x402\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agent-payment-x402\\skills\\agent-payment-x402\\SKILL.md",
       "suggestion": null
     },
     {
@@ -77,7 +77,7 @@
       "severity": "error",
       "target": "agent-sort",
       "message": "4 skills share `name: agent-sort` (plugin:agent-sort, plugin:agent-sort, plugin:agent-sort, plugin:agent-sort)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\agent-sort\\skills\\agent-sort\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\agent-sort\\skills\\agent-sort\\SKILL.md",
       "suggestion": null
     },
     {
@@ -85,7 +85,7 @@
       "severity": "error",
       "target": "agentic-engineering",
       "message": "4 skills share `name: agentic-engineering` (plugin:agentic-engineering, plugin:agentic-engineering, plugin:agentic-engineering, plugin:agentic-engineering)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\agentic-engineering\\skills\\agentic-engineering\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\agentic-engineering\\skills\\agentic-engineering\\SKILL.md",
       "suggestion": null
     },
     {
@@ -93,7 +93,7 @@
       "severity": "error",
       "target": "agentic-os",
       "message": "2 skills share `name: agentic-os` (plugin:agentic-os, plugin:agentic-os)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agentic-os\\skills\\agentic-os\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\agentic-os\\skills\\agentic-os\\SKILL.md",
       "suggestion": null
     },
     {
@@ -101,7 +101,7 @@
       "severity": "error",
       "target": "ai-first-engineering",
       "message": "3 skills share `name: ai-first-engineering` (plugin:ai-first-engineering, plugin:ai-first-engineering, plugin:ai-first-engineering)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ai-first-engineering\\skills\\ai-first-engineering\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ai-first-engineering\\skills\\ai-first-engineering\\SKILL.md",
       "suggestion": null
     },
     {
@@ -109,7 +109,7 @@
       "severity": "error",
       "target": "ai-regression-testing",
       "message": "3 skills share `name: ai-regression-testing` (plugin:ai-regression-testing, plugin:ai-regression-testing, plugin:ai-regression-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ai-regression-testing\\skills\\ai-regression-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ai-regression-testing\\skills\\ai-regression-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -117,7 +117,7 @@
       "severity": "error",
       "target": "android-clean-architecture",
       "message": "3 skills share `name: android-clean-architecture` (plugin:android-clean-architecture, plugin:android-clean-architecture, plugin:android-clean-architecture)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\android-clean-architecture\\skills\\android-clean-architecture\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\android-clean-architecture\\skills\\android-clean-architecture\\SKILL.md",
       "suggestion": null
     },
     {
@@ -125,7 +125,7 @@
       "severity": "error",
       "target": "angular-developer",
       "message": "2 skills share `name: angular-developer` (plugin:angular-developer, plugin:angular-developer)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\angular-developer\\skills\\angular-developer\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\angular-developer\\skills\\angular-developer\\SKILL.md",
       "suggestion": null
     },
     {
@@ -133,7 +133,7 @@
       "severity": "error",
       "target": "api-connector-builder",
       "message": "3 skills share `name: api-connector-builder` (plugin:api-connector-builder, plugin:api-connector-builder, plugin:api-connector-builder)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\api-connector-builder\\skills\\api-connector-builder\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\api-connector-builder\\skills\\api-connector-builder\\SKILL.md",
       "suggestion": null
     },
     {
@@ -141,7 +141,7 @@
       "severity": "error",
       "target": "api-design",
       "message": "7 skills share `name: api-design` (plugin:api-design, plugin:api-design, plugin:api-design, plugin:api-design, plugin:api-design, plugin:api-design, plugin:api-design)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\api-design\\skills\\api-design\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\api-design\\skills\\api-design\\SKILL.md",
       "suggestion": null
     },
     {
@@ -149,7 +149,7 @@
       "severity": "error",
       "target": "architecture-decision-records",
       "message": "3 skills share `name: architecture-decision-records` (plugin:architecture-decision-records, plugin:architecture-decision-records, plugin:architecture-decision-records)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\architecture-decision-records\\skills\\architecture-decision-records\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\architecture-decision-records\\skills\\architecture-decision-records\\SKILL.md",
       "suggestion": null
     },
     {
@@ -157,7 +157,7 @@
       "severity": "error",
       "target": "article-writing",
       "message": "5 skills share `name: article-writing` (plugin:article-writing, plugin:article-writing, plugin:article-writing, plugin:article-writing, plugin:article-writing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\article-writing\\skills\\article-writing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\article-writing\\skills\\article-writing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -165,7 +165,7 @@
       "severity": "error",
       "target": "automation-audit-ops",
       "message": "3 skills share `name: automation-audit-ops` (plugin:automation-audit-ops, plugin:automation-audit-ops, plugin:automation-audit-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\automation-audit-ops\\skills\\automation-audit-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\automation-audit-ops\\skills\\automation-audit-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -173,7 +173,7 @@
       "severity": "error",
       "target": "autonomous-agent-harness",
       "message": "3 skills share `name: autonomous-agent-harness` (plugin:autonomous-agent-harness, plugin:autonomous-agent-harness, plugin:autonomous-agent-harness)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\autonomous-agent-harness\\skills\\autonomous-agent-harness\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\autonomous-agent-harness\\skills\\autonomous-agent-harness\\SKILL.md",
       "suggestion": null
     },
     {
@@ -181,7 +181,7 @@
       "severity": "error",
       "target": "autonomous-loops",
       "message": "4 skills share `name: autonomous-loops` (plugin:autonomous-loops, plugin:autonomous-loops, plugin:autonomous-loops, plugin:autonomous-loops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\autonomous-loops\\skills\\autonomous-loops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\autonomous-loops\\skills\\autonomous-loops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -189,7 +189,7 @@
       "severity": "error",
       "target": "backend-patterns",
       "message": "9 skills share `name: backend-patterns` (plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns, plugin:backend-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\backend-patterns\\skills\\backend-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\backend-patterns\\skills\\backend-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -197,7 +197,7 @@
       "severity": "error",
       "target": "banner-design",
       "message": "2 skills share `name: banner-design` (plugin:banner-design, plugin:banner-design)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\banner-design\\skills\\banner-design\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\banner-design\\skills\\banner-design\\SKILL.md",
       "suggestion": null
     },
     {
@@ -205,7 +205,7 @@
       "severity": "error",
       "target": "benchmark",
       "message": "3 skills share `name: benchmark` (plugin:benchmark, plugin:benchmark, plugin:benchmark)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\benchmark\\skills\\benchmark\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\benchmark\\skills\\benchmark\\SKILL.md",
       "suggestion": null
     },
     {
@@ -213,7 +213,7 @@
       "severity": "error",
       "target": "benchmark-methodology",
       "message": "2 skills share `name: benchmark-methodology` (plugin:benchmark-methodology, plugin:benchmark-methodology)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\benchmark-methodology\\skills\\benchmark-methodology\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\benchmark-methodology\\skills\\benchmark-methodology\\SKILL.md",
       "suggestion": null
     },
     {
@@ -221,7 +221,7 @@
       "severity": "error",
       "target": "blueprint",
       "message": "3 skills share `name: blueprint` (plugin:blueprint, plugin:blueprint, plugin:blueprint)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\blueprint\\skills\\blueprint\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\blueprint\\skills\\blueprint\\SKILL.md",
       "suggestion": null
     },
     {
@@ -229,7 +229,7 @@
       "severity": "error",
       "target": "brand",
       "message": "2 skills share `name: brand` (plugin:brand, plugin:brand)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\brand\\skills\\brand\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\brand\\skills\\brand\\SKILL.md",
       "suggestion": null
     },
     {
@@ -237,7 +237,7 @@
       "severity": "error",
       "target": "brand-discovery",
       "message": "2 skills share `name: brand-discovery` (plugin:brand-discovery, plugin:brand-discovery)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\brand-discovery\\skills\\brand-discovery\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\brand-discovery\\skills\\brand-discovery\\SKILL.md",
       "suggestion": null
     },
     {
@@ -245,7 +245,7 @@
       "severity": "error",
       "target": "brand-voice",
       "message": "4 skills share `name: brand-voice` (plugin:brand-voice, plugin:brand-voice, plugin:brand-voice, plugin:brand-voice)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\brand-voice\\skills\\brand-voice\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\brand-voice\\skills\\brand-voice\\SKILL.md",
       "suggestion": null
     },
     {
@@ -253,7 +253,7 @@
       "severity": "error",
       "target": "browser-qa",
       "message": "3 skills share `name: browser-qa` (plugin:browser-qa, plugin:browser-qa, plugin:browser-qa)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\browser-qa\\skills\\browser-qa\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\browser-qa\\skills\\browser-qa\\SKILL.md",
       "suggestion": null
     },
     {
@@ -261,7 +261,7 @@
       "severity": "error",
       "target": "bun-runtime",
       "message": "5 skills share `name: bun-runtime` (plugin:bun-runtime, plugin:bun-runtime, plugin:bun-runtime, plugin:bun-runtime, plugin:bun-runtime)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\bun-runtime\\skills\\bun-runtime\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\bun-runtime\\skills\\bun-runtime\\SKILL.md",
       "suggestion": null
     },
     {
@@ -269,7 +269,7 @@
       "severity": "error",
       "target": "canary-watch",
       "message": "3 skills share `name: canary-watch` (plugin:canary-watch, plugin:canary-watch, plugin:canary-watch)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\canary-watch\\skills\\canary-watch\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\canary-watch\\skills\\canary-watch\\SKILL.md",
       "suggestion": null
     },
     {
@@ -277,7 +277,7 @@
       "severity": "error",
       "target": "carrier-relationship-management",
       "message": "3 skills share `name: carrier-relationship-management` (plugin:carrier-relationship-management, plugin:carrier-relationship-management, plugin:carrier-relationship-management)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\carrier-relationship-management\\skills\\carrier-relationship-management\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\carrier-relationship-management\\skills\\carrier-relationship-management\\SKILL.md",
       "suggestion": null
     },
     {
@@ -285,7 +285,7 @@
       "severity": "error",
       "target": "cavecrew",
       "message": "2 skills share `name: cavecrew` (plugin:cavecrew, plugin:cavecrew)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\cavecrew\\skills\\cavecrew\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\cavecrew\\skills\\cavecrew\\SKILL.md",
       "suggestion": null
     },
     {
@@ -293,7 +293,7 @@
       "severity": "error",
       "target": "caveman",
       "message": "2 skills share `name: caveman` (plugin:caveman, plugin:caveman)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman\\skills\\caveman\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman\\skills\\caveman\\SKILL.md",
       "suggestion": null
     },
     {
@@ -301,7 +301,7 @@
       "severity": "error",
       "target": "caveman-compress",
       "message": "2 skills share `name: caveman-compress` (plugin:caveman-compress, plugin:caveman-compress)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman-compress\\skills\\caveman-compress\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman-compress\\skills\\caveman-compress\\SKILL.md",
       "suggestion": null
     },
     {
@@ -309,7 +309,7 @@
       "severity": "error",
       "target": "caveman-stats",
       "message": "2 skills share `name: caveman-stats` (plugin:caveman-stats, plugin:caveman-stats)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman-stats\\skills\\caveman-stats\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\caveman__caveman\\plugins\\caveman\\skills\\caveman-stats\\skills\\caveman-stats\\SKILL.md",
       "suggestion": null
     },
     {
@@ -317,7 +317,7 @@
       "severity": "error",
       "target": "cisco-ios-patterns",
       "message": "2 skills share `name: cisco-ios-patterns` (plugin:cisco-ios-patterns, plugin:cisco-ios-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cisco-ios-patterns\\skills\\cisco-ios-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cisco-ios-patterns\\skills\\cisco-ios-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -325,7 +325,7 @@
       "severity": "error",
       "target": "ck",
       "message": "3 skills share `name: ck` (plugin:ck, plugin:ck, plugin:ck)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ck\\skills\\ck\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ck\\skills\\ck\\SKILL.md",
       "suggestion": null
     },
     {
@@ -333,7 +333,7 @@
       "severity": "error",
       "target": "claude-devfleet",
       "message": "3 skills share `name: claude-devfleet` (plugin:claude-devfleet, plugin:claude-devfleet, plugin:claude-devfleet)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\claude-devfleet\\skills\\claude-devfleet\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\claude-devfleet\\skills\\claude-devfleet\\SKILL.md",
       "suggestion": null
     },
     {
@@ -341,7 +341,7 @@
       "severity": "error",
       "target": "click-path-audit",
       "message": "3 skills share `name: click-path-audit` (plugin:click-path-audit, plugin:click-path-audit, plugin:click-path-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\click-path-audit\\skills\\click-path-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\click-path-audit\\skills\\click-path-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -349,7 +349,7 @@
       "severity": "error",
       "target": "clickhouse-io",
       "message": "5 skills share `name: clickhouse-io` (plugin:clickhouse-io, plugin:clickhouse-io, plugin:clickhouse-io, plugin:clickhouse-io, plugin:clickhouse-io)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\clickhouse-io\\skills\\clickhouse-io\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\clickhouse-io\\skills\\clickhouse-io\\SKILL.md",
       "suggestion": null
     },
     {
@@ -357,7 +357,7 @@
       "severity": "error",
       "target": "code-tour",
       "message": "3 skills share `name: code-tour` (plugin:code-tour, plugin:code-tour, plugin:code-tour)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\code-tour\\skills\\code-tour\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\code-tour\\skills\\code-tour\\SKILL.md",
       "suggestion": null
     },
     {
@@ -365,7 +365,7 @@
       "severity": "error",
       "target": "codebase-onboarding",
       "message": "3 skills share `name: codebase-onboarding` (plugin:codebase-onboarding, plugin:codebase-onboarding, plugin:codebase-onboarding)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\codebase-onboarding\\skills\\codebase-onboarding\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\codebase-onboarding\\skills\\codebase-onboarding\\SKILL.md",
       "suggestion": null
     },
     {
@@ -373,7 +373,7 @@
       "severity": "error",
       "target": "coding-standards",
       "message": "9 skills share `name: coding-standards` (plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards, plugin:coding-standards)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\coding-standards\\skills\\coding-standards\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\coding-standards\\skills\\coding-standards\\SKILL.md",
       "suggestion": null
     },
     {
@@ -381,7 +381,7 @@
       "severity": "error",
       "target": "competitive-platform-analysis",
       "message": "2 skills share `name: competitive-platform-analysis` (plugin:competitive-platform-analysis, plugin:competitive-platform-analysis)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\competitive-platform-analysis\\skills\\competitive-platform-analysis\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\competitive-platform-analysis\\skills\\competitive-platform-analysis\\SKILL.md",
       "suggestion": null
     },
     {
@@ -389,7 +389,7 @@
       "severity": "error",
       "target": "competitive-report-structure",
       "message": "2 skills share `name: competitive-report-structure` (plugin:competitive-report-structure, plugin:competitive-report-structure)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\competitive-report-structure\\skills\\competitive-report-structure\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\competitive-report-structure\\skills\\competitive-report-structure\\SKILL.md",
       "suggestion": null
     },
     {
@@ -397,7 +397,7 @@
       "severity": "error",
       "target": "compose-multiplatform-patterns",
       "message": "3 skills share `name: compose-multiplatform-patterns` (plugin:compose-multiplatform-patterns, plugin:compose-multiplatform-patterns, plugin:compose-multiplatform-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\compose-multiplatform-patterns\\skills\\compose-multiplatform-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\compose-multiplatform-patterns\\skills\\compose-multiplatform-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -405,7 +405,7 @@
       "severity": "error",
       "target": "configure-ecc",
       "message": "3 skills share `name: configure-ecc` (plugin:configure-ecc, plugin:configure-ecc, plugin:configure-ecc)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\configure-ecc\\skills\\configure-ecc\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\configure-ecc\\skills\\configure-ecc\\SKILL.md",
       "suggestion": null
     },
     {
@@ -413,7 +413,7 @@
       "severity": "error",
       "target": "connections-optimizer",
       "message": "3 skills share `name: connections-optimizer` (plugin:connections-optimizer, plugin:connections-optimizer, plugin:connections-optimizer)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\connections-optimizer\\skills\\connections-optimizer\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\connections-optimizer\\skills\\connections-optimizer\\SKILL.md",
       "suggestion": null
     },
     {
@@ -421,7 +421,7 @@
       "severity": "error",
       "target": "content-engine",
       "message": "5 skills share `name: content-engine` (plugin:content-engine, plugin:content-engine, plugin:content-engine, plugin:content-engine, plugin:content-engine)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\content-engine\\skills\\content-engine\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\content-engine\\skills\\content-engine\\SKILL.md",
       "suggestion": null
     },
     {
@@ -429,7 +429,7 @@
       "severity": "error",
       "target": "content-hash-cache-pattern",
       "message": "4 skills share `name: content-hash-cache-pattern` (plugin:content-hash-cache-pattern, plugin:content-hash-cache-pattern, plugin:content-hash-cache-pattern, plugin:content-hash-cache-pattern)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\content-hash-cache-pattern\\skills\\content-hash-cache-pattern\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\content-hash-cache-pattern\\skills\\content-hash-cache-pattern\\SKILL.md",
       "suggestion": null
     },
     {
@@ -437,7 +437,7 @@
       "severity": "error",
       "target": "context-budget",
       "message": "3 skills share `name: context-budget` (plugin:context-budget, plugin:context-budget, plugin:context-budget)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\context-budget\\skills\\context-budget\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\context-budget\\skills\\context-budget\\SKILL.md",
       "suggestion": null
     },
     {
@@ -445,7 +445,7 @@
       "severity": "error",
       "target": "context-mode",
       "message": "3 skills share `name: context-mode` (plugin:context-mode, plugin:context-mode, plugin:context-mode)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\context-mode__context-mode\\configs\\antigravity-cli\\skills\\context-mode\\skills\\context-mode\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\context-mode__context-mode\\configs\\antigravity-cli\\skills\\context-mode\\skills\\context-mode\\SKILL.md",
       "suggestion": null
     },
     {
@@ -453,7 +453,7 @@
       "severity": "error",
       "target": "continuous-agent-loop",
       "message": "3 skills share `name: continuous-agent-loop` (plugin:continuous-agent-loop, plugin:continuous-agent-loop, plugin:continuous-agent-loop)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\continuous-agent-loop\\skills\\continuous-agent-loop\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\continuous-agent-loop\\skills\\continuous-agent-loop\\SKILL.md",
       "suggestion": null
     },
     {
@@ -461,7 +461,7 @@
       "severity": "error",
       "target": "continuous-learning",
       "message": "7 skills share `name: continuous-learning` (plugin:continuous-learning, plugin:continuous-learning, plugin:continuous-learning, plugin:continuous-learning, plugin:continuous-learning, plugin:continuous-learning, plugin:continuous-learning)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\continuous-learning\\skills\\continuous-learning\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\continuous-learning\\skills\\continuous-learning\\SKILL.md",
       "suggestion": null
     },
     {
@@ -469,7 +469,7 @@
       "severity": "error",
       "target": "continuous-learning-v2",
       "message": "7 skills share `name: continuous-learning-v2` (plugin:continuous-learning-v2, plugin:continuous-learning-v2, plugin:continuous-learning-v2, plugin:continuous-learning-v2, plugin:continuous-learning-v2, plugin:continuous-learning-v2, plugin:continuous-learning-v2)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\continuous-learning-v2\\skills\\continuous-learning-v2\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\continuous-learning-v2\\skills\\continuous-learning-v2\\SKILL.md",
       "suggestion": null
     },
     {
@@ -477,7 +477,7 @@
       "severity": "error",
       "target": "cost-aware-llm-pipeline",
       "message": "3 skills share `name: cost-aware-llm-pipeline` (plugin:cost-aware-llm-pipeline, plugin:cost-aware-llm-pipeline, plugin:cost-aware-llm-pipeline)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cost-aware-llm-pipeline\\skills\\cost-aware-llm-pipeline\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cost-aware-llm-pipeline\\skills\\cost-aware-llm-pipeline\\SKILL.md",
       "suggestion": null
     },
     {
@@ -485,7 +485,7 @@
       "severity": "error",
       "target": "cost-tracking",
       "message": "2 skills share `name: cost-tracking` (plugin:cost-tracking, plugin:cost-tracking)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cost-tracking\\skills\\cost-tracking\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\cost-tracking\\skills\\cost-tracking\\SKILL.md",
       "suggestion": null
     },
     {
@@ -493,7 +493,7 @@
       "severity": "error",
       "target": "council",
       "message": "3 skills share `name: council` (plugin:council, plugin:council, plugin:council)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\council\\skills\\council\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\council\\skills\\council\\SKILL.md",
       "suggestion": null
     },
     {
@@ -501,7 +501,7 @@
       "severity": "error",
       "target": "cpp-coding-standards",
       "message": "4 skills share `name: cpp-coding-standards` (plugin:cpp-coding-standards, plugin:cpp-coding-standards, plugin:cpp-coding-standards, plugin:cpp-coding-standards)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\cpp-coding-standards\\skills\\cpp-coding-standards\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\cpp-coding-standards\\skills\\cpp-coding-standards\\SKILL.md",
       "suggestion": null
     },
     {
@@ -509,7 +509,7 @@
       "severity": "error",
       "target": "cpp-testing",
       "message": "4 skills share `name: cpp-testing` (plugin:cpp-testing, plugin:cpp-testing, plugin:cpp-testing, plugin:cpp-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\cpp-testing\\skills\\cpp-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\cpp-testing\\skills\\cpp-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -517,7 +517,7 @@
       "severity": "error",
       "target": "crosspost",
       "message": "4 skills share `name: crosspost` (plugin:crosspost, plugin:crosspost, plugin:crosspost, plugin:crosspost)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\crosspost\\skills\\crosspost\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\crosspost\\skills\\crosspost\\SKILL.md",
       "suggestion": null
     },
     {
@@ -525,7 +525,7 @@
       "severity": "error",
       "target": "csharp-testing",
       "message": "3 skills share `name: csharp-testing` (plugin:csharp-testing, plugin:csharp-testing, plugin:csharp-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\csharp-testing\\skills\\csharp-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\csharp-testing\\skills\\csharp-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -533,7 +533,7 @@
       "severity": "error",
       "target": "customer-billing-ops",
       "message": "3 skills share `name: customer-billing-ops` (plugin:customer-billing-ops, plugin:customer-billing-ops, plugin:customer-billing-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\customer-billing-ops\\skills\\customer-billing-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\customer-billing-ops\\skills\\customer-billing-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -541,7 +541,7 @@
       "severity": "error",
       "target": "customs-trade-compliance",
       "message": "3 skills share `name: customs-trade-compliance` (plugin:customs-trade-compliance, plugin:customs-trade-compliance, plugin:customs-trade-compliance)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\customs-trade-compliance\\skills\\customs-trade-compliance\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\customs-trade-compliance\\skills\\customs-trade-compliance\\SKILL.md",
       "suggestion": null
     },
     {
@@ -549,7 +549,7 @@
       "severity": "error",
       "target": "dart-flutter-patterns",
       "message": "3 skills share `name: dart-flutter-patterns` (plugin:dart-flutter-patterns, plugin:dart-flutter-patterns, plugin:dart-flutter-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dart-flutter-patterns\\skills\\dart-flutter-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dart-flutter-patterns\\skills\\dart-flutter-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -557,7 +557,7 @@
       "severity": "error",
       "target": "dashboard-builder",
       "message": "3 skills share `name: dashboard-builder` (plugin:dashboard-builder, plugin:dashboard-builder, plugin:dashboard-builder)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dashboard-builder\\skills\\dashboard-builder\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dashboard-builder\\skills\\dashboard-builder\\SKILL.md",
       "suggestion": null
     },
     {
@@ -565,7 +565,7 @@
       "severity": "error",
       "target": "data-scraper-agent",
       "message": "3 skills share `name: data-scraper-agent` (plugin:data-scraper-agent, plugin:data-scraper-agent, plugin:data-scraper-agent)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\data-scraper-agent\\skills\\data-scraper-agent\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\data-scraper-agent\\skills\\data-scraper-agent\\SKILL.md",
       "suggestion": null
     },
     {
@@ -573,7 +573,7 @@
       "severity": "error",
       "target": "database-migrations",
       "message": "6 skills share `name: database-migrations` (plugin:database-migrations, plugin:database-migrations, plugin:database-migrations, plugin:database-migrations, plugin:database-migrations, plugin:database-migrations)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\database-migrations\\skills\\database-migrations\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\database-migrations\\skills\\database-migrations\\SKILL.md",
       "suggestion": null
     },
     {
@@ -581,7 +581,7 @@
       "severity": "error",
       "target": "deep-research",
       "message": "5 skills share `name: deep-research` (plugin:deep-research, plugin:deep-research, plugin:deep-research, plugin:deep-research, plugin:deep-research)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\deep-research\\skills\\deep-research\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\deep-research\\skills\\deep-research\\SKILL.md",
       "suggestion": null
     },
     {
@@ -589,7 +589,7 @@
       "severity": "error",
       "target": "defi-amm-security",
       "message": "3 skills share `name: defi-amm-security` (plugin:defi-amm-security, plugin:defi-amm-security, plugin:defi-amm-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\defi-amm-security\\skills\\defi-amm-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\defi-amm-security\\skills\\defi-amm-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -597,7 +597,7 @@
       "severity": "error",
       "target": "deployment-patterns",
       "message": "6 skills share `name: deployment-patterns` (plugin:deployment-patterns, plugin:deployment-patterns, plugin:deployment-patterns, plugin:deployment-patterns, plugin:deployment-patterns, plugin:deployment-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\deployment-patterns\\skills\\deployment-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\deployment-patterns\\skills\\deployment-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -605,7 +605,7 @@
       "severity": "error",
       "target": "design",
       "message": "2 skills share `name: design` (plugin:design, plugin:design)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\design\\skills\\design\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\design\\skills\\design\\SKILL.md",
       "suggestion": null
     },
     {
@@ -613,7 +613,7 @@
       "severity": "error",
       "target": "design-system",
       "message": "5 skills share `name: design-system` (plugin:design-system, plugin:design-system, plugin:design-system, plugin:design-system, plugin:design-system)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\design-system\\skills\\design-system\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\design-system\\skills\\design-system\\SKILL.md",
       "suggestion": null
     },
     {
@@ -621,7 +621,7 @@
       "severity": "error",
       "target": "django-celery",
       "message": "2 skills share `name: django-celery` (plugin:django-celery, plugin:django-celery)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-celery\\skills\\django-celery\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-celery\\skills\\django-celery\\SKILL.md",
       "suggestion": null
     },
     {
@@ -629,7 +629,7 @@
       "severity": "error",
       "target": "django-patterns",
       "message": "6 skills share `name: django-patterns` (plugin:django-patterns, plugin:django-patterns, plugin:django-patterns, plugin:django-patterns, plugin:django-patterns, plugin:django-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\django-patterns\\skills\\django-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\django-patterns\\skills\\django-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -637,7 +637,7 @@
       "severity": "error",
       "target": "django-security",
       "message": "4 skills share `name: django-security` (plugin:django-security, plugin:django-security, plugin:django-security, plugin:django-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\django-security\\skills\\django-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\django-security\\skills\\django-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -645,7 +645,7 @@
       "severity": "error",
       "target": "django-tdd",
       "message": "3 skills share `name: django-tdd` (plugin:django-tdd, plugin:django-tdd, plugin:django-tdd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-tdd\\skills\\django-tdd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-tdd\\skills\\django-tdd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -653,7 +653,7 @@
       "severity": "error",
       "target": "django-verification",
       "message": "3 skills share `name: django-verification` (plugin:django-verification, plugin:django-verification, plugin:django-verification)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-verification\\skills\\django-verification\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\django-verification\\skills\\django-verification\\SKILL.md",
       "suggestion": null
     },
     {
@@ -661,7 +661,7 @@
       "severity": "error",
       "target": "dmux-workflows",
       "message": "4 skills share `name: dmux-workflows` (plugin:dmux-workflows, plugin:dmux-workflows, plugin:dmux-workflows, plugin:dmux-workflows)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\dmux-workflows\\skills\\dmux-workflows\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\dmux-workflows\\skills\\dmux-workflows\\SKILL.md",
       "suggestion": null
     },
     {
@@ -669,7 +669,7 @@
       "severity": "error",
       "target": "docker-patterns",
       "message": "6 skills share `name: docker-patterns` (plugin:docker-patterns, plugin:docker-patterns, plugin:docker-patterns, plugin:docker-patterns, plugin:docker-patterns, plugin:docker-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\docker-patterns\\skills\\docker-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\docker-patterns\\skills\\docker-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -677,7 +677,7 @@
       "severity": "error",
       "target": "documentation-lookup",
       "message": "5 skills share `name: documentation-lookup` (plugin:documentation-lookup, plugin:documentation-lookup, plugin:documentation-lookup, plugin:documentation-lookup, plugin:documentation-lookup)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\documentation-lookup\\skills\\documentation-lookup\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\documentation-lookup\\skills\\documentation-lookup\\SKILL.md",
       "suggestion": null
     },
     {
@@ -685,7 +685,7 @@
       "severity": "error",
       "target": "dotnet-patterns",
       "message": "3 skills share `name: dotnet-patterns` (plugin:dotnet-patterns, plugin:dotnet-patterns, plugin:dotnet-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dotnet-patterns\\skills\\dotnet-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\dotnet-patterns\\skills\\dotnet-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -693,7 +693,7 @@
       "severity": "error",
       "target": "e2e-testing",
       "message": "7 skills share `name: e2e-testing` (plugin:e2e-testing, plugin:e2e-testing, plugin:e2e-testing, plugin:e2e-testing, plugin:e2e-testing, plugin:e2e-testing, plugin:e2e-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\e2e-testing\\skills\\e2e-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\e2e-testing\\skills\\e2e-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -701,7 +701,7 @@
       "severity": "error",
       "target": "ecc-guide",
       "message": "3 skills share `name: ecc-guide` (plugin:ecc-guide, plugin:ecc-guide, plugin:ecc-guide)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ecc-guide\\skills\\ecc-guide\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ecc-guide\\skills\\ecc-guide\\SKILL.md",
       "suggestion": null
     },
     {
@@ -709,7 +709,7 @@
       "severity": "error",
       "target": "ecc-tools-cost-audit",
       "message": "3 skills share `name: ecc-tools-cost-audit` (plugin:ecc-tools-cost-audit, plugin:ecc-tools-cost-audit, plugin:ecc-tools-cost-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ecc-tools-cost-audit\\skills\\ecc-tools-cost-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ecc-tools-cost-audit\\skills\\ecc-tools-cost-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -717,7 +717,7 @@
       "severity": "error",
       "target": "email-ops",
       "message": "3 skills share `name: email-ops` (plugin:email-ops, plugin:email-ops, plugin:email-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\email-ops\\skills\\email-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\email-ops\\skills\\email-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -725,7 +725,7 @@
       "severity": "error",
       "target": "energy-procurement",
       "message": "3 skills share `name: energy-procurement` (plugin:energy-procurement, plugin:energy-procurement, plugin:energy-procurement)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\energy-procurement\\skills\\energy-procurement\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\energy-procurement\\skills\\energy-procurement\\SKILL.md",
       "suggestion": null
     },
     {
@@ -733,7 +733,7 @@
       "severity": "error",
       "target": "enterprise-agent-ops",
       "message": "3 skills share `name: enterprise-agent-ops` (plugin:enterprise-agent-ops, plugin:enterprise-agent-ops, plugin:enterprise-agent-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\enterprise-agent-ops\\skills\\enterprise-agent-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\enterprise-agent-ops\\skills\\enterprise-agent-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -741,7 +741,7 @@
       "severity": "error",
       "target": "error-handling",
       "message": "2 skills share `name: error-handling` (plugin:error-handling, plugin:error-handling)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\error-handling\\skills\\error-handling\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\error-handling\\skills\\error-handling\\SKILL.md",
       "suggestion": null
     },
     {
@@ -749,7 +749,7 @@
       "severity": "error",
       "target": "eval-harness",
       "message": "8 skills share `name: eval-harness` (plugin:eval-harness, plugin:eval-harness, plugin:eval-harness, plugin:eval-harness, plugin:eval-harness, plugin:eval-harness, plugin:eval-harness, plugin:eval-harness)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\eval-harness\\skills\\eval-harness\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\eval-harness\\skills\\eval-harness\\SKILL.md",
       "suggestion": null
     },
     {
@@ -757,7 +757,7 @@
       "severity": "error",
       "target": "evm-token-decimals",
       "message": "3 skills share `name: evm-token-decimals` (plugin:evm-token-decimals, plugin:evm-token-decimals, plugin:evm-token-decimals)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\evm-token-decimals\\skills\\evm-token-decimals\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\evm-token-decimals\\skills\\evm-token-decimals\\SKILL.md",
       "suggestion": null
     },
     {
@@ -765,7 +765,7 @@
       "severity": "error",
       "target": "exa-search",
       "message": "4 skills share `name: exa-search` (plugin:exa-search, plugin:exa-search, plugin:exa-search, plugin:exa-search)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\exa-search\\skills\\exa-search\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\exa-search\\skills\\exa-search\\SKILL.md",
       "suggestion": null
     },
     {
@@ -773,7 +773,7 @@
       "severity": "error",
       "target": "fal-ai-media",
       "message": "4 skills share `name: fal-ai-media` (plugin:fal-ai-media, plugin:fal-ai-media, plugin:fal-ai-media, plugin:fal-ai-media)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\fal-ai-media\\skills\\fal-ai-media\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\fal-ai-media\\skills\\fal-ai-media\\SKILL.md",
       "suggestion": null
     },
     {
@@ -781,7 +781,7 @@
       "severity": "error",
       "target": "fastapi-patterns",
       "message": "3 skills share `name: fastapi-patterns` (plugin:fastapi-patterns, plugin:fastapi-patterns, plugin:fastapi-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\fastapi-patterns\\skills\\fastapi-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\fastapi-patterns\\skills\\fastapi-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -789,7 +789,7 @@
       "severity": "error",
       "target": "finance-billing-ops",
       "message": "3 skills share `name: finance-billing-ops` (plugin:finance-billing-ops, plugin:finance-billing-ops, plugin:finance-billing-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\finance-billing-ops\\skills\\finance-billing-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\finance-billing-ops\\skills\\finance-billing-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -797,7 +797,7 @@
       "severity": "error",
       "target": "flox-environments",
       "message": "2 skills share `name: flox-environments` (plugin:flox-environments, plugin:flox-environments)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\flox-environments\\skills\\flox-environments\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\flox-environments\\skills\\flox-environments\\SKILL.md",
       "suggestion": null
     },
     {
@@ -805,7 +805,7 @@
       "severity": "error",
       "target": "flutter-dart-code-review",
       "message": "3 skills share `name: flutter-dart-code-review` (plugin:flutter-dart-code-review, plugin:flutter-dart-code-review, plugin:flutter-dart-code-review)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\flutter-dart-code-review\\skills\\flutter-dart-code-review\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\flutter-dart-code-review\\skills\\flutter-dart-code-review\\SKILL.md",
       "suggestion": null
     },
     {
@@ -813,7 +813,7 @@
       "severity": "error",
       "target": "foundation-models-on-device",
       "message": "3 skills share `name: foundation-models-on-device` (plugin:foundation-models-on-device, plugin:foundation-models-on-device, plugin:foundation-models-on-device)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\foundation-models-on-device\\skills\\foundation-models-on-device\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\foundation-models-on-device\\skills\\foundation-models-on-device\\SKILL.md",
       "suggestion": null
     },
     {
@@ -821,7 +821,7 @@
       "severity": "error",
       "target": "frontend-design-direction",
       "message": "2 skills share `name: frontend-design-direction` (plugin:frontend-design-direction, plugin:frontend-design-direction)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\frontend-design-direction\\skills\\frontend-design-direction\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\frontend-design-direction\\skills\\frontend-design-direction\\SKILL.md",
       "suggestion": null
     },
     {
@@ -829,7 +829,7 @@
       "severity": "error",
       "target": "frontend-patterns",
       "message": "9 skills share `name: frontend-patterns` (plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns, plugin:frontend-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\frontend-patterns\\skills\\frontend-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\frontend-patterns\\skills\\frontend-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -837,7 +837,7 @@
       "severity": "error",
       "target": "frontend-slides",
       "message": "5 skills share `name: frontend-slides` (plugin:frontend-slides, plugin:frontend-slides, plugin:frontend-slides, plugin:frontend-slides, plugin:frontend-slides)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\frontend-slides\\skills\\frontend-slides\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\frontend-slides\\skills\\frontend-slides\\SKILL.md",
       "suggestion": null
     },
     {
@@ -845,7 +845,7 @@
       "severity": "error",
       "target": "fsharp-testing",
       "message": "2 skills share `name: fsharp-testing` (plugin:fsharp-testing, plugin:fsharp-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\fsharp-testing\\skills\\fsharp-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\fsharp-testing\\skills\\fsharp-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -853,7 +853,7 @@
       "severity": "error",
       "target": "gan-style-harness",
       "message": "3 skills share `name: gan-style-harness` (plugin:gan-style-harness, plugin:gan-style-harness, plugin:gan-style-harness)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\gan-style-harness\\skills\\gan-style-harness\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\gan-style-harness\\skills\\gan-style-harness\\SKILL.md",
       "suggestion": null
     },
     {
@@ -861,7 +861,7 @@
       "severity": "error",
       "target": "gateguard",
       "message": "3 skills share `name: gateguard` (plugin:gateguard, plugin:gateguard, plugin:gateguard)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\gateguard\\skills\\gateguard\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\gateguard\\skills\\gateguard\\SKILL.md",
       "suggestion": null
     },
     {
@@ -869,7 +869,7 @@
       "severity": "error",
       "target": "gget",
       "message": "2 skills share `name: gget` (plugin:scientific-pkg-gget, plugin:scientific-pkg-gget)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-pkg-gget\\skills\\scientific-pkg-gget\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-pkg-gget\\skills\\scientific-pkg-gget\\SKILL.md",
       "suggestion": null
     },
     {
@@ -877,7 +877,7 @@
       "severity": "error",
       "target": "git-workflow",
       "message": "3 skills share `name: git-workflow` (plugin:git-workflow, plugin:git-workflow, plugin:git-workflow)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\git-workflow\\skills\\git-workflow\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\git-workflow\\skills\\git-workflow\\SKILL.md",
       "suggestion": null
     },
     {
@@ -885,7 +885,7 @@
       "severity": "error",
       "target": "github-ops",
       "message": "3 skills share `name: github-ops` (plugin:github-ops, plugin:github-ops, plugin:github-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\github-ops\\skills\\github-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\github-ops\\skills\\github-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -893,7 +893,7 @@
       "severity": "error",
       "target": "golang-patterns",
       "message": "8 skills share `name: golang-patterns` (plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns, plugin:golang-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\golang-patterns\\skills\\golang-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\golang-patterns\\skills\\golang-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -901,7 +901,7 @@
       "severity": "error",
       "target": "golang-testing",
       "message": "8 skills share `name: golang-testing` (plugin:golang-testing, plugin:golang-testing, plugin:golang-testing, plugin:golang-testing, plugin:golang-testing, plugin:golang-testing, plugin:golang-testing, plugin:golang-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\golang-testing\\skills\\golang-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\golang-testing\\skills\\golang-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -909,7 +909,7 @@
       "severity": "error",
       "target": "google-workspace-ops",
       "message": "3 skills share `name: google-workspace-ops` (plugin:google-workspace-ops, plugin:google-workspace-ops, plugin:google-workspace-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\google-workspace-ops\\skills\\google-workspace-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\google-workspace-ops\\skills\\google-workspace-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -917,7 +917,7 @@
       "severity": "error",
       "target": "handoff",
       "message": "2 skills share `name: handoff` (plugin:handoff, plugin:handoff)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\handoff\\skills\\handoff\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\handoff\\skills\\handoff\\SKILL.md",
       "suggestion": null
     },
     {
@@ -925,7 +925,7 @@
       "severity": "error",
       "target": "healthcare-cdss-patterns",
       "message": "3 skills share `name: healthcare-cdss-patterns` (plugin:healthcare-cdss-patterns, plugin:healthcare-cdss-patterns, plugin:healthcare-cdss-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-cdss-patterns\\skills\\healthcare-cdss-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-cdss-patterns\\skills\\healthcare-cdss-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -933,7 +933,7 @@
       "severity": "error",
       "target": "healthcare-emr-patterns",
       "message": "3 skills share `name: healthcare-emr-patterns` (plugin:healthcare-emr-patterns, plugin:healthcare-emr-patterns, plugin:healthcare-emr-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-emr-patterns\\skills\\healthcare-emr-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-emr-patterns\\skills\\healthcare-emr-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -941,7 +941,7 @@
       "severity": "error",
       "target": "healthcare-eval-harness",
       "message": "3 skills share `name: healthcare-eval-harness` (plugin:healthcare-eval-harness, plugin:healthcare-eval-harness, plugin:healthcare-eval-harness)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-eval-harness\\skills\\healthcare-eval-harness\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-eval-harness\\skills\\healthcare-eval-harness\\SKILL.md",
       "suggestion": null
     },
     {
@@ -949,7 +949,7 @@
       "severity": "error",
       "target": "healthcare-phi-compliance",
       "message": "3 skills share `name: healthcare-phi-compliance` (plugin:healthcare-phi-compliance, plugin:healthcare-phi-compliance, plugin:healthcare-phi-compliance)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-phi-compliance\\skills\\healthcare-phi-compliance\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\healthcare-phi-compliance\\skills\\healthcare-phi-compliance\\SKILL.md",
       "suggestion": null
     },
     {
@@ -957,7 +957,7 @@
       "severity": "error",
       "target": "hermes-imports",
       "message": "3 skills share `name: hermes-imports` (plugin:hermes-imports, plugin:hermes-imports, plugin:hermes-imports)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hermes-imports\\skills\\hermes-imports\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hermes-imports\\skills\\hermes-imports\\SKILL.md",
       "suggestion": null
     },
     {
@@ -965,7 +965,7 @@
       "severity": "error",
       "target": "hexagonal-architecture",
       "message": "3 skills share `name: hexagonal-architecture` (plugin:hexagonal-architecture, plugin:hexagonal-architecture, plugin:hexagonal-architecture)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hexagonal-architecture\\skills\\hexagonal-architecture\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hexagonal-architecture\\skills\\hexagonal-architecture\\SKILL.md",
       "suggestion": null
     },
     {
@@ -973,7 +973,7 @@
       "severity": "error",
       "target": "hipaa-compliance",
       "message": "3 skills share `name: hipaa-compliance` (plugin:hipaa-compliance, plugin:hipaa-compliance, plugin:hipaa-compliance)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hipaa-compliance\\skills\\hipaa-compliance\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hipaa-compliance\\skills\\hipaa-compliance\\SKILL.md",
       "suggestion": null
     },
     {
@@ -981,7 +981,7 @@
       "severity": "error",
       "target": "homelab-network-readiness",
       "message": "2 skills share `name: homelab-network-readiness` (plugin:homelab-network-readiness, plugin:homelab-network-readiness)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-network-readiness\\skills\\homelab-network-readiness\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-network-readiness\\skills\\homelab-network-readiness\\SKILL.md",
       "suggestion": null
     },
     {
@@ -989,7 +989,7 @@
       "severity": "error",
       "target": "homelab-network-setup",
       "message": "2 skills share `name: homelab-network-setup` (plugin:homelab-network-setup, plugin:homelab-network-setup)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-network-setup\\skills\\homelab-network-setup\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-network-setup\\skills\\homelab-network-setup\\SKILL.md",
       "suggestion": null
     },
     {
@@ -997,7 +997,7 @@
       "severity": "error",
       "target": "homelab-pihole-dns",
       "message": "2 skills share `name: homelab-pihole-dns` (plugin:homelab-pihole-dns, plugin:homelab-pihole-dns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-pihole-dns\\skills\\homelab-pihole-dns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-pihole-dns\\skills\\homelab-pihole-dns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1005,7 +1005,7 @@
       "severity": "error",
       "target": "homelab-vlan-segmentation",
       "message": "2 skills share `name: homelab-vlan-segmentation` (plugin:homelab-vlan-segmentation, plugin:homelab-vlan-segmentation)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-vlan-segmentation\\skills\\homelab-vlan-segmentation\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-vlan-segmentation\\skills\\homelab-vlan-segmentation\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1013,7 +1013,7 @@
       "severity": "error",
       "target": "homelab-wireguard-vpn",
       "message": "2 skills share `name: homelab-wireguard-vpn` (plugin:homelab-wireguard-vpn, plugin:homelab-wireguard-vpn)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-wireguard-vpn\\skills\\homelab-wireguard-vpn\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\homelab-wireguard-vpn\\skills\\homelab-wireguard-vpn\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1021,7 +1021,7 @@
       "severity": "error",
       "target": "hookify-rules",
       "message": "3 skills share `name: hookify-rules` (plugin:hookify-rules, plugin:hookify-rules, plugin:hookify-rules)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hookify-rules\\skills\\hookify-rules\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\hookify-rules\\skills\\hookify-rules\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1029,7 +1029,7 @@
       "severity": "error",
       "target": "i-have-adhd",
       "message": "2 skills share `name: i-have-adhd` (plugin:i-have-adhd, plugin:i-have-adhd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\i-have-adhd__i-have-adhd\\.cursor\\skills\\i-have-adhd\\skills\\i-have-adhd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\i-have-adhd__i-have-adhd\\.cursor\\skills\\i-have-adhd\\skills\\i-have-adhd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1037,7 +1037,7 @@
       "severity": "error",
       "target": "inventory-demand-planning",
       "message": "3 skills share `name: inventory-demand-planning` (plugin:inventory-demand-planning, plugin:inventory-demand-planning, plugin:inventory-demand-planning)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\inventory-demand-planning\\skills\\inventory-demand-planning\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\inventory-demand-planning\\skills\\inventory-demand-planning\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1045,7 +1045,7 @@
       "severity": "error",
       "target": "investor-materials",
       "message": "5 skills share `name: investor-materials` (plugin:investor-materials, plugin:investor-materials, plugin:investor-materials, plugin:investor-materials, plugin:investor-materials)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\investor-materials\\skills\\investor-materials\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\investor-materials\\skills\\investor-materials\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1053,7 +1053,7 @@
       "severity": "error",
       "target": "investor-outreach",
       "message": "5 skills share `name: investor-outreach` (plugin:investor-outreach, plugin:investor-outreach, plugin:investor-outreach, plugin:investor-outreach, plugin:investor-outreach)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\investor-outreach\\skills\\investor-outreach\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\investor-outreach\\skills\\investor-outreach\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1061,7 +1061,7 @@
       "severity": "error",
       "target": "ios-icon-gen",
       "message": "2 skills share `name: ios-icon-gen` (plugin:ios-icon-gen, plugin:ios-icon-gen)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ios-icon-gen\\skills\\ios-icon-gen\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ios-icon-gen\\skills\\ios-icon-gen\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1069,7 +1069,7 @@
       "severity": "error",
       "target": "iterative-retrieval",
       "message": "5 skills share `name: iterative-retrieval` (plugin:iterative-retrieval, plugin:iterative-retrieval, plugin:iterative-retrieval, plugin:iterative-retrieval, plugin:iterative-retrieval)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\iterative-retrieval\\skills\\iterative-retrieval\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\iterative-retrieval\\skills\\iterative-retrieval\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1077,7 +1077,7 @@
       "severity": "error",
       "target": "java-coding-standards",
       "message": "4 skills share `name: java-coding-standards` (plugin:java-coding-standards, plugin:java-coding-standards, plugin:java-coding-standards, plugin:java-coding-standards)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\java-coding-standards\\skills\\java-coding-standards\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\java-coding-standards\\skills\\java-coding-standards\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1085,7 +1085,7 @@
       "severity": "error",
       "target": "jira-integration",
       "message": "3 skills share `name: jira-integration` (plugin:jira-integration, plugin:jira-integration, plugin:jira-integration)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\jira-integration\\skills\\jira-integration\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\jira-integration\\skills\\jira-integration\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1093,7 +1093,7 @@
       "severity": "error",
       "target": "jpa-patterns",
       "message": "6 skills share `name: jpa-patterns` (plugin:jpa-patterns, plugin:jpa-patterns, plugin:jpa-patterns, plugin:jpa-patterns, plugin:jpa-patterns, plugin:jpa-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\jpa-patterns\\skills\\jpa-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\jpa-patterns\\skills\\jpa-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1101,7 +1101,7 @@
       "severity": "error",
       "target": "knowledge-ops",
       "message": "3 skills share `name: knowledge-ops` (plugin:knowledge-ops, plugin:knowledge-ops, plugin:knowledge-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\knowledge-ops\\skills\\knowledge-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\knowledge-ops\\skills\\knowledge-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1109,7 +1109,7 @@
       "severity": "error",
       "target": "kotlin-coroutines-flows",
       "message": "3 skills share `name: kotlin-coroutines-flows` (plugin:kotlin-coroutines-flows, plugin:kotlin-coroutines-flows, plugin:kotlin-coroutines-flows)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-coroutines-flows\\skills\\kotlin-coroutines-flows\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-coroutines-flows\\skills\\kotlin-coroutines-flows\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1117,7 +1117,7 @@
       "severity": "error",
       "target": "kotlin-exposed-patterns",
       "message": "3 skills share `name: kotlin-exposed-patterns` (plugin:kotlin-exposed-patterns, plugin:kotlin-exposed-patterns, plugin:kotlin-exposed-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-exposed-patterns\\skills\\kotlin-exposed-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-exposed-patterns\\skills\\kotlin-exposed-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1125,7 +1125,7 @@
       "severity": "error",
       "target": "kotlin-ktor-patterns",
       "message": "3 skills share `name: kotlin-ktor-patterns` (plugin:kotlin-ktor-patterns, plugin:kotlin-ktor-patterns, plugin:kotlin-ktor-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-ktor-patterns\\skills\\kotlin-ktor-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\kotlin-ktor-patterns\\skills\\kotlin-ktor-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1133,7 +1133,7 @@
       "severity": "error",
       "target": "kotlin-patterns",
       "message": "6 skills share `name: kotlin-patterns` (plugin:kotlin-patterns, plugin:kotlin-patterns, plugin:kotlin-patterns, plugin:kotlin-patterns, plugin:kotlin-patterns, plugin:kotlin-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\kotlin-patterns\\skills\\kotlin-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\kotlin-patterns\\skills\\kotlin-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1141,7 +1141,7 @@
       "severity": "error",
       "target": "kotlin-testing",
       "message": "6 skills share `name: kotlin-testing` (plugin:kotlin-testing, plugin:kotlin-testing, plugin:kotlin-testing, plugin:kotlin-testing, plugin:kotlin-testing, plugin:kotlin-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\kotlin-testing\\skills\\kotlin-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\kotlin-testing\\skills\\kotlin-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1149,7 +1149,7 @@
       "severity": "error",
       "target": "laravel-patterns",
       "message": "5 skills share `name: laravel-patterns` (plugin:laravel-patterns, plugin:laravel-patterns, plugin:laravel-patterns, plugin:laravel-patterns, plugin:laravel-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-patterns\\skills\\laravel-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-patterns\\skills\\laravel-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1157,7 +1157,7 @@
       "severity": "error",
       "target": "laravel-plugin-discovery",
       "message": "3 skills share `name: laravel-plugin-discovery` (plugin:laravel-plugin-discovery, plugin:laravel-plugin-discovery, plugin:laravel-plugin-discovery)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\laravel-plugin-discovery\\skills\\laravel-plugin-discovery\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\laravel-plugin-discovery\\skills\\laravel-plugin-discovery\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1165,7 +1165,7 @@
       "severity": "error",
       "target": "laravel-security",
       "message": "5 skills share `name: laravel-security` (plugin:laravel-security, plugin:laravel-security, plugin:laravel-security, plugin:laravel-security, plugin:laravel-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-security\\skills\\laravel-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-security\\skills\\laravel-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1173,7 +1173,7 @@
       "severity": "error",
       "target": "laravel-tdd",
       "message": "5 skills share `name: laravel-tdd` (plugin:laravel-tdd, plugin:laravel-tdd, plugin:laravel-tdd, plugin:laravel-tdd, plugin:laravel-tdd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-tdd\\skills\\laravel-tdd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-tdd\\skills\\laravel-tdd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1181,7 +1181,7 @@
       "severity": "error",
       "target": "laravel-verification",
       "message": "5 skills share `name: laravel-verification` (plugin:laravel-verification, plugin:laravel-verification, plugin:laravel-verification, plugin:laravel-verification, plugin:laravel-verification)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-verification\\skills\\laravel-verification\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\laravel-verification\\skills\\laravel-verification\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1189,7 +1189,7 @@
       "severity": "error",
       "target": "lead-intelligence",
       "message": "3 skills share `name: lead-intelligence` (plugin:lead-intelligence, plugin:lead-intelligence, plugin:lead-intelligence)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\lead-intelligence\\skills\\lead-intelligence\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\lead-intelligence\\skills\\lead-intelligence\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1197,7 +1197,7 @@
       "severity": "error",
       "target": "liquid-glass-design",
       "message": "3 skills share `name: liquid-glass-design` (plugin:liquid-glass-design, plugin:liquid-glass-design, plugin:liquid-glass-design)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\liquid-glass-design\\skills\\liquid-glass-design\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\liquid-glass-design\\skills\\liquid-glass-design\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1205,7 +1205,7 @@
       "severity": "error",
       "target": "literature-review",
       "message": "2 skills share `name: literature-review` (plugin:scientific-thinking-literature-review, plugin:scientific-thinking-literature-review)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-thinking-literature-review\\skills\\scientific-thinking-literature-review\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-thinking-literature-review\\skills\\scientific-thinking-literature-review\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1213,7 +1213,7 @@
       "severity": "error",
       "target": "llm-trading-agent-security",
       "message": "3 skills share `name: llm-trading-agent-security` (plugin:llm-trading-agent-security, plugin:llm-trading-agent-security, plugin:llm-trading-agent-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\llm-trading-agent-security\\skills\\llm-trading-agent-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\llm-trading-agent-security\\skills\\llm-trading-agent-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1221,7 +1221,7 @@
       "severity": "error",
       "target": "logistics-exception-management",
       "message": "3 skills share `name: logistics-exception-management` (plugin:logistics-exception-management, plugin:logistics-exception-management, plugin:logistics-exception-management)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\logistics-exception-management\\skills\\logistics-exception-management\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\logistics-exception-management\\skills\\logistics-exception-management\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1229,7 +1229,7 @@
       "severity": "error",
       "target": "make-interfaces-feel-better",
       "message": "2 skills share `name: make-interfaces-feel-better` (plugin:make-interfaces-feel-better, plugin:make-interfaces-feel-better)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\make-interfaces-feel-better\\skills\\make-interfaces-feel-better\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\make-interfaces-feel-better\\skills\\make-interfaces-feel-better\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1237,7 +1237,7 @@
       "severity": "error",
       "target": "manim-video",
       "message": "3 skills share `name: manim-video` (plugin:manim-video, plugin:manim-video, plugin:manim-video)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\manim-video\\skills\\manim-video\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\manim-video\\skills\\manim-video\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1245,7 +1245,7 @@
       "severity": "error",
       "target": "market-research",
       "message": "5 skills share `name: market-research` (plugin:market-research, plugin:market-research, plugin:market-research, plugin:market-research, plugin:market-research)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\market-research\\skills\\market-research\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\market-research\\skills\\market-research\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1253,7 +1253,7 @@
       "severity": "error",
       "target": "mcp-server-patterns",
       "message": "5 skills share `name: mcp-server-patterns` (plugin:mcp-server-patterns, plugin:mcp-server-patterns, plugin:mcp-server-patterns, plugin:mcp-server-patterns, plugin:mcp-server-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\mcp-server-patterns\\skills\\mcp-server-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\mcp-server-patterns\\skills\\mcp-server-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1261,7 +1261,7 @@
       "severity": "error",
       "target": "messages-ops",
       "message": "3 skills share `name: messages-ops` (plugin:messages-ops, plugin:messages-ops, plugin:messages-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\messages-ops\\skills\\messages-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\messages-ops\\skills\\messages-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1269,7 +1269,7 @@
       "severity": "error",
       "target": "mle-workflow",
       "message": "4 skills share `name: mle-workflow` (plugin:mle-workflow, plugin:mle-workflow, plugin:mle-workflow, plugin:mle-workflow)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\mle-workflow\\skills\\mle-workflow\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\mle-workflow\\skills\\mle-workflow\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1277,7 +1277,7 @@
       "severity": "error",
       "target": "motion-advanced",
       "message": "2 skills share `name: motion-advanced` (plugin:motion-advanced, plugin:motion-advanced)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-advanced\\skills\\motion-advanced\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-advanced\\skills\\motion-advanced\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1285,7 +1285,7 @@
       "severity": "error",
       "target": "motion-foundations",
       "message": "2 skills share `name: motion-foundations` (plugin:motion-foundations, plugin:motion-foundations)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-foundations\\skills\\motion-foundations\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-foundations\\skills\\motion-foundations\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1293,7 +1293,7 @@
       "severity": "error",
       "target": "motion-patterns",
       "message": "2 skills share `name: motion-patterns` (plugin:motion-patterns, plugin:motion-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-patterns\\skills\\motion-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\motion-patterns\\skills\\motion-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1301,7 +1301,7 @@
       "severity": "error",
       "target": "mysql-patterns",
       "message": "2 skills share `name: mysql-patterns` (plugin:mysql-patterns, plugin:mysql-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\mysql-patterns\\skills\\mysql-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\mysql-patterns\\skills\\mysql-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1309,7 +1309,7 @@
       "severity": "error",
       "target": "nanoclaw-repl",
       "message": "3 skills share `name: nanoclaw-repl` (plugin:nanoclaw-repl, plugin:nanoclaw-repl, plugin:nanoclaw-repl)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nanoclaw-repl\\skills\\nanoclaw-repl\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nanoclaw-repl\\skills\\nanoclaw-repl\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1317,7 +1317,7 @@
       "severity": "error",
       "target": "nestjs-patterns",
       "message": "4 skills share `name: nestjs-patterns` (plugin:nestjs-patterns, plugin:nestjs-patterns, plugin:nestjs-patterns, plugin:nestjs-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\nestjs-patterns\\skills\\nestjs-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\nestjs-patterns\\skills\\nestjs-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1325,7 +1325,7 @@
       "severity": "error",
       "target": "netmiko-ssh-automation",
       "message": "2 skills share `name: netmiko-ssh-automation` (plugin:netmiko-ssh-automation, plugin:netmiko-ssh-automation)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\netmiko-ssh-automation\\skills\\netmiko-ssh-automation\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\netmiko-ssh-automation\\skills\\netmiko-ssh-automation\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1333,7 +1333,7 @@
       "severity": "error",
       "target": "network-bgp-diagnostics",
       "message": "2 skills share `name: network-bgp-diagnostics` (plugin:network-bgp-diagnostics, plugin:network-bgp-diagnostics)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-bgp-diagnostics\\skills\\network-bgp-diagnostics\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-bgp-diagnostics\\skills\\network-bgp-diagnostics\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1341,7 +1341,7 @@
       "severity": "error",
       "target": "network-config-validation",
       "message": "2 skills share `name: network-config-validation` (plugin:network-config-validation, plugin:network-config-validation)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-config-validation\\skills\\network-config-validation\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-config-validation\\skills\\network-config-validation\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1349,7 +1349,7 @@
       "severity": "error",
       "target": "network-interface-health",
       "message": "2 skills share `name: network-interface-health` (plugin:network-interface-health, plugin:network-interface-health)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-interface-health\\skills\\network-interface-health\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\network-interface-health\\skills\\network-interface-health\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1357,7 +1357,7 @@
       "severity": "error",
       "target": "nextjs-turbopack",
       "message": "8 skills share `name: nextjs-turbopack` (plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack, plugin:nextjs-turbopack)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\nextjs-turbopack\\skills\\nextjs-turbopack\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\nextjs-turbopack\\skills\\nextjs-turbopack\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1365,7 +1365,7 @@
       "severity": "error",
       "target": "nodejs-keccak256",
       "message": "3 skills share `name: nodejs-keccak256` (plugin:nodejs-keccak256, plugin:nodejs-keccak256, plugin:nodejs-keccak256)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nodejs-keccak256\\skills\\nodejs-keccak256\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nodejs-keccak256\\skills\\nodejs-keccak256\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1373,7 +1373,7 @@
       "severity": "error",
       "target": "nutrient-document-processing",
       "message": "3 skills share `name: nutrient-document-processing` (plugin:nutrient-document-processing, plugin:nutrient-document-processing, plugin:nutrient-document-processing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nutrient-document-processing\\skills\\nutrient-document-processing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nutrient-document-processing\\skills\\nutrient-document-processing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1381,7 +1381,7 @@
       "severity": "error",
       "target": "nuxt4-patterns",
       "message": "3 skills share `name: nuxt4-patterns` (plugin:nuxt4-patterns, plugin:nuxt4-patterns, plugin:nuxt4-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nuxt4-patterns\\skills\\nuxt4-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\nuxt4-patterns\\skills\\nuxt4-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1389,7 +1389,7 @@
       "severity": "error",
       "target": "openclaw-persona-forge",
       "message": "2 skills share `name: openclaw-persona-forge` (plugin:openclaw-persona-forge, plugin:openclaw-persona-forge)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\openclaw-persona-forge\\skills\\openclaw-persona-forge\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\openclaw-persona-forge\\skills\\openclaw-persona-forge\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1397,7 +1397,7 @@
       "severity": "error",
       "target": "opensource-pipeline",
       "message": "3 skills share `name: opensource-pipeline` (plugin:opensource-pipeline, plugin:opensource-pipeline, plugin:opensource-pipeline)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\opensource-pipeline\\skills\\opensource-pipeline\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\opensource-pipeline\\skills\\opensource-pipeline\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1405,7 +1405,7 @@
       "severity": "error",
       "target": "parallel-execution-optimizer",
       "message": "2 skills share `name: parallel-execution-optimizer` (plugin:parallel-execution-optimizer, plugin:parallel-execution-optimizer)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\zh-CN\\skills\\parallel-execution-optimizer\\skills\\parallel-execution-optimizer\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\zh-CN\\skills\\parallel-execution-optimizer\\skills\\parallel-execution-optimizer\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1413,7 +1413,7 @@
       "severity": "error",
       "target": "perl-patterns",
       "message": "3 skills share `name: perl-patterns` (plugin:perl-patterns, plugin:perl-patterns, plugin:perl-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-patterns\\skills\\perl-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-patterns\\skills\\perl-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1421,7 +1421,7 @@
       "severity": "error",
       "target": "perl-security",
       "message": "3 skills share `name: perl-security` (plugin:perl-security, plugin:perl-security, plugin:perl-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-security\\skills\\perl-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-security\\skills\\perl-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1429,7 +1429,7 @@
       "severity": "error",
       "target": "perl-testing",
       "message": "3 skills share `name: perl-testing` (plugin:perl-testing, plugin:perl-testing, plugin:perl-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-testing\\skills\\perl-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\perl-testing\\skills\\perl-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1437,7 +1437,7 @@
       "severity": "error",
       "target": "plan-canvas",
       "message": "2 skills share `name: plan-canvas` (plugin:plan-canvas, plugin:plan-canvas)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\plan-canvas\\skills\\plan-canvas\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\plan-canvas\\skills\\plan-canvas\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1445,7 +1445,7 @@
       "severity": "error",
       "target": "plan-orchestrate",
       "message": "2 skills share `name: plan-orchestrate` (plugin:plan-orchestrate, plugin:plan-orchestrate)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\plan-orchestrate\\skills\\plan-orchestrate\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\plan-orchestrate\\skills\\plan-orchestrate\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1453,7 +1453,7 @@
       "severity": "error",
       "target": "plankton-code-quality",
       "message": "3 skills share `name: plankton-code-quality` (plugin:plankton-code-quality, plugin:plankton-code-quality, plugin:plankton-code-quality)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\plankton-code-quality\\skills\\plankton-code-quality\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\plankton-code-quality\\skills\\plankton-code-quality\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1461,7 +1461,7 @@
       "severity": "error",
       "target": "ponytail",
       "message": "2 skills share `name: ponytail` (plugin:ponytail, plugin:ponytail)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail\\skills\\ponytail\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail\\skills\\ponytail\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1469,7 +1469,7 @@
       "severity": "error",
       "target": "ponytail-audit",
       "message": "2 skills share `name: ponytail-audit` (plugin:ponytail-audit, plugin:ponytail-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-audit\\skills\\ponytail-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-audit\\skills\\ponytail-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1477,7 +1477,7 @@
       "severity": "error",
       "target": "ponytail-debt",
       "message": "2 skills share `name: ponytail-debt` (plugin:ponytail-debt, plugin:ponytail-debt)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-debt\\skills\\ponytail-debt\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-debt\\skills\\ponytail-debt\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1485,7 +1485,7 @@
       "severity": "error",
       "target": "ponytail-gain",
       "message": "2 skills share `name: ponytail-gain` (plugin:ponytail-gain, plugin:ponytail-gain)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-gain\\skills\\ponytail-gain\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-gain\\skills\\ponytail-gain\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1493,7 +1493,7 @@
       "severity": "error",
       "target": "ponytail-help",
       "message": "2 skills share `name: ponytail-help` (plugin:ponytail-help, plugin:ponytail-help)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-help\\skills\\ponytail-help\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-help\\skills\\ponytail-help\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1501,7 +1501,7 @@
       "severity": "error",
       "target": "ponytail-review",
       "message": "2 skills share `name: ponytail-review` (plugin:ponytail-review, plugin:ponytail-review)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-review\\skills\\ponytail-review\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ponytail__ponytail\\.openclaw\\skills\\ponytail-review\\skills\\ponytail-review\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1509,7 +1509,7 @@
       "severity": "error",
       "target": "postgres-patterns",
       "message": "8 skills share `name: postgres-patterns` (plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns, plugin:postgres-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\postgres-patterns\\skills\\postgres-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\postgres-patterns\\skills\\postgres-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1517,7 +1517,7 @@
       "severity": "error",
       "target": "product-capability",
       "message": "4 skills share `name: product-capability` (plugin:product-capability, plugin:product-capability, plugin:product-capability, plugin:product-capability)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\product-capability\\skills\\product-capability\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\product-capability\\skills\\product-capability\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1525,7 +1525,7 @@
       "severity": "error",
       "target": "product-lens",
       "message": "3 skills share `name: product-lens` (plugin:product-lens, plugin:product-lens, plugin:product-lens)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\product-lens\\skills\\product-lens\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\product-lens\\skills\\product-lens\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1533,7 +1533,7 @@
       "severity": "error",
       "target": "production-audit",
       "message": "2 skills share `name: production-audit` (plugin:production-audit, plugin:production-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\production-audit\\skills\\production-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\production-audit\\skills\\production-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1541,7 +1541,7 @@
       "severity": "error",
       "target": "production-scheduling",
       "message": "3 skills share `name: production-scheduling` (plugin:production-scheduling, plugin:production-scheduling, plugin:production-scheduling)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\production-scheduling\\skills\\production-scheduling\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\production-scheduling\\skills\\production-scheduling\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1549,7 +1549,7 @@
       "severity": "error",
       "target": "project-flow-ops",
       "message": "3 skills share `name: project-flow-ops` (plugin:project-flow-ops, plugin:project-flow-ops, plugin:project-flow-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\project-flow-ops\\skills\\project-flow-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\project-flow-ops\\skills\\project-flow-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1557,7 +1557,7 @@
       "severity": "error",
       "target": "project-guidelines-example",
       "message": "2 skills share `name: project-guidelines-example` (plugin:project-guidelines-example, plugin:project-guidelines-example)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\project-guidelines-example\\skills\\project-guidelines-example\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\project-guidelines-example\\skills\\project-guidelines-example\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1565,7 +1565,7 @@
       "severity": "error",
       "target": "prompt-optimizer",
       "message": "3 skills share `name: prompt-optimizer` (plugin:prompt-optimizer, plugin:prompt-optimizer, plugin:prompt-optimizer)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\prompt-optimizer\\skills\\prompt-optimizer\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\prompt-optimizer\\skills\\prompt-optimizer\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1573,7 +1573,7 @@
       "severity": "error",
       "target": "pubmed-database",
       "message": "2 skills share `name: pubmed-database` (plugin:scientific-db-pubmed-database, plugin:scientific-db-pubmed-database)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-db-pubmed-database\\skills\\scientific-db-pubmed-database\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-db-pubmed-database\\skills\\scientific-db-pubmed-database\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1581,7 +1581,7 @@
       "severity": "error",
       "target": "python-patterns",
       "message": "6 skills share `name: python-patterns` (plugin:python-patterns, plugin:python-patterns, plugin:python-patterns, plugin:python-patterns, plugin:python-patterns, plugin:python-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\python-patterns\\skills\\python-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\python-patterns\\skills\\python-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1589,7 +1589,7 @@
       "severity": "error",
       "target": "python-testing",
       "message": "6 skills share `name: python-testing` (plugin:python-testing, plugin:python-testing, plugin:python-testing, plugin:python-testing, plugin:python-testing, plugin:python-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\python-testing\\skills\\python-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\python-testing\\skills\\python-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1597,7 +1597,7 @@
       "severity": "error",
       "target": "pytorch-patterns",
       "message": "4 skills share `name: pytorch-patterns` (plugin:pytorch-patterns, plugin:pytorch-patterns, plugin:pytorch-patterns, plugin:pytorch-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\pytorch-patterns\\skills\\pytorch-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\pytorch-patterns\\skills\\pytorch-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1605,7 +1605,7 @@
       "severity": "error",
       "target": "quality-nonconformance",
       "message": "3 skills share `name: quality-nonconformance` (plugin:quality-nonconformance, plugin:quality-nonconformance, plugin:quality-nonconformance)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\quality-nonconformance\\skills\\quality-nonconformance\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\quality-nonconformance\\skills\\quality-nonconformance\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1613,7 +1613,7 @@
       "severity": "error",
       "target": "quarkus-patterns",
       "message": "4 skills share `name: quarkus-patterns` (plugin:quarkus-patterns, plugin:quarkus-patterns, plugin:quarkus-patterns, plugin:quarkus-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-patterns\\skills\\quarkus-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-patterns\\skills\\quarkus-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1621,7 +1621,7 @@
       "severity": "error",
       "target": "quarkus-security",
       "message": "4 skills share `name: quarkus-security` (plugin:quarkus-security, plugin:quarkus-security, plugin:quarkus-security, plugin:quarkus-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-security\\skills\\quarkus-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-security\\skills\\quarkus-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1629,7 +1629,7 @@
       "severity": "error",
       "target": "quarkus-tdd",
       "message": "4 skills share `name: quarkus-tdd` (plugin:quarkus-tdd, plugin:quarkus-tdd, plugin:quarkus-tdd, plugin:quarkus-tdd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-tdd\\skills\\quarkus-tdd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-tdd\\skills\\quarkus-tdd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1637,7 +1637,7 @@
       "severity": "error",
       "target": "quarkus-verification",
       "message": "4 skills share `name: quarkus-verification` (plugin:quarkus-verification, plugin:quarkus-verification, plugin:quarkus-verification, plugin:quarkus-verification)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-verification\\skills\\quarkus-verification\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\quarkus-verification\\skills\\quarkus-verification\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1645,7 +1645,7 @@
       "severity": "error",
       "target": "ralphinho-rfc-pipeline",
       "message": "3 skills share `name: ralphinho-rfc-pipeline` (plugin:ralphinho-rfc-pipeline, plugin:ralphinho-rfc-pipeline, plugin:ralphinho-rfc-pipeline)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ralphinho-rfc-pipeline\\skills\\ralphinho-rfc-pipeline\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ralphinho-rfc-pipeline\\skills\\ralphinho-rfc-pipeline\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1653,7 +1653,7 @@
       "severity": "error",
       "target": "react-patterns",
       "message": "2 skills share `name: react-patterns` (plugin:react-patterns, plugin:react-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\react-patterns\\skills\\react-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\react-patterns\\skills\\react-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1661,7 +1661,7 @@
       "severity": "error",
       "target": "react-testing",
       "message": "2 skills share `name: react-testing` (plugin:react-testing, plugin:react-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\react-testing\\skills\\react-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\react-testing\\skills\\react-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1669,7 +1669,7 @@
       "severity": "error",
       "target": "redis-patterns",
       "message": "2 skills share `name: redis-patterns` (plugin:redis-patterns, plugin:redis-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\redis-patterns\\skills\\redis-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\redis-patterns\\skills\\redis-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1677,7 +1677,7 @@
       "severity": "error",
       "target": "regex-vs-llm-structured-text",
       "message": "3 skills share `name: regex-vs-llm-structured-text` (plugin:regex-vs-llm-structured-text, plugin:regex-vs-llm-structured-text, plugin:regex-vs-llm-structured-text)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\regex-vs-llm-structured-text\\skills\\regex-vs-llm-structured-text\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\regex-vs-llm-structured-text\\skills\\regex-vs-llm-structured-text\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1685,7 +1685,7 @@
       "severity": "error",
       "target": "remotion-video-creation",
       "message": "3 skills share `name: remotion-video-creation` (plugin:remotion-video-creation, plugin:remotion-video-creation, plugin:remotion-video-creation)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\remotion-video-creation\\skills\\remotion-video-creation\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\remotion-video-creation\\skills\\remotion-video-creation\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1693,7 +1693,7 @@
       "severity": "error",
       "target": "repo-scan",
       "message": "3 skills share `name: repo-scan` (plugin:repo-scan, plugin:repo-scan, plugin:repo-scan)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\repo-scan\\skills\\repo-scan\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\repo-scan\\skills\\repo-scan\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1701,7 +1701,7 @@
       "severity": "error",
       "target": "research-ops",
       "message": "3 skills share `name: research-ops` (plugin:research-ops, plugin:research-ops, plugin:research-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\research-ops\\skills\\research-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\research-ops\\skills\\research-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1709,7 +1709,7 @@
       "severity": "error",
       "target": "returns-reverse-logistics",
       "message": "3 skills share `name: returns-reverse-logistics` (plugin:returns-reverse-logistics, plugin:returns-reverse-logistics, plugin:returns-reverse-logistics)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\returns-reverse-logistics\\skills\\returns-reverse-logistics\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\returns-reverse-logistics\\skills\\returns-reverse-logistics\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1717,7 +1717,7 @@
       "severity": "error",
       "target": "rules-distill",
       "message": "3 skills share `name: rules-distill` (plugin:rules-distill, plugin:rules-distill, plugin:rules-distill)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\rules-distill\\skills\\rules-distill\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\rules-distill\\skills\\rules-distill\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1725,7 +1725,7 @@
       "severity": "error",
       "target": "rust-patterns",
       "message": "6 skills share `name: rust-patterns` (plugin:rust-patterns, plugin:rust-patterns, plugin:rust-patterns, plugin:rust-patterns, plugin:rust-patterns, plugin:rust-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\rust-patterns\\skills\\rust-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\rust-patterns\\skills\\rust-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1733,7 +1733,7 @@
       "severity": "error",
       "target": "rust-testing",
       "message": "6 skills share `name: rust-testing` (plugin:rust-testing, plugin:rust-testing, plugin:rust-testing, plugin:rust-testing, plugin:rust-testing, plugin:rust-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\rust-testing\\skills\\rust-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\rust-testing\\skills\\rust-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1741,7 +1741,7 @@
       "severity": "error",
       "target": "safety-guard",
       "message": "3 skills share `name: safety-guard` (plugin:safety-guard, plugin:safety-guard, plugin:safety-guard)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\safety-guard\\skills\\safety-guard\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\safety-guard\\skills\\safety-guard\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1749,7 +1749,7 @@
       "severity": "error",
       "target": "santa-method",
       "message": "3 skills share `name: santa-method` (plugin:santa-method, plugin:santa-method, plugin:santa-method)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\santa-method\\skills\\santa-method\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\santa-method\\skills\\santa-method\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1757,7 +1757,7 @@
       "severity": "error",
       "target": "scholar-evaluation",
       "message": "2 skills share `name: scholar-evaluation` (plugin:scientific-thinking-scholar-evaluation, plugin:scientific-thinking-scholar-evaluation)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-thinking-scholar-evaluation\\skills\\scientific-thinking-scholar-evaluation\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-thinking-scholar-evaluation\\skills\\scientific-thinking-scholar-evaluation\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1765,7 +1765,7 @@
       "severity": "error",
       "target": "search-first",
       "message": "4 skills share `name: search-first` (plugin:search-first, plugin:search-first, plugin:search-first, plugin:search-first)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\search-first\\skills\\search-first\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\search-first\\skills\\search-first\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1773,7 +1773,7 @@
       "severity": "error",
       "target": "security-bounty-hunter",
       "message": "3 skills share `name: security-bounty-hunter` (plugin:security-bounty-hunter, plugin:security-bounty-hunter, plugin:security-bounty-hunter)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\security-bounty-hunter\\skills\\security-bounty-hunter\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\security-bounty-hunter\\skills\\security-bounty-hunter\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1781,7 +1781,7 @@
       "severity": "error",
       "target": "security-review",
       "message": "9 skills share `name: security-review` (plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review, plugin:security-review)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\security-review\\skills\\security-review\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\security-review\\skills\\security-review\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1789,7 +1789,7 @@
       "severity": "error",
       "target": "security-scan",
       "message": "3 skills share `name: security-scan` (plugin:security-scan, plugin:security-scan, plugin:security-scan)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\security-scan\\skills\\security-scan\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\security-scan\\skills\\security-scan\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1797,7 +1797,7 @@
       "severity": "error",
       "target": "seo",
       "message": "3 skills share `name: seo` (plugin:seo, plugin:seo, plugin:seo)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\seo\\skills\\seo\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\seo\\skills\\seo\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1805,7 +1805,7 @@
       "severity": "error",
       "target": "skill-comply",
       "message": "3 skills share `name: skill-comply` (plugin:skill-comply, plugin:skill-comply, plugin:skill-comply)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-comply\\skills\\skill-comply\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-comply\\skills\\skill-comply\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1813,7 +1813,7 @@
       "severity": "error",
       "target": "skill-scout",
       "message": "2 skills share `name: skill-scout` (plugin:skill-scout, plugin:skill-scout)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-scout\\skills\\skill-scout\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-scout\\skills\\skill-scout\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1821,7 +1821,7 @@
       "severity": "error",
       "target": "skill-stocktake",
       "message": "3 skills share `name: skill-stocktake` (plugin:skill-stocktake, plugin:skill-stocktake, plugin:skill-stocktake)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-stocktake\\skills\\skill-stocktake\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\skill-stocktake\\skills\\skill-stocktake\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1829,7 +1829,7 @@
       "severity": "error",
       "target": "slides",
       "message": "2 skills share `name: slides` (plugin:slides, plugin:slides)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\slides\\skills\\slides\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\slides\\skills\\slides\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1837,7 +1837,7 @@
       "severity": "error",
       "target": "social-graph-ranker",
       "message": "3 skills share `name: social-graph-ranker` (plugin:social-graph-ranker, plugin:social-graph-ranker, plugin:social-graph-ranker)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\social-graph-ranker\\skills\\social-graph-ranker\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\social-graph-ranker\\skills\\social-graph-ranker\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1845,7 +1845,7 @@
       "severity": "error",
       "target": "springboot-patterns",
       "message": "6 skills share `name: springboot-patterns` (plugin:springboot-patterns, plugin:springboot-patterns, plugin:springboot-patterns, plugin:springboot-patterns, plugin:springboot-patterns, plugin:springboot-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\springboot-patterns\\skills\\springboot-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\springboot-patterns\\skills\\springboot-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1853,7 +1853,7 @@
       "severity": "error",
       "target": "springboot-security",
       "message": "6 skills share `name: springboot-security` (plugin:springboot-security, plugin:springboot-security, plugin:springboot-security, plugin:springboot-security, plugin:springboot-security, plugin:springboot-security)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\springboot-security\\skills\\springboot-security\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\springboot-security\\skills\\springboot-security\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1861,7 +1861,7 @@
       "severity": "error",
       "target": "springboot-tdd",
       "message": "5 skills share `name: springboot-tdd` (plugin:springboot-tdd, plugin:springboot-tdd, plugin:springboot-tdd, plugin:springboot-tdd, plugin:springboot-tdd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\springboot-tdd\\skills\\springboot-tdd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\springboot-tdd\\skills\\springboot-tdd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1869,7 +1869,7 @@
       "severity": "error",
       "target": "springboot-verification",
       "message": "5 skills share `name: springboot-verification` (plugin:springboot-verification, plugin:springboot-verification, plugin:springboot-verification, plugin:springboot-verification, plugin:springboot-verification)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\springboot-verification\\skills\\springboot-verification\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\es\\skills\\springboot-verification\\skills\\springboot-verification\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1877,7 +1877,7 @@
       "severity": "error",
       "target": "strategic-compact",
       "message": "7 skills share `name: strategic-compact` (plugin:strategic-compact, plugin:strategic-compact, plugin:strategic-compact, plugin:strategic-compact, plugin:strategic-compact, plugin:strategic-compact, plugin:strategic-compact)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\strategic-compact\\skills\\strategic-compact\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\strategic-compact\\skills\\strategic-compact\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1885,7 +1885,7 @@
       "severity": "error",
       "target": "swift-actor-persistence",
       "message": "4 skills share `name: swift-actor-persistence` (plugin:swift-actor-persistence, plugin:swift-actor-persistence, plugin:swift-actor-persistence, plugin:swift-actor-persistence)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\swift-actor-persistence\\skills\\swift-actor-persistence\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\swift-actor-persistence\\skills\\swift-actor-persistence\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1893,7 +1893,7 @@
       "severity": "error",
       "target": "swift-concurrency-6-2",
       "message": "3 skills share `name: swift-concurrency-6-2` (plugin:swift-concurrency-6-2, plugin:swift-concurrency-6-2, plugin:swift-concurrency-6-2)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\swift-concurrency-6-2\\skills\\swift-concurrency-6-2\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\swift-concurrency-6-2\\skills\\swift-concurrency-6-2\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1901,7 +1901,7 @@
       "severity": "error",
       "target": "swift-protocol-di-testing",
       "message": "4 skills share `name: swift-protocol-di-testing` (plugin:swift-protocol-di-testing, plugin:swift-protocol-di-testing, plugin:swift-protocol-di-testing, plugin:swift-protocol-di-testing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\swift-protocol-di-testing\\skills\\swift-protocol-di-testing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.kiro\\skills\\swift-protocol-di-testing\\skills\\swift-protocol-di-testing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1909,7 +1909,7 @@
       "severity": "error",
       "target": "swiftui-patterns",
       "message": "3 skills share `name: swiftui-patterns` (plugin:swiftui-patterns, plugin:swiftui-patterns, plugin:swiftui-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\swiftui-patterns\\skills\\swiftui-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\swiftui-patterns\\skills\\swiftui-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1917,7 +1917,7 @@
       "severity": "error",
       "target": "tdd",
       "message": "2 skills share `name: tdd` (plugin:tdd, plugin:tdd)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\mattpocock-skills__claude-plugins-official\\skills\\engineering\\tdd\\skills\\tdd\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\mattpocock-skills__claude-plugins-official\\skills\\engineering\\tdd\\skills\\tdd\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1925,7 +1925,7 @@
       "severity": "error",
       "target": "tdd-workflow",
       "message": "9 skills share `name: tdd-workflow` (plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow, plugin:tdd-workflow)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\tdd-workflow\\skills\\tdd-workflow\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\tdd-workflow\\skills\\tdd-workflow\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1933,7 +1933,7 @@
       "severity": "error",
       "target": "teach",
       "message": "2 skills share `name: teach` (plugin:teach, plugin:teach)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\mattpocock-skills__claude-plugins-official\\skills\\productivity\\teach\\skills\\teach\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\mattpocock-skills__claude-plugins-official\\skills\\productivity\\teach\\skills\\teach\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1941,7 +1941,7 @@
       "severity": "error",
       "target": "team-builder",
       "message": "3 skills share `name: team-builder` (plugin:team-builder, plugin:team-builder, plugin:team-builder)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\team-builder\\skills\\team-builder\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\team-builder\\skills\\team-builder\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1949,7 +1949,7 @@
       "severity": "error",
       "target": "terminal-ops",
       "message": "3 skills share `name: terminal-ops` (plugin:terminal-ops, plugin:terminal-ops, plugin:terminal-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\terminal-ops\\skills\\terminal-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\terminal-ops\\skills\\terminal-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1957,7 +1957,7 @@
       "severity": "error",
       "target": "tinystruct-patterns",
       "message": "2 skills share `name: tinystruct-patterns` (plugin:tinystruct-patterns, plugin:tinystruct-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\tinystruct-patterns\\skills\\tinystruct-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\tinystruct-patterns\\skills\\tinystruct-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1965,7 +1965,7 @@
       "severity": "error",
       "target": "token-budget-advisor",
       "message": "3 skills share `name: token-budget-advisor` (plugin:token-budget-advisor, plugin:token-budget-advisor, plugin:token-budget-advisor)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\token-budget-advisor\\skills\\token-budget-advisor\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\token-budget-advisor\\skills\\token-budget-advisor\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1973,7 +1973,7 @@
       "severity": "error",
       "target": "ui-demo",
       "message": "3 skills share `name: ui-demo` (plugin:ui-demo, plugin:ui-demo, plugin:ui-demo)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ui-demo\\skills\\ui-demo\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ui-demo\\skills\\ui-demo\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1981,7 +1981,7 @@
       "severity": "error",
       "target": "ui-styling",
       "message": "2 skills share `name: ui-styling` (plugin:ui-styling, plugin:ui-styling)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\ui-styling\\skills\\ui-styling\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\ui-styling\\skills\\ui-styling\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1989,7 +1989,7 @@
       "severity": "error",
       "target": "ui-to-vue",
       "message": "2 skills share `name: ui-to-vue` (plugin:ui-to-vue, plugin:ui-to-vue)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ui-to-vue\\skills\\ui-to-vue\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\ui-to-vue\\skills\\ui-to-vue\\SKILL.md",
       "suggestion": null
     },
     {
@@ -1997,7 +1997,7 @@
       "severity": "error",
       "target": "unified-memory",
       "message": "3 skills share `name: unified-memory` (plugin:unified-memory, plugin:unified-memory, plugin:unified-memory)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\unified-memory\\skills\\unified-memory\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\unified-memory\\skills\\unified-memory\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2005,7 +2005,7 @@
       "severity": "error",
       "target": "unified-notifications-ops",
       "message": "3 skills share `name: unified-notifications-ops` (plugin:unified-notifications-ops, plugin:unified-notifications-ops, plugin:unified-notifications-ops)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\unified-notifications-ops\\skills\\unified-notifications-ops\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\unified-notifications-ops\\skills\\unified-notifications-ops\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2013,7 +2013,7 @@
       "severity": "error",
       "target": "uspto-database",
       "message": "2 skills share `name: uspto-database` (plugin:scientific-db-uspto-database, plugin:scientific-db-uspto-database)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-db-uspto-database\\skills\\scientific-db-uspto-database\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\scientific-db-uspto-database\\skills\\scientific-db-uspto-database\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2021,7 +2021,7 @@
       "severity": "error",
       "target": "verification-loop",
       "message": "9 skills share `name: verification-loop` (plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop, plugin:verification-loop)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\verification-loop\\skills\\verification-loop\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\verification-loop\\skills\\verification-loop\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2029,7 +2029,7 @@
       "severity": "error",
       "target": "video-editing",
       "message": "4 skills share `name: video-editing` (plugin:video-editing, plugin:video-editing, plugin:video-editing, plugin:video-editing)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\video-editing\\skills\\video-editing\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\video-editing\\skills\\video-editing\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2037,7 +2037,7 @@
       "severity": "error",
       "target": "videodb",
       "message": "3 skills share `name: videodb` (plugin:videodb, plugin:videodb, plugin:videodb)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\videodb\\skills\\videodb\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\videodb\\skills\\videodb\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2045,7 +2045,7 @@
       "severity": "error",
       "target": "visa-doc-translate",
       "message": "3 skills share `name: visa-doc-translate` (plugin:visa-doc-translate, plugin:visa-doc-translate, plugin:visa-doc-translate)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\visa-doc-translate\\skills\\visa-doc-translate\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\visa-doc-translate\\skills\\visa-doc-translate\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2053,7 +2053,7 @@
       "severity": "error",
       "target": "vite-patterns",
       "message": "2 skills share `name: vite-patterns` (plugin:vite-patterns, plugin:vite-patterns)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\vite-patterns\\skills\\vite-patterns\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\vite-patterns\\skills\\vite-patterns\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2061,7 +2061,7 @@
       "severity": "error",
       "target": "windows-desktop-e2e",
       "message": "2 skills share `name: windows-desktop-e2e` (plugin:windows-desktop-e2e, plugin:windows-desktop-e2e)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\windows-desktop-e2e\\skills\\windows-desktop-e2e\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\windows-desktop-e2e\\skills\\windows-desktop-e2e\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2069,7 +2069,7 @@
       "severity": "error",
       "target": "workspace-surface-audit",
       "message": "3 skills share `name: workspace-surface-audit` (plugin:workspace-surface-audit, plugin:workspace-surface-audit, plugin:workspace-surface-audit)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\workspace-surface-audit\\skills\\workspace-surface-audit\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\docs\\ja-JP\\skills\\workspace-surface-audit\\skills\\workspace-surface-audit\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2077,7 +2077,7 @@
       "severity": "error",
       "target": "x-api",
       "message": "4 skills share `name: x-api` (plugin:x-api, plugin:x-api, plugin:x-api, plugin:x-api)",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\x-api\\skills\\x-api\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\.agents\\skills\\x-api\\skills\\x-api\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2085,7 +2085,7 @@
       "severity": "error",
       "target": "mem-search",
       "message": "invalid YAML in frontmatter: mapping values are not allowed here",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\mem-search\\skills\\mem-search\\SKILL.md",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\mem-search\\skills\\mem-search\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2093,7 +2093,7 @@
       "severity": "warning",
       "target": "graphflow",
       "message": "SKILL.md body is 28323 chars — move detail into references/",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\graphflow\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\graphflow\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2101,7 +2101,7 @@
       "severity": "warning",
       "target": "graphify",
       "message": "SKILL.md body is 50379 chars — move detail into references/",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\graphify\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\graphify\\SKILL.md",
       "suggestion": null
     },
     {
@@ -2109,7 +2109,7 @@
       "severity": "warning",
       "target": "agent-reach",
       "message": "references/social.md links onward to another .md — keep references one level deep so the agent doesn't miss nested instructions",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\agent-reach\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\agent-reach\\SKILL.md",
       "suggestion": "Link deep files directly from SKILL.md, or inline the content."
     },
     {
@@ -2117,7 +2117,7 @@
       "severity": "warning",
       "target": "hyperframes",
       "message": "references/skill-lifecycle.md links onward to another .md — keep references one level deep so the agent doesn't miss nested instructions",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\hyperframes\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\hyperframes\\SKILL.md",
       "suggestion": "Link deep files directly from SKILL.md, or inline the content."
     },
     {
@@ -2125,7 +2125,7 @@
       "severity": "warning",
       "target": "hyperframes-cli",
       "message": "references/cloud.md links onward to another .md — keep references one level deep so the agent doesn't miss nested instructions",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\hyperframes-cli\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\hyperframes-cli\\SKILL.md",
       "suggestion": "Link deep files directly from SKILL.md, or inline the content."
     },
     {
@@ -2133,7 +2133,7 @@
       "severity": "warning",
       "target": "hyperframes-registry",
       "message": "references/contributing.md links onward to another .md — keep references one level deep so the agent doesn't miss nested instructions",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\hyperframes-registry\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\hyperframes-registry\\SKILL.md",
       "suggestion": "Link deep files directly from SKILL.md, or inline the content."
     },
     {
@@ -2141,7 +2141,7 @@
       "severity": "warning",
       "target": "remotion-to-hyperframes",
       "message": "references/api-map.md links onward to another .md — keep references one level deep so the agent doesn't miss nested instructions",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\remotion-to-hyperframes\\SKILL.md",
+      "path": "<home>\\.claude\\skills\\remotion-to-hyperframes\\SKILL.md",
       "suggestion": "Link deep files directly from SKILL.md, or inline the content."
     },
     {
@@ -2149,7 +2149,7 @@
       "severity": "warning",
       "target": "Agent Cost Report",
       "message": "scripts/classify.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\classify.py",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\classify.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2157,7 +2157,7 @@
       "severity": "warning",
       "target": "Agent Cost Report",
       "message": "scripts/measure.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\measure.py",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\measure.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2165,7 +2165,7 @@
       "severity": "warning",
       "target": "Agent Cost Report",
       "message": "scripts/patterns.py makes pipes a remote script straight into a shell — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\patterns.py",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\patterns.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2173,7 +2173,7 @@
       "severity": "warning",
       "target": "Agent Cost Report",
       "message": "scripts/prices.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\prices.py",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\agent-cost-report\\skills\\agent-cost-report\\scripts\\acr\\prices.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2181,7 +2181,7 @@
       "severity": "warning",
       "target": "continuous-learning-v2",
       "message": "scripts/instinct-cli.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\skills\\continuous-learning-v2\\skills\\continuous-learning-v2\\scripts\\instinct-cli.py",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\skills\\continuous-learning-v2\\skills\\continuous-learning-v2\\scripts\\instinct-cli.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2189,7 +2189,7 @@
       "severity": "warning",
       "target": "design",
       "message": "scripts/generate.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\design\\skills\\design\\scripts\\logo\\generate.py",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\.claude\\skills\\design\\skills\\design\\scripts\\logo\\generate.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2197,7 +2197,7 @@
       "severity": "warning",
       "target": "design",
       "message": "scripts/generate.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\cli\\assets\\skills\\design\\skills\\design\\scripts\\logo\\generate.py",
+      "path": "<home>\\.claude\\plugins\\ui-ux-pro-max__ui-ux-pro-max-skill\\cli\\assets\\skills\\design\\skills\\design\\scripts\\logo\\generate.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2205,7 +2205,7 @@
       "severity": "warning",
       "target": "hyperframes",
       "message": "scripts/bake-basemap.mjs makes a fetch() to a remote URL — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\hyperframes\\scripts\\bake-basemap.mjs",
+      "path": "<home>\\.claude\\skills\\hyperframes\\scripts\\bake-basemap.mjs",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2213,7 +2213,7 @@
       "severity": "warning",
       "target": "hyperframes",
       "message": "scripts/locate.mjs makes a fetch() to a remote URL — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\skills\\hyperframes\\scripts\\locate.mjs",
+      "path": "<home>\\.claude\\skills\\hyperframes\\scripts\\locate.mjs",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2221,7 +2221,7 @@
       "severity": "warning",
       "target": "mode-creator",
       "message": "scripts/configure-telegram.mjs makes a fetch() to a remote URL — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\claude-mem__thedotmack\\skills\\mode-creator\\skills\\mode-creator\\scripts\\configure-telegram.mjs",
+      "path": "<home>\\.claude\\plugins\\claude-mem__thedotmack\\skills\\mode-creator\\skills\\mode-creator\\scripts\\configure-telegram.mjs",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2229,7 +2229,7 @@
       "severity": "warning",
       "target": "taste-application",
       "message": "scripts/falapi.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\falapi.py",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\falapi.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2237,7 +2237,7 @@
       "severity": "warning",
       "target": "taste-application",
       "message": "scripts/falapi.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\taste\\falapi.py",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\taste\\falapi.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2245,7 +2245,7 @@
       "severity": "warning",
       "target": "taste-application",
       "message": "scripts/assets.py makes an HTTP request (python-requests) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\tasteforge\\assets.py",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\skills\\taste-application\\skills\\taste-application\\scripts\\tasteforge\\assets.py",
       "suggestion": "Audit the script; confirm the call is expected."
     },
     {
@@ -2253,7 +2253,7 @@
       "severity": "warning",
       "target": "taste-distillation",
       "message": "scripts/falapi.py makes an HTTP request (urllib) — worth a look",
-      "path": "C:\\Users\\Abdul Mateen\\AppData\\Local\\Temp\\skill-diag-bl\\corpus\\home\\.claude\\plugins\\ecc__ecc\\skills\\taste-distillation\\skills\\taste-distillation\\scripts\\taste\\falapi.py",
+      "path": "<home>\\.claude\\plugins\\ecc__ecc\\skills\\taste-distillation\\skills\\taste-distillation\\scripts\\taste\\falapi.py",
       "suggestion": "Audit the script; confirm the call is expected."
     }
   ]
