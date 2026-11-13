@@ -134,19 +134,43 @@ export function renderWhy(
     );
 
     if (!simulation) {
-      out.push(pc.dim('  drop simulation: listing is within budget — no description is dropped'));
-    } else if (simulation.kind === 'range') {
-      out.push(
-        pc.yellow(
-          `  drop simulation: if the budget is exceeded by ${simulation.excessChars.toLocaleString('en-US')} chars, between ${simulation.min} and ${simulation.max} skill descriptions will be dropped. Exact skill cannot be predicted without calibration. Run \`calibration/manual-drop-order.sh\` with a working host to enable precise simulation.`,
-        ),
-      );
+      out.push(pc.dim('  drop simulation: no droppable description — nothing to simulate'));
     } else {
-      out.push(
-        pc.yellow(
-          `  drop simulation: rule ${simulation.rule} drops ${simulation.skills.length} description${simulation.skills.length === 1 ? '' : 's'}: ${simulation.skills.join(', ')}`,
-        ),
-      );
+      switch (simulation.kind) {
+        case 'none':
+          out.push(
+            pc.dim('  drop simulation: the listing is within budget — no description is dropped'),
+          );
+          break;
+        case 'all':
+          out.push(
+            pc.yellow(
+              `  drop simulation: the entire budget is exhausted — all ${simulation.count} skill descriptions will be dropped.`,
+            ),
+          );
+          break;
+        case 'exact-count':
+          out.push(
+            pc.yellow(
+              `  drop simulation: the listing is ${simulation.excessChars.toLocaleString('en-US')} chars over budget; exactly ${simulation.count} skill description${simulation.count === 1 ? '' : 's'} will be dropped (worst-case bound; exact skills require calibration). Run \`calibration/manual-drop-order.sh\` with a working host to enable precise simulation.`,
+            ),
+          );
+          break;
+        case 'range':
+          out.push(
+            pc.yellow(
+              `  drop simulation: the listing is ${simulation.excessChars.toLocaleString('en-US')} chars over budget. Between ${simulation.min} and ${simulation.max} skill descriptions will be dropped (worst-case bound; exact skills require calibration). Run \`calibration/manual-drop-order.sh\` with a working host to enable precise simulation.`,
+            ),
+          );
+          break;
+        case 'set':
+          out.push(
+            pc.yellow(
+              `  drop simulation: rule ${simulation.rule} drops ${simulation.skills.length} description${simulation.skills.length === 1 ? '' : 's'}: ${simulation.skills.join(', ')}`,
+            ),
+          );
+          break;
+      }
     }
     out.push(pc.dim('  runtime activation: not available (OTEL ingest is v0.2)'));
   }

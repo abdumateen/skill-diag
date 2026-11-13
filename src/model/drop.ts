@@ -3,14 +3,19 @@
  *
  * The contract records that overflow removes *descriptions* (names stay listed)
  * and that the drop order is `unknown` until a working host can be calibrated.
- * With an unknown order the only honest answer is a range; a calibrated,
- * deterministic rule yields the exact set it predicts.
+ * With an unknown order the only honest answer is a bound: `none` when the
+ * listing fits, `all` when the overflow exceeds every description combined,
+ * `exact-count` when the worst and best cases agree, and `range` otherwise.
+ * A calibrated, deterministic rule yields the exact set it predicts.
  */
 
-import type { Budget, Skill } from '../types.js';
+import type { Budget, DropOrder, Skill } from '../types.js';
 import { commandName, displayName } from '../types.js';
 
 export type DropSimulation =
+  | { kind: 'none'; excessChars: number }
+  | { kind: 'all'; count: number; excessChars: number; note: string }
+  | { kind: 'exact-count'; count: number; excessChars: number }
   | {
       kind: 'range';
       min: number;
@@ -18,20 +23,15 @@ export type DropSimulation =
       excessChars: number;
       reason: 'unknown-drop-order';
     }
-  | {
-      kind: 'set';
-      skills: string[];
-      rule: string;
-      excessChars: number;
-    };
+  | { kind: 'set'; skills: string[]; rule: string; excessChars: number };
 
 export interface DropBehavior {
   namesAlwaysListed: boolean;
-  dropOrder: string;
+  dropOrder: DropOrder;
 }
 
 /** Rules the tool can simulate from data it already holds. */
-const SIMULATABLE = new Set(['reverse-alphabetical', 'reverse-registration']);
+const SIMULATABLE = new Set<string>(['reverse-alphabetical', 'reverse-registration']);
 
 function descriptionCost(skill: Skill, cap: number): number {
   const desc =
@@ -62,35 +62,48 @@ export function simulateDrop(
   dropBehavior: DropBehavior,
 ): DropSimulation | null {
   const excessChars = Math.round(budget.effectiveChars - budget.limitChars);
-  if (excessChars <= 0 || skills.length === 0) return null;
+  if (excessChars <= 0) return { kind: 'none', excessChars: 0 };
 
   const cap = budget.perEntryCapChars;
   const costs = skills
     .map((s) => freedChars(s, cap, dropBehavior.namesAlwaysListed))
     .filter((c) => c > 0);
 
+  // Nothing can free chars: no description to drop.
   if (costs.length === 0) return null;
 
-  if (!SIMULATABLE.has(dropBehavior.dropOrder)) {
-    const maxCost = Math.max(...costs);
-    const minCost = Math.min(...costs);
-    // Brief §6.1: lower = floor(excess / max description), upper =
-    // ceil(excess / min description), clamped to the entries that can free
-    // chars at all. An exceeded budget cannot drop nothing, so the lower bound
-    // is raised to 1.
-    const min = Math.max(1, Math.min(costs.length, Math.floor(excessChars / maxCost)));
-    const max = Math.max(min, Math.min(costs.length, Math.ceil(excessChars / minCost)));
-    return { kind: 'range', min, max, excessChars, reason: 'unknown-drop-order' };
+  if (SIMULATABLE.has(dropBehavior.dropOrder)) {
+    const chosen: string[] = [];
+    let freed = 0;
+    for (const skill of orderedBy(dropBehavior.dropOrder, skills)) {
+      if (freed >= excessChars) break;
+      const cost = freedChars(skill, cap, dropBehavior.namesAlwaysListed);
+      if (cost === 0) continue;
+      freed += cost;
+      chosen.push(commandName(skill));
+    }
+    return { kind: 'set', skills: chosen, rule: dropBehavior.dropOrder, excessChars };
   }
 
-  const chosen: string[] = [];
-  let freed = 0;
-  for (const skill of orderedBy(dropBehavior.dropOrder, skills)) {
-    if (freed >= excessChars) break;
-    const cost = freedChars(skill, cap, dropBehavior.namesAlwaysListed);
-    if (cost === 0) continue;
-    freed += cost;
-    chosen.push(commandName(skill));
+  const N = costs.length;
+  const maxDesc = Math.max(...costs);
+  const minDesc = Math.max(1, Math.min(...costs));
+
+  if (excessChars >= N * maxDesc) {
+    return {
+      kind: 'all',
+      count: N,
+      excessChars,
+      note: 'the entire budget is exhausted — all descriptions will be dropped',
+    };
   }
-  return { kind: 'set', skills: chosen, rule: dropBehavior.dropOrder, excessChars };
+
+  // Lower bound assumes every drop frees the largest description; upper bound
+  // assumes every drop frees the smallest. Both clamped to the droppable set.
+  const min = Math.max(1, Math.min(N, Math.floor(excessChars / maxDesc)));
+  const max = Math.min(N, Math.ceil(excessChars / minDesc));
+
+  if (min === max) return { kind: 'exact-count', count: min, excessChars };
+
+  return { kind: 'range', min, max, excessChars, reason: 'unknown-drop-order' };
 }

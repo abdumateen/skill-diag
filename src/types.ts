@@ -129,6 +129,20 @@ export interface CorpusReport {
   budget: Budget;
 }
 
+/** What the host does with an over-budget listing, once calibrated. */
+export type DropOrder =
+  | 'least-recently-invoked'
+  | 'reverse-alphabetical'
+  | 'reverse-registration'
+  | 'never-invoked-first'
+  | 'unknown';
+
+/** How much the drop-order calibration can be trusted. */
+export type DropConfidence = 'high' | 'medium' | 'low' | 'none';
+
+/** How the drop order was established. */
+export type DropCalibrationMethod = '5-trial-harness' | 'manual-script' | 'unverified';
+
 export const NAME_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 export const NAME_MAX = 64;
 export const DESCRIPTION_MAX = 1024;

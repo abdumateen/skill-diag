@@ -4,6 +4,7 @@
  */
 
 import raw from './claude-code.json';
+import type { DropCalibrationMethod, DropConfidence, DropOrder } from '../types.js';
 
 export interface Contract {
   host: string;
@@ -44,9 +45,9 @@ export interface Contract {
     namesAlwaysListed: boolean;
     dropTarget: string;
     /** `unknown` until a 5-trial harness observes the host's real drop order. */
-    dropOrder: string;
-    confidence: string;
-    calibrationMethod: string;
+    dropOrder: DropOrder;
+    confidence: DropConfidence;
+    calibrationMethod: DropCalibrationMethod;
     /** Result file a calibration run would write. */
     evidence: string;
     reason?: string;

@@ -1,0 +1,16 @@
+{
+  "version": "1",
+  "tool": { "name": "skill-diag", "version": "0.1.0" },
+  "skills": [
+    {
+      "skill": {
+        "name": "alpha",
+        "path": "/tmp/home/.claude/skills/alpha/SKILL.md",
+        "source": "user"
+      },
+      "findings": [],
+      "listingCost": 640,
+      "dropSimulation": { "kind": "none", "excessChars": 0 }
+    }
+  ]
+}

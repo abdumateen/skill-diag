@@ -36,6 +36,9 @@
           "dropSimulation": {
             "oneOf": [
               { "type": "null" },
+              { "$ref": "#/definitions/dropNone" },
+              { "$ref": "#/definitions/dropAll" },
+              { "$ref": "#/definitions/dropExactCount" },
               { "$ref": "#/definitions/dropRange" },
               { "$ref": "#/definitions/dropSet" }
             ]
@@ -71,6 +74,36 @@
             "confidence": { "enum": ["certain", "likely", "heuristic", "diagnostic"] }
           }
         }
+      }
+    },
+    "dropNone": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "excessChars"],
+      "properties": {
+        "kind": { "const": "none" },
+        "excessChars": { "const": 0 }
+      }
+    },
+    "dropAll": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "count", "excessChars", "note"],
+      "properties": {
+        "kind": { "const": "all" },
+        "count": { "type": "integer", "minimum": 1 },
+        "excessChars": { "type": "number" },
+        "note": { "type": "string" }
+      }
+    },
+    "dropExactCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "count", "excessChars"],
+      "properties": {
+        "kind": { "const": "exact-count" },
+        "count": { "type": "integer", "minimum": 1 },
+        "excessChars": { "type": "number" }
       }
     },
     "dropRange": {

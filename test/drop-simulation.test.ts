@@ -32,7 +32,7 @@ function budgetOf(effectiveChars: number, limitChars = 10_000): Budget {
   };
 }
 
-const UNKNOWN = { namesAlwaysListed: true, dropOrder: 'unknown' };
+const UNKNOWN = { namesAlwaysListed: true, dropOrder: 'unknown' } as const;
 
 describe('simulateDrop', () => {
   it('reports a range when the drop order is unknown', () => {
@@ -48,8 +48,26 @@ describe('simulateDrop', () => {
     });
   });
 
-  it('returns null when the listing fits the budget', () => {
-    expect(simulateDrop([skill('a', 100)], budgetOf(9_000), UNKNOWN)).toBeNull();
+  it('reports none when the listing fits the budget', () => {
+    expect(simulateDrop([skill('a', 100)], budgetOf(9_000), UNKNOWN)).toEqual({
+      kind: 'none',
+      excessChars: 0,
+    });
+  });
+
+  it('reports exact-count when the worst and best case agree', () => {
+    const sim = simulateDrop([skill('a', 1000)], budgetOf(10_500), UNKNOWN);
+    expect(sim).toEqual({ kind: 'exact-count', count: 1, excessChars: 500 });
+  });
+
+  it('reports all when the excess covers every description', () => {
+    const sim = simulateDrop([skill('a', 400), skill('b', 400)], budgetOf(11_000), UNKNOWN);
+    expect(sim).toEqual({
+      kind: 'all',
+      count: 2,
+      excessChars: 1000,
+      note: 'the entire budget is exhausted — all descriptions will be dropped',
+    });
   });
 
   it('names the exact set for a simulatable rule', () => {
@@ -89,7 +107,8 @@ describe('--why drop simulation', () => {
       budget: budgetOf(12_000),
     };
     const out = renderWhy(report, 'alpha', { color: false, dropBehavior: UNKNOWN });
-    expect(out).toContain('between 2 and 3 skill descriptions will be dropped');
+    expect(out).toContain('Between 2 and 3 skill descriptions will be dropped');
+    expect(out).toContain('worst-case bound; exact skills require calibration');
     expect(out).toContain('manual-drop-order.sh');
   });
 
@@ -117,7 +136,9 @@ describe('schema/report-v1.json', () => {
     JSON.parse(readFileSync('schema/report-v1.json', 'utf8')) as object,
   );
 
-  it.each(['why-range.json', 'why-set.json'])('accepts fixtures/drop/%s', (file) => {
+  it.each(['why-range.json', 'why-set.json', 'why-none.json', 'why-all.json'])(
+    'accepts fixtures/drop/%s',
+    (file) => {
     const doc = JSON.parse(readFileSync(`test/fixtures/drop/${file}`, 'utf8')) as object;
     expect(validate(doc), JSON.stringify(validate.errors)).toBe(true);
   });
