@@ -8,6 +8,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import type { DedupeMode } from '../discovery/walk.js';
 import {
   DEFAULT_SURVIVAL_PARAMS,
   parseRoutingParams,
@@ -18,6 +19,8 @@ import { DEFAULT_ROUTING_CONFIG, type RoutingConfig } from './routing.js';
 export const CONFIG_FILENAME = '.skill-diag.json';
 
 export interface ConfigFile {
+  /** Discovery dedupe mode (Phase 2c.3). */
+  dedupe?: 'enabled-latest' | 'all';
   routing?: {
     r?: number;
     p?: number;
@@ -30,6 +33,7 @@ export interface ConfigFile {
 }
 
 export const DEFAULT_CONFIG_FILE = {
+  dedupe: 'enabled-latest',
   routing: {
     r: DEFAULT_SURVIVAL_PARAMS.r,
     p: DEFAULT_SURVIVAL_PARAMS.p,
@@ -96,6 +100,21 @@ export function resolveRoutingConfig(
     shingleSize: Math.round(positive(file.shingleSize, DEFAULT_ROUTING_CONFIG.shingleSize)),
     minTokens: Math.round(positive(file.minTokens, DEFAULT_ROUTING_CONFIG.minTokens)),
   };
+}
+
+/**
+ * Flag beats config beats default. `off` is accepted on the flag as an alias for
+ * `all`; the config field is narrowed to the two documented values.
+ */
+export function resolveDedupeMode(
+  projectDir: string,
+  opts: { dedupe?: string } = {},
+): DedupeMode {
+  const flag = opts.dedupe;
+  if (flag === 'enabled-latest' || flag === 'all' || flag === 'off') return flag;
+  const file = readConfig(projectDir).dedupe;
+  if (file === 'enabled-latest' || file === 'all') return file;
+  return 'enabled-latest';
 }
 
 export function writeDefaultConfig(projectDir: string): { path: string; created: boolean } {

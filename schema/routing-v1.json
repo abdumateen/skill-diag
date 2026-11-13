@@ -14,6 +14,77 @@
       "properties": { "name": { "type": "string" }, "version": { "type": "string" } }
     },
     "generatedAt": { "type": "string" },
+    "dedupe": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "source",
+        "pluginsEnabled",
+        "pluginSkillsBefore",
+        "pluginSkillsAfter",
+        "removed"
+      ],
+      "properties": {
+        "mode": { "enum": ["enabled-latest", "all", "off"] },
+        "source": { "type": "string" },
+        "pluginsEnabled": { "type": ["integer", "null"] },
+        "pluginSkillsBefore": { "type": "integer", "minimum": 0 },
+        "pluginSkillsAfter": { "type": "integer", "minimum": 0 },
+        "removed": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["disabledPlugins", "oldVersions", "marketplaceCopies", "duplicateContent"],
+          "properties": {
+            "disabledPlugins": { "type": "integer", "minimum": 0 },
+            "oldVersions": { "type": "integer", "minimum": 0 },
+            "marketplaceCopies": { "type": "integer", "minimum": 0 },
+            "duplicateContent": { "type": "integer", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "findings": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
+    "raw": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n",
+        "nEff",
+        "naiveTop1",
+        "adjustedTop1",
+        "status",
+        "density",
+        "clusters",
+        "breakPoints"
+      ],
+      "properties": {
+        "n": { "type": "integer", "minimum": 0 },
+        "nEff": { "type": "number", "minimum": 0 },
+        "naiveTop1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "adjustedTop1": { "type": "number", "minimum": 0, "maximum": 1 },
+        "status": { "enum": ["ok", "at-risk", "critical"] },
+        "density": { "type": "number", "minimum": 1 },
+        "clusters": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count", "clusteredSkills"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 0 },
+            "clusteredSkills": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "breakPoints": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["warning", "critical"],
+          "properties": {
+            "warning": { "$ref": "#/definitions/breakPoint" },
+            "critical": { "$ref": "#/definitions/breakPoint" }
+          }
+        }
+      }
+    },
     "routing": {
       "type": "object",
       "additionalProperties": false,
@@ -150,6 +221,34 @@
     }
   },
   "definitions": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["checkId", "tier", "severity", "skill", "source", "path", "message"],
+      "properties": {
+        "checkId": { "type": "string" },
+        "tier": { "enum": [1, 2] },
+        "severity": { "enum": ["error", "warning", "info"] },
+        "skill": { "type": "string" },
+        "source": { "type": ["string", "null"] },
+        "path": { "type": ["string", "null"] },
+        "line": { "type": "integer", "minimum": 1 },
+        "column": { "type": "integer", "minimum": 1 },
+        "message": { "type": "string" },
+        "fix": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "confidence"],
+          "properties": {
+            "kind": { "type": "string" },
+            "field": { "type": "string" },
+            "from": { "type": "string" },
+            "to": { "type": "string" },
+            "confidence": { "enum": ["certain", "likely", "heuristic", "diagnostic"] }
+          }
+        }
+      }
+    },
     "breakPoint": {
       "type": "object",
       "additionalProperties": false,

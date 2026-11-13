@@ -1,38 +1,60 @@
 /**
- * `routing` output (Phase 2b), human and JSON.
+ * `routing` output (Phase 2b; dual-N from Phase 2c.3), human and JSON.
  *
  * Both formats print the parameters and their source next to the estimate. A
  * survival number without its provenance invites the reader to treat a published
  * constant as a measurement of their own library.
+ *
+ * Two N's are reported. The deduped one matches what the host loads when it
+ * honours `enabledPlugins`; the raw scan counts every cached plugin version and
+ * matches a host that loads the whole cache. Users must know which one is theirs,
+ * so both are printed even when only one produced the active finding.
  */
 
 import pc from 'picocolors';
+import type { DedupeMode, DedupeReport } from '../discovery/walk.js';
 import type { RoutingReport } from '../model/routing.js';
+import { marginalEffect } from '../model/survival.js';
+import { displayName, type Skill } from '../types.js';
 
 export function fmt(n: number, digits = 3): string {
   return n.toFixed(digits);
 }
 
+function signed(n: number): string {
+  return `${n < 0 ? '−' : ''}${Math.abs(n).toLocaleString('en-US')}`;
+}
+
+function statusLabel(status: RoutingReport['status']): string {
+  if (status === 'critical') return pc.red('CRITICAL (below 0.50)');
+  if (status === 'at-risk') return pc.yellow('AT RISK (below 0.60)');
+  return pc.green('OK (above 0.60)');
+}
+
+function headroomLine(label: string, headroom: number, suffix = ''): string {
+  const tail = headroom < 0 ? pc.red(' (already exceeded)') : suffix;
+  return `    ${`${label}${suffix}`.padEnd(30)}${signed(headroom)} skills${tail}`;
+}
+
 export function renderRoutingHuman(
   report: RoutingReport,
-  opts: { version: string; color: boolean },
+  opts: {
+    version: string;
+    color: boolean;
+    raw?: RoutingReport | null;
+    dedupe?: DedupeReport;
+  },
 ): string {
   if (!opts.color) process.env['NO_COLOR'] = '1';
   const lines: string[] = [];
   const p = report.config.params;
-
-  const statusLabel =
-    report.status === 'critical'
-      ? pc.red('CRITICAL (below 0.50)')
-      : report.status === 'at-risk'
-        ? pc.yellow('AT RISK (below 0.60)')
-        : pc.green('OK (above 0.60)');
+  const activeLabel = opts.dedupe && opts.dedupe.mode === 'enabled-latest' ? 'deduped' : 'raw scan';
 
   lines.push(
     `${pc.bold('skill-diag')} v${opts.version} · routing survival model · r=${p.r} p=${p.p} (${p.source})`,
   );
   lines.push(
-    `Routing health    estimated top-1 ${pc.bold(fmt(report.adjustedTop1))}  (N=${report.n.toLocaleString('en-US')}, N_eff=${report.nEff.toLocaleString('en-US')}, density ${report.density.toFixed(2)})`,
+    `Routing health    estimated top-1 ${pc.bold(fmt(report.adjustedTop1))}  (${activeLabel} N=${report.n.toLocaleString('en-US')}, N_eff=${report.nEff.toLocaleString('en-US')}, density ${report.density.toFixed(2)})`,
   );
   lines.push(`  naive P_top1(N)        ${fmt(report.naiveTop1)}`);
   if (report.clusters.count === 0) {
@@ -46,20 +68,35 @@ export function renderRoutingHuman(
     );
   }
 
+  lines.push(`  current status  ${statusLabel(report.status)} — ${activeLabel}`);
+  if (opts.raw) {
+    lines.push(`  current status  ${statusLabel(opts.raw.status)} — raw scan`);
+  }
+
   const bp = report.breakPoints;
+  lines.push(`  headroom (${activeLabel})`);
   lines.push(`  warning threshold (0.60)`);
-  lines.push(
-    `    naive headroom      ${bp.warning.naiveHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.warning.nStar.toLocaleString('en-US')})`,
-  );
-  lines.push(
-    `    adjusted headroom   ${bp.warning.adjustedHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.warning.adjustedN.toLocaleString('en-US')}, given density ${report.density.toFixed(2)})`,
-  );
+  lines.push(headroomLine('naive headroom ', bp.warning.naiveHeadroom));
+  lines.push(headroomLine('adjusted headroom ', bp.warning.adjustedHeadroom));
   lines.push(`  break point (0.50)`);
-  lines.push(`    naive headroom      ${bp.critical.naiveHeadroom.toLocaleString('en-US')} skills`);
-  lines.push(
-    `    adjusted headroom   ${bp.critical.adjustedHeadroom.toLocaleString('en-US')} skills (raw N → ${bp.critical.adjustedN.toLocaleString('en-US')})`,
-  );
-  lines.push(`  current status  ${statusLabel}`);
+  lines.push(headroomLine('naive headroom ', bp.critical.naiveHeadroom));
+  lines.push(headroomLine('adjusted headroom ', bp.critical.adjustedHeadroom));
+
+  if (opts.raw) {
+    const rbp = opts.raw.breakPoints;
+    lines.push('');
+    lines.push(
+      `raw-scan cross-check   estimated top-1 ${fmt(opts.raw.adjustedTop1)} (raw N=${opts.raw.n.toLocaleString('en-US')}, N_eff=${opts.raw.nEff.toLocaleString('en-US')})`,
+    );
+    lines.push(
+      `                       ${opts.raw.clusters.count} duplicate clusters, ${opts.raw.clusters.clusteredSkills} skills`,
+    );
+    lines.push('                       the raw scan counts every cached plugin version as a skill;');
+    lines.push('                       if your host loads all cached versions, the raw estimate applies');
+    lines.push('  headroom (raw scan)');
+    lines.push(`    warning threshold (0.60)    ${signed(rbp.warning.adjustedHeadroom)} skills${rbp.warning.adjustedHeadroom < 0 ? pc.red(' (already exceeded)') : ' (adjusted)'}`);
+    lines.push(`    break point (0.50)          ${signed(rbp.critical.adjustedHeadroom)} skills${rbp.critical.adjustedHeadroom < 0 ? pc.red(' (already exceeded)') : ' (adjusted)'}`);
+  }
 
   lines.push('');
   lines.push(pc.bold('Top marginal costs'));
@@ -90,7 +127,7 @@ export function renderRoutingHuman(
       lines.push(`  ${member.clusterSize}× ${member.name}${member.plugin ? pc.dim(` ${member.plugin}`) : ''}`);
     }
     if (report.clusters.members.length > shown.length) {
-      lines.push(pc.dim(`  … ${report.clusters.members.length - shown.length} more member(s); use --json for the full list`));
+      lines.push(pc.dim(`  ... ${report.clusters.members.length - shown.length} more member(s); use --json for the full list`));
     }
   }
   lines.push(pc.dim(`  ${report.clusters.insufficientNote}`));
@@ -107,6 +144,14 @@ export function renderRoutingHuman(
   }
 
   lines.push('');
+  if (opts.dedupe) {
+    const d = opts.dedupe;
+    lines.push(
+      pc.dim(
+        `dedupe: ${d.mode} (${d.source}) · plugin skills ${d.pluginSkillsBefore.toLocaleString('en-US')} → ${d.pluginSkillsAfter.toLocaleString('en-US')} · removed old versions ${d.removed.oldVersions}, disabled plugins ${d.removed.disabledPlugins}, marketplace copies ${d.removed.marketplaceCopies}, duplicate content ${d.removed.duplicateContent}`,
+      ),
+    );
+  }
   lines.push(
     pc.dim(
       `parameters: ${p.source} (${p.citation}) · collisionWeight=${report.config.collisionWeight} · threshold=${report.config.similarityThreshold} · shingle=${report.config.shingleSize}`,
@@ -115,15 +160,106 @@ export function renderRoutingHuman(
   return `${lines.join('\n')}\n`;
 }
 
+/** The per-skill routing numbers, shared by the human and JSON `--why` paths. */
+export function explainRouting(
+  skill: Skill,
+  report: RoutingReport,
+  mode: DedupeMode,
+): {
+  skill: { name: string; path: string; source: string; plugin?: string };
+  mode: DedupeMode;
+  marginalTop1Contribution: number;
+  clusterMembership: number | null;
+  duplicateClusterSize: number | null;
+  routingHealthContribution: string;
+} {
+  const member = report.clusters.members.find((m) => m.id === skill.path);
+  const clusterSize = member?.clusterSize ?? 1;
+  const rank = report.marginal.top.findIndex((m) => m.path === skill.path);
+  return {
+    skill: {
+      name: displayName(skill),
+      path: skill.path,
+      source: skill.source,
+      ...(skill.plugin ? { plugin: skill.plugin } : {}),
+    },
+    mode,
+    marginalTop1Contribution: Number(
+      fmt(
+        marginalEffect(report.nEff, report.config.params, clusterSize >= 2 ? 2 : 1),
+        6,
+      ),
+    ),
+    clusterMembership: clusterSize >= 2 ? clusterSize : null,
+    duplicateClusterSize: clusterSize >= 2 ? clusterSize : null,
+    routingHealthContribution:
+      rank === -1
+        ? 'excluded from top-10'
+        : `top-10 rank ${rank + 1} of ${report.marginal.top.length}`,
+  };
+}
+
+/** `routing --why <skill>`: one skill against the active plan. */
+export function renderRoutingWhy(
+  skill: Skill,
+  report: RoutingReport,
+  opts: { version: string; color: boolean; mode: DedupeMode },
+): string {
+  if (!opts.color) process.env['NO_COLOR'] = '1';
+  const why = explainRouting(skill, report, opts.mode);
+  const modeLabel = opts.mode === 'enabled-latest' ? 'deduped' : 'raw scan';
+  const sourceLabel =
+    skill.source === 'plugin'
+      ? `plugin${skill.plugin ? ` ${skill.plugin}` : ''}`
+      : skill.source;
+
+  return `${[
+    `${pc.bold('skill-diag')} v${opts.version} · routing survival model`,
+    `Skill: ${why.skill.name} (${sourceLabel}, ${modeLabel})`,
+    `  marginal top-1 contribution   ${fmt(why.marginalTop1Contribution, 6)}`,
+    `  cluster membership            ${why.clusterMembership ? `yes (cluster of ${why.clusterMembership})` : 'none'}`,
+    `  duplicate cluster size        ${why.duplicateClusterSize ?? 'n/a'}`,
+    `  routing health contribution   ${why.routingHealthContribution}`,
+  ].join('\n')}\n`;
+}
+
 export function toRoutingJson(
   report: RoutingReport,
-  opts: { version: string; generatedAt?: string },
+  opts: {
+    version: string;
+    generatedAt?: string;
+    findings?: unknown[];
+    dedupe?: DedupeReport;
+    raw?: RoutingReport | null;
+  },
 ): unknown {
   const p = report.config.params;
   return {
     version: '1',
     tool: { name: 'skill-diag', version: opts.version },
     generatedAt: opts.generatedAt ?? new Date().toISOString(),
+    ...(opts.dedupe ? { dedupe: opts.dedupe } : {}),
+    ...(opts.findings ? { findings: opts.findings } : {}),
+    ...(opts.raw
+      ? {
+          raw: {
+            n: opts.raw.n,
+            nEff: opts.raw.nEff,
+            naiveTop1: Number(fmt(opts.raw.naiveTop1)),
+            adjustedTop1: Number(fmt(opts.raw.adjustedTop1)),
+            status: opts.raw.status,
+            density: Number(opts.raw.density.toFixed(4)),
+            clusters: {
+              count: opts.raw.clusters.count,
+              clusteredSkills: opts.raw.clusters.clusteredSkills,
+            },
+            breakPoints: {
+              warning: { ...opts.raw.breakPoints.warning },
+              critical: { ...opts.raw.breakPoints.critical },
+            },
+          },
+        }
+      : {}),
     routing: {
       n: report.n,
       nEff: report.nEff,

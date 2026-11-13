@@ -13,14 +13,27 @@ import { Command } from 'commander';
 import { createRequire } from 'node:module';
 import { computeBudget, resolveContextWindow } from './budget.js';
 import { runChecks } from './checks/index.js';
+import { routingHealthFindings } from './checks/tier2.js';
 import { loadContract } from './contracts/loader.js';
 import { discoverCommands } from './discovery/commands.js';
-import { defaultHome, discoverSkills } from './discovery/walk.js';
-import { resolveRoutingConfig, writeDefaultConfig } from './model/config.js';
-import { analyzeRouting } from './model/routing.js';
-import { exitCodeFor, stringify, toJsonReport, toWhyJson } from './output/json.js';
+import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery/walk.js';
+import { resolveDedupeMode, resolveRoutingConfig, writeDefaultConfig } from './model/config.js';
+import { analyzeRouting, type RoutingReport } from './model/routing.js';
+import {
+  exitCodeFor,
+  stringify,
+  toJsonFinding,
+  toJsonReport,
+  toWhyJson,
+} from './output/json.js';
 import { renderHuman, renderWhy } from './output/human.js';
-import { renderRoutingHuman, toRoutingJson } from './output/routing.js';
+import {
+  explainRouting,
+  renderRoutingHuman,
+  renderRoutingWhy,
+  toRoutingJson,
+} from './output/routing.js';
+import { matchSkills } from './types.js';
 
 const require = createRequire(import.meta.url);
 const pkg = require('../package.json') as { version: string };
@@ -37,6 +50,7 @@ interface CommonOpts {
   color?: boolean;
   host?: string;
   routingParams?: string;
+  dedupe?: string;
 }
 
 /**
@@ -67,6 +81,7 @@ function addCommonOptions(cmd: Command): Command {
     .option('--quiet', 'suppress human output; exit code only')
     .option('--no-color', 'disable colour')
     .option('--routing-params <r,p>', 'override the published survival parameters (e.g. 0.867,0.000283)')
+    .option('--dedupe <mode>', 'discovery dedupe: enabled-latest (default), all, off')
     .option('--host <host>', 'host contract to use', 'claude-code');
 }
 
@@ -74,7 +89,8 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const contract = loadContract(opts.host ?? 'claude-code');
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
-  const skills = discoverSkills({ home, project });
+  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
+  const skills = discoverSkills({ home, project, dedupe });
   // Commands share the listing budget, so they are discovered and counted even
   // though Phase 1/2a does not lint them.
   const commands = discoverCommands({ home, project });
@@ -129,6 +145,17 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   }
 
   if (opts.why) {
+    // A skill that only exists in a cached older plugin version is not in the
+    // active set; say so plainly instead of "no skill matches".
+    if (matchSkills(skills, opts.why).length === 0) {
+      const raw = discoverSkills({ home, project, dedupe: 'all' });
+      if (matchSkills(raw, opts.why).length > 0) {
+        process.stdout.write(
+          'this skill is a cached older version; it is not in your active skill set.\n',
+        );
+        return exitCode;
+      }
+    }
     const dropBehavior = contract.dropBehavior;
     if (opts.json) {
       process.stdout.write(
@@ -172,20 +199,116 @@ budgetCommand.action(() => {
   process.exitCode = execute(mergedOpts(budgetCommand), 'budget');
 });
 
+const STATUS_RANK: Record<RoutingReport['status'], number> = {
+  ok: 0,
+  'at-risk': 1,
+  critical: 2,
+};
+
+function worstStatus(
+  a: RoutingReport['status'],
+  b: RoutingReport['status'],
+): RoutingReport['status'] {
+  return STATUS_RANK[a] >= STATUS_RANK[b] ? a : b;
+}
+
+/**
+ * `critical` always fails, `at-risk` fails only under `--strict`. The caller
+ * passes the worst of the active and raw estimates, so a machine whose raw scan
+ * is critical cannot exit 0 just because the deduped scan is healthy.
+ */
+function routingExitCode(status: RoutingReport['status'], strict: boolean): 0 | 1 | 2 {
+  if (status === 'critical') return 1;
+  if (status === 'at-risk' && strict) return 2;
+  return 0;
+}
+
 function executeRouting(opts: CommonOpts): number {
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
-  const skills = discoverSkills({ home, project });
+  const mode = resolveDedupeMode(project, { dedupe: opts.dedupe });
   const config = resolveRoutingConfig(project, { routingParams: opts.routingParams });
-  const report = analyzeRouting(skills, config);
 
-  if (opts.quiet) return 0;
-  if (opts.json) {
-    process.stdout.write(`${JSON.stringify(toRoutingJson(report, { version: pkg.version }), null, 2)}\n`);
-    return 0;
+  const active = discoverSkillsDetailed({ home, project, dedupe: mode });
+  const report = analyzeRouting(active.skills, config);
+  const rawOnly = mode === 'all' || mode === 'off';
+  const raw = rawOnly ? null : analyzeRouting(discoverSkills({ home, project, dedupe: 'all' }), config);
+
+  const strict = opts.strict === true;
+  const exitCode = routingExitCode(
+    raw ? worstStatus(report.status, raw.status) : report.status,
+    strict,
+  );
+
+  if (opts.why) {
+    const target = matchSkills(active.skills, opts.why)[0];
+    if (!target) {
+      const older = matchSkills(
+        rawOnly ? active.skills : discoverSkills({ home, project, dedupe: 'all' }),
+        opts.why,
+      );
+      if (older.length > 0) {
+        process.stdout.write(
+          'this skill is a cached older version; it is not in your active skill set.\n',
+        );
+        return exitCode;
+      }
+      process.stderr.write(`no skill matches ${opts.why}\n`);
+      return 3;
+    }
+    if (opts.json) {
+      process.stdout.write(
+        stringify({
+          version: '1',
+          tool: { name: 'skill-diag', version: pkg.version },
+          ...explainRouting(target, report, mode),
+        }),
+      );
+      return exitCode;
+    }
+    process.stdout.write(
+      renderRoutingWhy(target, report, {
+        version: pkg.version,
+        color: opts.color !== false,
+        mode,
+      }),
+    );
+    return exitCode;
   }
-  process.stdout.write(renderRoutingHuman(report, { version: pkg.version, color: opts.color !== false }));
-  return 0;
+
+  // The routing subcommand reports both estimates' findings; the main report
+  // stays active-only so a deduped install is not alarmed by its own cache.
+  const seen = new Set<string>();
+  const findings = [
+    ...routingHealthFindings(report),
+    ...(raw ? routingHealthFindings(raw) : []),
+  ].filter((f) => (seen.has(f.checkId) ? false : (seen.add(f.checkId), true)));
+
+  if (opts.quiet) return exitCode;
+  if (opts.json) {
+    process.stdout.write(
+      `${JSON.stringify(
+        toRoutingJson(report, {
+          version: pkg.version,
+          findings: findings.map(toJsonFinding),
+          dedupe: active.dedupe,
+          raw,
+        }),
+        null,
+        2,
+      )}\n`,
+    );
+    return exitCode;
+  }
+  process.stdout.write(
+    renderRoutingHuman(report, {
+      version: pkg.version,
+      color: opts.color !== false,
+      raw,
+      dedupe: active.dedupe,
+    }),
+  );
+  return exitCode;
 }
 
 const routingCommand = program

@@ -573,6 +573,38 @@ headline is the routing survival model, plugin-skill coverage, and honest budget
 labels; a specific "you will lose these skills" claim needs a calibrated host
 and stays "coming when you have a working host", not a promise.
 
+### Phase 2c.3 — routing exit codes, dual-N reporting, dedupe mode (shipped)
+
+**The user's machine has two valid N's.** Deduped to enabled plugins at latest
+version: N=1,115, top-1=0.633 adjusted 0.615, status OK. Raw scan of all cached
+plugin versions: N=2,290, top-1=0.454 adjusted 0.348, status CRITICAL. 676
+duplicate clusters covering 1,612 skills, dominated by `nextjs-turbopack`
+appearing as 10-skill clusters in both `cache/` and `marketplaces/`. The tool
+reports both; users must know which corresponds to their host's load behavior.
+
+**Measured on the user's home.** `enabled-latest` keeps 1,069 of 2,275 plugin
+skills (817 from disabled plugins, 389 marketplace install copies, 0 old
+versions, 0 duplicate content), giving N=1,084 with the 15 user and project
+skills included. That is 31 short of the 1,115 corpus figure. The gap is
+`mattpocock-skills`, whose skills sit at `skills/<category>/<name>/SKILL.md`
+instead of `skills/<name>/SKILL.md`, so the host rule does not count them. The
+number was not tuned to hit 1,115; a different host layout legitimately changes
+N.
+
+**Modes.** `--dedupe enabled-latest` (default) applies the rules above,
+`--dedupe all` (alias `off`) keeps the raw scan, and `.skill-diag.json` accepts
+the same value. When `settings.json` has no readable `enabledPlugins`,
+discovery falls back to the heuristic and `dedupe.source` reports
+`heuristic, settings unreadable` rather than silently pretending the filter ran.
+
+**Exit codes.** `routing` exits 1 on `critical` regardless of `--strict`, 2 on
+`at-risk` only under `--strict`, 0 on `ok`, and 3 when `--why` matches nothing.
+The status used is the worse of the active mode and the raw scan, because the
+raw scan is a real load scenario for hosts that mount every cached version.
+Main-report warnings still follow the active mode only, so the default run on
+this machine stays clean while `--dedupe all` fires
+`routing-health-critical`.
+
 ## Bugs discovered during Phase 2
 
 Three defects surfaced while building 2a–2b. They are recorded here because two

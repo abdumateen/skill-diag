@@ -10,6 +10,7 @@
 import {
   ROUTING_CRITICAL_THRESHOLD,
   ROUTING_WARNING_THRESHOLD,
+  type RoutingReport,
 } from '../model/routing.js';
 import type { Finding, Skill } from '../types.js';
 import { displayName } from '../types.js';
@@ -56,31 +57,12 @@ export const contextPressure: Check = {
  * `routing-health-at-risk` is the warning band, `routing-health-critical` is
  * below it. They are mutually exclusive: a corpus at 0.45 gets the error and not
  * also the warning, because one condition should not produce two findings.
+ *
+ * One helper feeds both checks and `routing --json`, so the two surfaces cannot
+ * disagree about the same estimate.
  */
-export const routingHealthAtRisk: Check = {
-  id: 'routing-health-at-risk',
-  tier: 2,
-  run: ({ routing }: CheckContext) => {
-    if (!routing) return [];
-    if (routing.adjustedTop1 >= ROUTING_WARNING_THRESHOLD) return [];
-    if (routing.adjustedTop1 < ROUTING_CRITICAL_THRESHOLD) return [];
-    return [
-      finding(
-        'routing-health-at-risk',
-        null,
-        'warning',
-        `estimated top-1 ${routing.adjustedTop1.toFixed(3)} at N_eff=${routing.nEff.toLocaleString('en-US')} is below the ${ROUTING_WARNING_THRESHOLD.toFixed(2)} warning line; the line is crossed at N ≈ ${routing.breakPoints.warning.nStar.toLocaleString('en-US')}`,
-      ),
-    ];
-  },
-};
-
-export const routingHealthCritical: Check = {
-  id: 'routing-health-critical',
-  tier: 2,
-  run: ({ routing }: CheckContext) => {
-    if (!routing) return [];
-    if (routing.adjustedTop1 >= ROUTING_CRITICAL_THRESHOLD) return [];
+export function routingHealthFindings(routing: RoutingReport): Finding[] {
+  if (routing.adjustedTop1 < ROUTING_CRITICAL_THRESHOLD) {
     return [
       finding(
         'routing-health-critical',
@@ -89,7 +71,32 @@ export const routingHealthCritical: Check = {
         `estimated top-1 ${routing.adjustedTop1.toFixed(3)} at N_eff=${routing.nEff.toLocaleString('en-US')} is below the ${ROUTING_CRITICAL_THRESHOLD.toFixed(2)} floor; the router is guessing more often than routing`,
       ),
     ];
-  },
+  }
+  if (routing.adjustedTop1 < ROUTING_WARNING_THRESHOLD) {
+    return [
+      finding(
+        'routing-health-at-risk',
+        null,
+        'warning',
+        `estimated top-1 ${routing.adjustedTop1.toFixed(3)} at N_eff=${routing.nEff.toLocaleString('en-US')} is below the ${ROUTING_WARNING_THRESHOLD.toFixed(2)} warning line; the line is crossed at N ≈ ${routing.breakPoints.warning.nStar.toLocaleString('en-US')}`,
+      ),
+    ];
+  }
+  return [];
+}
+
+export const routingHealthAtRisk: Check = {
+  id: 'routing-health-at-risk',
+  tier: 2,
+  run: ({ routing }: CheckContext) =>
+    routing ? routingHealthFindings(routing).filter((f) => f.checkId === 'routing-health-at-risk') : [],
+};
+
+export const routingHealthCritical: Check = {
+  id: 'routing-health-critical',
+  tier: 2,
+  run: ({ routing }: CheckContext) =>
+    routing ? routingHealthFindings(routing).filter((f) => f.checkId === 'routing-health-critical') : [],
 };
 
 export const TIER2_CHECKS: readonly Check[] = [

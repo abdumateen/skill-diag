@@ -112,7 +112,7 @@ export function toJsonReport(
   };
 }
 
-function toJsonFinding(f: Finding): JsonFinding {
+export function toJsonFinding(f: Finding): JsonFinding {
   return {
     checkId: f.checkId,
     tier: f.tier,

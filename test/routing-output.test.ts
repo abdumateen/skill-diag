@@ -4,7 +4,7 @@
  */
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { homedir, tmpdir } from 'node:os';
 import { join } from 'node:path';
 import Ajv from 'ajv';
@@ -84,15 +84,153 @@ describe('config', () => {
 });
 
 describe.skipIf(!existsSync('dist/cli.js') || !existsSync(CORPUS))('routing subcommand', () => {
+  const run = (args: string[]): { stdout: string; code: number } => {
+    try {
+      const stdout = execFileSync(process.execPath, ['dist/cli.js', 'routing', ...args], {
+        encoding: 'utf8',
+        maxBuffer: 8 * 1024 * 1024,
+      });
+      return { stdout, code: 0 };
+    } catch (error) {
+      const e = error as { stdout?: string; status?: number };
+      return { stdout: e.stdout ?? '', code: e.status ?? -1 };
+    }
+  };
+
   it('exits 0 and emits schema-valid JSON on the live corpus', () => {
-    const stdout = execFileSync(
-      process.execPath,
-      ['dist/cli.js', 'routing', '--json', '--home', CORPUS, '-p', EMPTY],
-      { encoding: 'utf8', maxBuffer: 8 * 1024 * 1024 },
-    );
-    const json = JSON.parse(stdout) as { routing: { n: number; naiveTop1: number } };
+    const { stdout, code } = run(['--json', '--home', CORPUS, '-p', EMPTY]);
+    expect(code).toBe(0);
+    const json = JSON.parse(stdout) as {
+      routing: { n: number; naiveTop1: number };
+      raw?: { n: number };
+      dedupe?: { mode: string };
+    };
     expect(validate(json)).toBe(true);
     expect(json.routing.n).toBe(1115);
     expect(json.routing.naiveTop1).toBeCloseTo(0.633, 2);
+    expect(json.dedupe?.mode).toBe('enabled-latest');
+    expect(json.raw?.n).toBe(1115);
+  });
+
+  it('reports both N estimates in JSON and in human output', () => {
+    const { stdout } = run(['--json', '--home', CORPUS, '-p', EMPTY]);
+    const json = JSON.parse(stdout) as { routing: { n: number; nEff: number }; raw: { n: number } };
+    expect(json.routing.n).toBe(1115);
+    expect(json.raw.n).toBe(1115);
+
+    const human = run(['--home', CORPUS, '-p', EMPTY, '--no-color']).stdout;
+    expect(human).toContain('raw-scan cross-check');
+    expect(human).toContain('deduped N=');
+    expect(human).toContain('dedupe: enabled-latest');
+  });
+
+  it('exits 3 with a message when --why matches nothing', () => {
+    const { stdout, code } = run(['--why', 'no-such-skill-anywhere', '--home', CORPUS, '-p', EMPTY]);
+    expect(code).toBe(3);
+    expect(stdout).toBe('');
+  });
+
+  it('explains a single skill in the routing block', () => {
+    const { stdout, code } = run(['--why', 'karpathy-guidelines', '--home', CORPUS, '-p', EMPTY, '--no-color']);
+    expect(code).toBe(0);
+    expect(stdout).toContain('routing survival model');
+    expect(stdout).toContain('marginal top-1 contribution');
+    expect(stdout).toContain('duplicate cluster size');
+    expect(stdout).toContain('routing health contribution');
+    expect(stdout).toMatch(/\(.*, (deduped|raw scan)\)/);
+  });
+
+  it('exits 2 under --strict only when the estimate is at risk', () => {
+    // The corpus is healthy, so --strict must stay 0 there.
+    expect(run(['--home', CORPUS, '-p', EMPTY, '--strict', '--quiet']).code).toBe(0);
+  });
+});
+
+describe.skipIf(!existsSync('dist/cli.js'))('routing exit codes', () => {
+  const runCli = (args: string[]): { stdout: string; code: number } => {
+    try {
+      const stdout = execFileSync(process.execPath, ['dist/cli.js', ...args], {
+        encoding: 'utf8',
+        maxBuffer: 16 * 1024 * 1024,
+      });
+      return { stdout, code: 0 };
+    } catch (error) {
+      const e = error as { stdout?: string; status?: number };
+      return { stdout: e.stdout ?? '', code: e.status ?? -1 };
+    }
+  };
+
+  const made: string[] = [];
+  afterAll(() => {
+    for (const dir of made.splice(0)) rmSync(dir, { recursive: true, force: true });
+  });
+
+  /** A flat plugin corpus of `count` distinct skills — no clusters, no cache. */
+  function corpusOf(count: number): string {
+    const home = mkdtempSync(join(tmpdir(), 'skill-diag-exit-'));
+    made.push(home);
+    for (let i = 0; i < count; i += 1) {
+      const dir = join(home, '.claude', 'plugins', `plug-${i}`, 'skills', `skill-${i}`);
+      mkdirSync(dir, { recursive: true });
+      writeFileSync(
+        join(dir, 'SKILL.md'),
+        `---\nname: skill-${i}\ndescription: Distinct capability number ${i} that handles workflow ${i % 97} with procedure ${i * 7 % 1009}\n---\n\nBody.\n`,
+        'utf8',
+      );
+    }
+    return home;
+  }
+
+  it('exits 0 at ok, 2 at at-risk under --strict, and 1 at critical', () => {
+    const okHome = corpusOf(10);
+    expect(runCli(['routing', '--home', okHome, '--quiet']).code).toBe(0);
+
+    const riskHome = corpusOf(1500);
+    expect(runCli(['routing', '--home', riskHome, '--quiet']).code).toBe(0);
+    expect(runCli(['routing', '--home', riskHome, '--strict', '--quiet']).code).toBe(2);
+
+    const criticalHome = corpusOf(2000);
+    expect(runCli(['routing', '--home', criticalHome, '--quiet']).code).toBe(1);
+  });
+
+  it('puts the routing findings in the routing JSON, in the main report shape', () => {
+    const home = corpusOf(2000);
+    const json = JSON.parse(runCli(['routing', '--json', '--home', home]).stdout) as {
+      findings: Array<{ checkId: string; tier: number; severity: string; message: string }>;
+    };
+    expect(validate(json)).toBe(true);
+    const critical = json.findings.find((f) => f.checkId === 'routing-health-critical');
+    expect(critical?.severity).toBe('error');
+    expect(critical?.tier).toBe(2);
+    expect(critical?.message).toContain('estimated top-1');
+  });
+
+  it('warns on --why for a skill that only a cached older version contains', () => {
+    const home = mkdtempSync(join(tmpdir(), 'skill-diag-older-'));
+    made.push(home);
+    const base = join(home, '.claude', 'plugins', 'cache', 'mp', 'plug');
+    const old = join(base, '1.0.0', 'skills', 'legacy');
+    const latest = join(base, '2.0.0', 'skills', 'current');
+    mkdirSync(old, { recursive: true });
+    mkdirSync(latest, { recursive: true });
+    writeFileSync(
+      join(old, 'SKILL.md'),
+      '---\nname: legacy\ndescription: Old behaviour kept for compatibility with earlier installations\n---\n\nBody.\n',
+      'utf8',
+    );
+    writeFileSync(
+      join(latest, 'SKILL.md'),
+      '---\nname: current\ndescription: Current behaviour that replaced the older installation path\n---\n\nBody.\n',
+      'utf8',
+    );
+    writeFileSync(
+      join(home, '.claude', 'settings.json'),
+      JSON.stringify({ enabledPlugins: { 'plug@mp': true } }),
+      'utf8',
+    );
+
+    const { stdout, code } = runCli(['routing', '--why', 'legacy', '--home', home]);
+    expect(stdout).toContain('this skill is a cached older version');
+    expect(code).not.toBe(3);
   });
 });
