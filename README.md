@@ -96,6 +96,38 @@ The hook runs `skill-diag --strict` against the whole skill directory — not
 just changed files — because a skill's listing cost and routing health depend
 on the corpus, not on the diff.
 
+## GitLab CI
+
+Jenkins, Bitbucket Pipelines, and GitLab CI all drive the tool through its
+Docker image. Build the image from this repository's `Dockerfile`, push it to
+your registry, then use it as the job image:
+
+```yaml
+# .gitlab-ci.yml
+skill-diag:
+  stage: test
+  image:
+    name: registry.gitlab.com/OWNER/skill-diag:v0.2.0
+    entrypoint: [""]
+  script:
+    - node /app/dist/cli.js --strict --sarif skill-diag.sarif
+  artifacts:
+    when: always
+    paths:
+      - skill-diag.sarif
+```
+
+`entrypoint: [""]` hands the job a plain shell; the tool lives at
+`/app/dist/cli.js` inside the image. GitLab has no Code Scanning equivalent,
+so the SARIF file is kept as a job artifact — with `when: always`, a failing
+gate still uploads its report.
+
+Any CI that can run Docker gets the same result without a registry:
+
+```bash
+docker run --rm -v "$PWD:/project" -w /project skill-diag --strict
+```
+
 ## CI usage
 
 Prefer the action and hook above. For a bare gate on any CI:
