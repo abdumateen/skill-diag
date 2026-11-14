@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 /**
- * `skill-diag` CLI — Phase 1 surface plus Phases 2–4a.
+ * `skill-diag` CLI — Phase 1 surface plus Phases 2–4d.
  *
  * Implemented: default lint (Tier 1 + Tier 2), `budget`, `routing`, `--why`,
  * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`,
  * `--dedupe`, `--upload`, `--sarif`, `--strict-raw`, `runtime ingest`,
- * `runtime report`, `mcp`.
- * Not implemented on purpose: --fix, --llm, graph. Those are later phases, and
- * a stub that prints nothing would be worse than no command at all.
+ * `runtime report`, `mcp`, `--fix`, `--llm`.
+ * Not implemented on purpose: graph. That is a later phase, and a stub that
+ * prints nothing would be worse than no command at all.
  */
 
 import { Command } from 'commander';
@@ -19,6 +19,7 @@ import { routingHealthFindings } from './checks/tier2.js';
 import { loadContract } from './contracts/loader.js';
 import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery/walk.js';
+import { applyMechanicalFixes } from './fix.js';
 import {
   resolveDedupeMode,
   resolveRoutingConfig,
@@ -34,6 +35,7 @@ import {
   loadRuntimeStore,
   whyRuntimeFor,
 } from './model/runtime.js';
+import { gradeDescriptions } from './llm.js';
 import {
   exitCodeFor,
   stringify,
@@ -74,6 +76,8 @@ interface CommonOpts {
   strictRaw?: boolean;
   otel?: string;
   store?: string;
+  fix?: boolean;
+  llm?: boolean;
 }
 
 /**
@@ -114,7 +118,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
   const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
+  let skills = discoverSkills({ home, project, dedupe, host: opts.host });
   // Commands share the listing budget, so they are discovered and counted even
   // though Phase 1/2a does not lint them. Non-claude hosts have no commands.
   const commands = discoverCommands({ home, project, dedupe, host: opts.host });
@@ -131,14 +135,52 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const routing = resolveRoutingConfig(project, { routingParams: opts.routingParams });
   const uploadMode = resolveUploadMode(project, { upload: opts.upload });
   const strictRaw = resolveStrictRaw(project, { strictRaw: opts.strictRaw });
-  const report = runChecks(skills, {
+  const checkOptions = {
     contract,
     ...budgetOptions,
     commands,
     routing,
     uploadMode,
     strictRaw,
-  });
+  };
+  let report = runChecks(skills, checkOptions);
+
+  // Phase 4d: --fix applies only mechanical repairs, then re-discovers and
+  // re-checks so the report describes the corpus as it now stands. The diff
+  // goes to stderr under --json so the protocol stream stays clean.
+  if (mode === 'lint' && opts.fix) {
+    const sink = opts.json
+      ? (text: string) => process.stderr.write(text)
+      : (text: string) => process.stdout.write(text);
+    applyMechanicalFixes(skills, {
+      findings: report.findings,
+      contract,
+      capChars: report.budget.perEntryCapChars,
+      write: sink,
+    });
+    skills = discoverSkills({ home, project, dedupe, host: opts.host });
+    report = runChecks(skills, checkOptions);
+  }
+
+  // Phase 4d: --llm grades descriptions through a local CLI. Verdicts land as
+  // info findings, so they inform but never move the exit code.
+  if (mode === 'lint' && opts.llm && !opts.quiet) {
+    const scope = opts.why ? matchSkills(skills, opts.why) : skills;
+    const grade = gradeDescriptions(scope, { bin: process.env['SKILL_DIAG_LLM_BIN'] });
+    if (grade.available) {
+      report = { ...report, findings: [...report.findings, ...grade.findings] };
+      if (!opts.json && (grade.graded > 0 || grade.failed > 0)) {
+        process.stdout.write(
+          `llm grading via ${grade.bin}: ${grade.graded} graded, ${grade.failed} failed, ${grade.findings.length} flagged\n`,
+        );
+      }
+    } else {
+      process.stderr.write(
+        'no local grading CLI found (tried claude, codex; set SKILL_DIAG_LLM_BIN to override)\n',
+      );
+    }
+  }
+
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
 
@@ -249,7 +291,15 @@ program
     '--strict-raw',
     'promote routing-model findings from info to their natural severity; they then affect exit codes and SARIF levels',
   )
-  .option('--store <path>', 'runtime store path override (default ~/.cache/skill-diag/runtime.jsonl)');
+  .option('--store <path>', 'runtime store path override (default ~/.cache/skill-diag/runtime.jsonl)')
+  .option(
+    '--fix',
+    'apply unambiguous mechanical fixes (name/folder mismatch, over-long description); semantic issues are left alone',
+  )
+  .option(
+    '--llm',
+    'grade descriptions with a local CLI (claude or codex, or SKILL_DIAG_LLM_BIN); advisory info findings only',
+  );
 program.action(() => {
   process.exitCode = execute(mergedOpts(program), 'lint');
 });

@@ -32,7 +32,7 @@ import type { CorpusReport, Finding } from '../src/types.js';
 
 const contract = loadContract();
 const HOME = join(process.cwd(), 'test', 'fixtures', 'plugins', 'home');
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 
 const ajv = new Ajv({ allErrors: true, strict: false });
 const validate = ajv.compile(

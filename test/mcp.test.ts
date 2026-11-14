@@ -144,7 +144,7 @@ describe.skipIf(!hasCli)('skill-diag mcp', () => {
       };
       expect(typeof result.protocolVersion).toBe('string');
       expect(result.serverInfo.name).toBe('skill-diag');
-      expect(result.serverInfo.version).toBe('0.1.0');
+      expect(result.serverInfo.version).toBe('0.2.0');
       expect(result.capabilities.tools).toBeDefined();
       client.notify('notifications/initialized', {});
     } finally {
