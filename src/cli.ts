@@ -5,9 +5,9 @@
  * Implemented: default lint (Tier 1 + Tier 2), `budget`, `routing`, `--why`,
  * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`,
  * `--dedupe`, `--upload`, `--sarif`, `--strict-raw`, `runtime ingest`,
- * `runtime report`.
- * Not implemented on purpose: MCP, --fix, --llm, graph. Those are later
- * phases, and a stub that prints nothing would be worse than no command at all.
+ * `runtime report`, `mcp`.
+ * Not implemented on purpose: --fix, --llm, graph. Those are later phases, and
+ * a stub that prints nothing would be worse than no command at all.
  */
 
 import { Command } from 'commander';
@@ -50,6 +50,7 @@ import {
 } from './output/routing.js';
 import { renderRuntimeHuman, toRuntimeJson } from './output/runtime.js';
 import { buildSarif } from './output/sarif.js';
+import { runMcpServer } from './mcp.js';
 import { matchSkills } from './types.js';
 
 const require = createRequire(import.meta.url);
@@ -451,6 +452,18 @@ const runtimeReportCommand = runtimeCommand
 addCommonOptions(runtimeReportCommand);
 runtimeReportCommand.action(() => {
   process.exitCode = executeRuntimeReport(mergedOpts(runtimeReportCommand));
+});
+
+/**
+ * Phase 4b: the MCP server. stdout belongs to the protocol from here on —
+ * the report travels inside tool-result text, never as a bare stdout write.
+ */
+const mcpCommand = program
+  .command('mcp')
+  .description('Run the stdio MCP server exposing the diagnose_skills tool');
+addCommonOptions(mcpCommand);
+mcpCommand.action(async () => {
+  process.exitCode = await runMcpServer({ ...mergedOpts(mcpCommand), version: pkg.version });
 });
 
 const initCommand = program
