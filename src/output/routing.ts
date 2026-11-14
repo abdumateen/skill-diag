@@ -13,6 +13,7 @@
 
 import pc from 'picocolors';
 import type { DedupeMode, DedupeReport } from '../discovery/walk.js';
+import type { WhyRuntime } from '../model/runtime.js';
 import type { RoutingReport } from '../model/routing.js';
 import { marginalEffect } from '../model/survival.js';
 import { displayName, type Skill } from '../types.js';
@@ -203,7 +204,7 @@ export function explainRouting(
 export function renderRoutingWhy(
   skill: Skill,
   report: RoutingReport,
-  opts: { version: string; color: boolean; mode: DedupeMode },
+  opts: { version: string; color: boolean; mode: DedupeMode; runtime?: WhyRuntime | null },
 ): string {
   if (!opts.color) process.env['NO_COLOR'] = '1';
   const why = explainRouting(skill, report, opts.mode);
@@ -213,14 +214,24 @@ export function renderRoutingWhy(
       ? `plugin${skill.plugin ? ` ${skill.plugin}` : ''}`
       : skill.source;
 
-  return `${[
+  const lines = [
     `${pc.bold('skill-diag')} v${opts.version} · routing survival model`,
     `Skill: ${why.skill.name} (${sourceLabel}, ${modeLabel})`,
     `  marginal top-1 contribution   ${fmt(why.marginalTop1Contribution, 6)}`,
     `  cluster membership            ${why.clusterMembership ? `yes (cluster of ${why.clusterMembership})` : 'none'}`,
     `  duplicate cluster size        ${why.duplicateClusterSize ?? 'n/a'}`,
     `  routing health contribution   ${why.routingHealthContribution}`,
-  ].join('\n')}\n`;
+  ];
+  if (opts.runtime) {
+    const rt = opts.runtime;
+    lines.push(`  runtime activations           ${rt.activations} in ${rt.sessions} sessions`);
+    if (rt.thiefNeighbor) {
+      lines.push(
+        `  closest firing neighbor       ${rt.thiefNeighbor.name} (${rt.thiefNeighbor.activations} activations)`,
+      );
+    }
+  }
+  return `${lines.join('\n')}\n`;
 }
 
 export function toRoutingJson(

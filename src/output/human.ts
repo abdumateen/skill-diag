@@ -1,10 +1,12 @@
 /**
  * Human output (spec §12.4) — Phase 1 surface plus the Phase 2c drop simulation.
- * Routing health lives in `output/routing.ts`; runtime findings wait for v0.2.
+ * Routing health lives in `output/routing.ts`; the runtime activation join
+ * (Phase 4a) surfaces here through the optional `runtime` evidence.
  */
 
 import pc from 'picocolors';
 import { simulateDrop, type DropBehavior } from '../model/drop.js';
+import type { RuntimeJoin } from '../model/runtime.js';
 import { displayName, matchSkills, type CorpusReport, type Finding } from '../types.js';
 
 const BAR_WIDTH = 32;
@@ -81,11 +83,11 @@ export function renderHuman(
   return lines.join('\n');
 }
 
-/** `--why <skill>`: the §18.1 workflow, static half only. */
+/** `--why <skill>`: the §18.1 workflow, static half plus runtime evidence. */
 export function renderWhy(
   report: CorpusReport,
   target: string,
-  opts: { color: boolean; dropBehavior?: DropBehavior },
+  opts: { color: boolean; dropBehavior?: DropBehavior; runtime?: RuntimeJoin | null },
 ): string {
   if (!opts.color) process.env['NO_COLOR'] = '1';
   const matches = matchSkills(report.skills, target);
@@ -172,7 +174,17 @@ export function renderWhy(
           break;
       }
     }
-    out.push(pc.dim('  runtime activation: not available (OTEL ingest is v0.2)'));
+    const rt = opts.runtime;
+    const runtimeRow = rt?.skills.find((row) => row.path === skill.path);
+    if (rt && runtimeRow) {
+      const thief = runtimeRow.thiefNeighbor;
+      out.push(
+        `  runtime activation: fired ${runtimeRow.activations} times in ${rt.sessions} sessions` +
+          (thief ? `; closest neighbor ${thief.name} fired ${thief.activations} times` : ''),
+      );
+    } else {
+      out.push(pc.dim('  runtime activation: no data — run `skill-diag runtime ingest --otel <file>`'));
+    }
   }
   return `${out.join('\n')}\n`;
 }

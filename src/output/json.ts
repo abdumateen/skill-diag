@@ -10,6 +10,7 @@
 
 import type { DropBehavior, DropSimulation } from '../model/drop.js';
 import { simulateDrop } from '../model/drop.js';
+import type { RuntimeJoin } from '../model/runtime.js';
 import { displayName, matchSkills, type CorpusReport, type Finding } from '../types.js';
 
 export const REPORT_VERSION = '1';
@@ -132,6 +133,11 @@ export interface JsonWhySkill {
   findings: JsonFinding[];
   listingCost: number;
   dropSimulation: DropSimulation | null;
+  runtime?: {
+    sessions: number;
+    activations: number;
+    thiefNeighbor: { name: string; activations: number } | null;
+  };
 }
 
 export interface JsonWhyReport {
@@ -144,7 +150,7 @@ export interface JsonWhyReport {
 export function toWhyJson(
   report: CorpusReport,
   target: string,
-  opts: { version: string; dropBehavior: DropBehavior },
+  opts: { version: string; dropBehavior: DropBehavior; runtime?: RuntimeJoin | null },
 ): JsonWhyReport {
   const dropSimulation = simulateDrop(report.skills, report.budget, opts.dropBehavior);
   return {
@@ -160,6 +166,8 @@ export function toWhyJson(
         typeof skill.frontmatter['when_to_use'] === 'string'
           ? skill.frontmatter['when_to_use']
           : '';
+      const rt = opts.runtime;
+      const runtimeRow = rt?.skills.find((row) => row.path === skill.path);
       return {
         skill: {
           name,
@@ -170,6 +178,20 @@ export function toWhyJson(
         findings: report.findings.filter((f) => f.skillPath === skill.path).map(toJsonFinding),
         listingCost: name.length + Math.min(desc.length + when.length, report.budget.perEntryCapChars),
         dropSimulation,
+        ...(rt && runtimeRow
+          ? {
+              runtime: {
+                sessions: rt.sessions,
+                activations: runtimeRow.activations,
+                thiefNeighbor: runtimeRow.thiefNeighbor
+                  ? {
+                      name: runtimeRow.thiefNeighbor.name,
+                      activations: runtimeRow.thiefNeighbor.activations,
+                    }
+                  : null,
+              },
+            }
+          : {}),
       };
     }),
   };

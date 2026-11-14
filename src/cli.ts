@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
- * `skill-diag` CLI — Phase 1 surface only.
+ * `skill-diag` CLI — Phase 1 surface plus Phases 2–4a.
  *
  * Implemented: default lint (Tier 1 + Tier 2), `budget`, `routing`, `--why`,
  * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`,
- * `--dedupe`, `--upload`, `--sarif`, `--strict-raw`.
- * Not implemented on purpose: runtime, MCP, --fix, --llm, graph. Those are later
+ * `--dedupe`, `--upload`, `--sarif`, `--strict-raw`, `runtime ingest`,
+ * `runtime report`.
+ * Not implemented on purpose: MCP, --fix, --llm, graph. Those are later
  * phases, and a stub that prints nothing would be worse than no command at all.
  */
 
@@ -27,6 +28,13 @@ import {
 } from './model/config.js';
 import { analyzeRouting, type RoutingReport } from './model/routing.js';
 import {
+  analyzeRuntimeJoin,
+  DEFAULT_STORE_PATH,
+  ingestOtelFile,
+  loadRuntimeStore,
+  whyRuntimeFor,
+} from './model/runtime.js';
+import {
   exitCodeFor,
   stringify,
   toJsonFinding,
@@ -40,6 +48,7 @@ import {
   renderRoutingWhy,
   toRoutingJson,
 } from './output/routing.js';
+import { renderRuntimeHuman, toRuntimeJson } from './output/runtime.js';
 import { buildSarif } from './output/sarif.js';
 import { matchSkills } from './types.js';
 
@@ -62,6 +71,8 @@ interface CommonOpts {
   upload?: boolean;
   sarif?: string;
   strictRaw?: boolean;
+  otel?: string;
+  store?: string;
 }
 
 /**
@@ -190,14 +201,20 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
       }
     }
     const dropBehavior = contract.dropBehavior;
+    // Phase 4a: runtime evidence joins the --why output when the local store
+    // has observed sessions; an empty store keeps the static-only report.
+    const store = loadRuntimeStore(opts.store);
+    const runtimeJoin = store.sessions.length > 0 ? analyzeRuntimeJoin(skills, store) : null;
     if (opts.json) {
       process.stdout.write(
-        stringify(toWhyJson(report, opts.why, { version: pkg.version, dropBehavior })),
+        stringify(
+          toWhyJson(report, opts.why, { version: pkg.version, dropBehavior, runtime: runtimeJoin }),
+        ),
       );
       return exitCode;
     }
     process.stdout.write(
-      renderWhy(report, opts.why, { color: opts.color !== false, dropBehavior }),
+      renderWhy(report, opts.why, { color: opts.color !== false, dropBehavior, runtime: runtimeJoin }),
     );
     return exitCode;
   }
@@ -230,7 +247,8 @@ program
   .option(
     '--strict-raw',
     'promote routing-model findings from info to their natural severity; they then affect exit codes and SARIF levels',
-  );
+  )
+  .option('--store <path>', 'runtime store path override (default ~/.cache/skill-diag/runtime.jsonl)');
 program.action(() => {
   process.exitCode = execute(mergedOpts(program), 'lint');
 });
@@ -292,12 +310,15 @@ function executeRouting(opts: CommonOpts): number {
       process.stderr.write(`no skill matches ${opts.why}\n`);
       return 3;
     }
+    // Phase 4a: runtime evidence rides along when the store has sessions.
+    const runtime = whyRuntimeFor(active.skills, target, loadRuntimeStore(opts.store));
     if (opts.json) {
       process.stdout.write(
         stringify({
           version: '1',
           tool: { name: 'skill-diag', version: pkg.version },
           ...explainRouting(target, report, mode),
+          ...(runtime ? { runtime } : {}),
         }),
       );
       return exitCode;
@@ -307,6 +328,7 @@ function executeRouting(opts: CommonOpts): number {
         version: pkg.version,
         color: opts.color !== false,
         mode,
+        runtime,
       }),
     );
     return exitCode;
@@ -354,6 +376,81 @@ const routingCommand = program
 addCommonOptions(routingCommand);
 routingCommand.action(() => {
   process.exitCode = executeRouting(mergedOpts(routingCommand));
+});
+
+/**
+ * Phase 4a: runtime activation evidence. `ingest` appends OTEL skill_activated
+ * events to the local JSONL store; `report` joins the static corpus with what
+ * actually fired. The report never gates — it is evidence, not a check.
+ */
+function executeRuntimeIngest(opts: CommonOpts): number {
+  if (!opts.otel) {
+    process.stderr.write('runtime ingest requires --otel <path>\n');
+    return 3;
+  }
+  const storePath = opts.store ?? DEFAULT_STORE_PATH;
+  try {
+    const result = ingestOtelFile(opts.otel, storePath);
+    if (opts.json) {
+      process.stdout.write(
+        stringify({
+          version: '1',
+          tool: { name: 'skill-diag', version: pkg.version },
+          ingested: result,
+          storePath,
+        }),
+      );
+      return 0;
+    }
+    if (opts.quiet) return 0;
+    const skipped =
+      result.skipped > 0
+        ? ` (${result.skipped} malformed line${result.skipped === 1 ? '' : 's'} skipped)`
+        : '';
+    process.stdout.write(
+      `ingested ${result.events} activation${result.events === 1 ? '' : 's'} across ${result.sessions} session${result.sessions === 1 ? '' : 's'} from ${opts.otel}${skipped}\nstore: ${storePath}\n`,
+    );
+    return 0;
+  } catch (error) {
+    process.stderr.write(`${(error as Error).message}\n`);
+    return 3;
+  }
+}
+
+function executeRuntimeReport(opts: CommonOpts): number {
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
+  const skills = discoverSkills({ home, project, dedupe });
+  const storePath = opts.store ?? DEFAULT_STORE_PATH;
+  const join = analyzeRuntimeJoin(skills, loadRuntimeStore(storePath));
+  if (opts.json) {
+    process.stdout.write(toRuntimeJson(join, { version: pkg.version, storePath }));
+    return 0;
+  }
+  if (opts.quiet) return 0;
+  process.stdout.write(
+    renderRuntimeHuman(join, { version: pkg.version, storePath, color: opts.color !== false }),
+  );
+  return 0;
+}
+
+const runtimeCommand = program.command('runtime').description('Runtime activation evidence from OTEL telemetry');
+const ingestCommand = runtimeCommand
+  .command('ingest')
+  .description('Ingest OTEL JSONL activation logs into the local store')
+  .option('--otel <path>', 'OTEL JSONL log file to ingest')
+  .option('--store <path>', 'runtime store path override (default ~/.cache/skill-diag/runtime.jsonl)');
+ingestCommand.action(() => {
+  process.exitCode = executeRuntimeIngest(mergedOpts(ingestCommand));
+});
+
+const runtimeReportCommand = runtimeCommand
+  .command('report')
+  .description('Join static skill discovery with runtime activations');
+addCommonOptions(runtimeReportCommand);
+runtimeReportCommand.action(() => {
+  process.exitCode = executeRuntimeReport(mergedOpts(runtimeReportCommand));
 });
 
 const initCommand = program

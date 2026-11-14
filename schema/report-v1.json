@@ -33,6 +33,29 @@
           },
           "findings": { "type": "array", "items": { "$ref": "#/definitions/finding" } },
           "listingCost": { "type": "number", "minimum": 0 },
+          "runtime": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sessions", "activations", "thiefNeighbor"],
+            "properties": {
+              "sessions": { "type": "number", "minimum": 0 },
+              "activations": { "type": "number", "minimum": 0 },
+              "thiefNeighbor": {
+                "oneOf": [
+                  { "type": "null" },
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["name", "activations"],
+                    "properties": {
+                      "name": { "type": "string" },
+                      "activations": { "type": "number", "minimum": 0 }
+                    }
+                  }
+                ]
+              }
+            }
+          },
           "dropSimulation": {
             "oneOf": [
               { "type": "null" },
