@@ -1,0 +1,34 @@
+name: 'skill-diag'
+description: >-
+  Diagnose why AI agent skills fail to load, route, or scale — local-first,
+  deterministic, and SARIF-ready for GitHub Code Scanning.
+branding:
+  icon: 'activity'
+  color: 'purple'
+
+inputs:
+  args:
+    description: >-
+      Arguments passed to skill-diag. The default gates on errors and emits
+      skill-diag.sarif for the upload step below; if you change the SARIF
+      path here, change it in the upload step too.
+    required: false
+    default: '--strict --sarif skill-diag.sarif'
+  version:
+    description: 'skill-diag version to run (npm semver or dist-tag).'
+    required: false
+    default: 'latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run skill-diag
+      shell: bash
+      # --yes keeps npx non-interactive on a cold runner.
+      run: npx --yes skill-diag@${{ inputs.version }} ${{ inputs.args }}
+
+    - name: Upload SARIF to GitHub Code Scanning
+      if: always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: skill-diag.sarif

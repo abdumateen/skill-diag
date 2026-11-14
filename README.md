@@ -46,18 +46,59 @@ counterfactual is not uniquely determined. See
 [RELEASE_NOTES_v0.1.0.md](RELEASE_NOTES_v0.1.0.md) for the full feature list,
 known limitations, and the honest-numbers policy.
 
-## CI usage
+## GitHub Actions
 
-GitHub Actions (Code Scanning upload):
+The repo ships a composite action (`action.yml`) that runs the scan and
+uploads the SARIF report to GitHub Code Scanning. The upload runs even when
+the scan fails, so a red build still shows its findings:
 
 ```yaml
-- run: npx skill-diag --sarif --quiet --home "$HOME" > skill-diag.sarif
-- uses: github/codeql-action/upload-sarif@v3
-  with:
-    sarif_file: skill-diag.sarif
+name: skill-diag
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  security-events: write   # required for the SARIF upload
+
+jobs:
+  skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: OWNER/skill-diag@v0.2.0
+        with:
+          version: 0.2.0
+          args: --strict --sarif skill-diag.sarif
 ```
 
-Pre-commit / any gate:
+Replace `OWNER` with the repository owner once the action is published.
+Inputs: `args` (default `--strict --sarif skill-diag.sarif`) and `version`
+(default `latest`). If you change the SARIF path in `args`, change the
+`sarif_file` the action uploads accordingly — pin `version` to the release
+you reviewed for reproducible CI.
+
+## Pre-commit Hook
+
+The repo ships a pre-commit hook definition (`.pre-commit-hooks.yaml`) that
+runs the full scan before every commit:
+
+```yaml
+repos:
+  - repo: OWNER/skill-diag
+    rev: v0.2.0
+    hooks:
+      - id: skill-diag
+```
+
+The hook runs `skill-diag --strict` against the whole skill directory — not
+just changed files — because a skill's listing cost and routing health depend
+on the corpus, not on the diff.
+
+## CI usage
+
+Prefer the action and hook above. For a bare gate on any CI:
 
 ```bash
 npx skill-diag --quiet          # exit 1 on error findings

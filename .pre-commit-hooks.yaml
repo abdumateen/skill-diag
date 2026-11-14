@@ -1,0 +1,21 @@
+# pre-commit hook definitions for skill-diag.
+# Usage in .pre-commit-config.yaml:
+#
+#   repos:
+#     - repo: <this-repository>
+#       rev: v0.2.0
+#       hooks:
+#         - id: skill-diag
+- id: skill-diag
+  name: skill-diag
+  description: >-
+    Diagnose AI agent skills (frontmatter, naming, listing budget, routing)
+    across the whole repository before they ship.
+  entry: skill-diag
+  args: ['--strict']
+  language: node
+  additional_dependencies: ['skill-diag']
+  # The tool scans the whole skill directory, not just changed files.
+  pass_filenames: false
+  # A whole-corpus scan is meaningful even when no file changed.
+  always_run: true
