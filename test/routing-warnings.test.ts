@@ -16,10 +16,10 @@ import type { Skill } from '../src/types.js';
 
 const contract = loadContract();
 
-function runFixture(dir: string) {
+function runFixture(dir: string, strictRaw = false) {
   const skills = discoverSkills({ home: dir, project: dir });
   const routing = resolveRoutingConfig(dir);
-  return runChecks(skills, { contract, routing });
+  return runChecks(skills, { contract, routing, strictRaw });
 }
 
 function generated(count: number): Skill[] {
@@ -42,18 +42,23 @@ describe('routing-health-at-risk', () => {
     expect(report.findings.filter((f) => f.checkId === 'routing-health-at-risk')).toHaveLength(0);
   });
 
-  it('fires as a warning below 0.60 (fail fixture)', () => {
+  it('fires as info below 0.60 by default, warning under --strict-raw (fail fixture)', () => {
     const report = runFixture('test/fixtures/tier2/routing-health-at-risk/fail');
     const hits = report.findings.filter((f) => f.checkId === 'routing-health-at-risk');
     expect(hits).toHaveLength(1);
-    expect(hits[0]?.severity).toBe('warning');
+    expect(hits[0]?.severity).toBe('info');
     expect(hits[0]?.tier).toBe(2);
+    const promoted = runFixture('test/fixtures/tier2/routing-health-at-risk/fail', true);
+    expect(
+      promoted.findings.filter((f) => f.checkId === 'routing-health-at-risk')[0]?.severity,
+    ).toBe('warning');
   });
 
   it('fires on a generated 1,400-skill corpus', () => {
     const report = runChecks(generated(1400), { contract });
     const hits = report.findings.filter((f) => f.checkId === 'routing-health-at-risk');
     expect(hits).toHaveLength(1);
+    expect(hits[0]?.severity).toBe('info');
     expect(report.findings.some((f) => f.checkId === 'routing-health-critical')).toBe(false);
   });
 });
@@ -64,18 +69,26 @@ describe('routing-health-critical', () => {
     expect(report.findings.filter((f) => f.checkId === 'routing-health-critical')).toHaveLength(0);
   });
 
-  it('fires as an error below 0.50 (fail fixture)', () => {
+  it('fires as info below 0.50 by default, error under --strict-raw (fail fixture)', () => {
     const report = runFixture('test/fixtures/tier2/routing-health-critical/fail');
     const hits = report.findings.filter((f) => f.checkId === 'routing-health-critical');
     expect(hits).toHaveLength(1);
-    expect(hits[0]?.severity).toBe('error');
+    expect(hits[0]?.severity).toBe('info');
+    const promoted = runFixture('test/fixtures/tier2/routing-health-critical/fail', true);
+    expect(
+      promoted.findings.filter((f) => f.checkId === 'routing-health-critical')[0]?.severity,
+    ).toBe('error');
   });
 
   it('fires on a generated 2,000-skill corpus', () => {
     const report = runChecks(generated(2000), { contract });
     const hits = report.findings.filter((f) => f.checkId === 'routing-health-critical');
     expect(hits).toHaveLength(1);
-    expect(hits[0]?.severity).toBe('error');
+    expect(hits[0]?.severity).toBe('info');
+    const promoted = runChecks(generated(2000), { contract, strictRaw: true });
+    expect(promoted.findings.filter((f) => f.checkId === 'routing-health-critical')[0]?.severity).toBe(
+      'error',
+    );
   });
 
   it('does not also emit the warning when critical fires', () => {

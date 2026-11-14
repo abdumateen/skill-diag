@@ -23,6 +23,8 @@ export interface CheckContext {
    * the contract's `rejectedOnUploadPath` fields actually fail.
    */
   uploadMode?: boolean;
+  /** True when `--strict-raw` asked for routing estimates at natural severity. */
+  strictRaw?: boolean;
 }
 
 export interface Check {

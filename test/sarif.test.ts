@@ -64,11 +64,12 @@ function pressuredReport(): CorpusReport {
 }
 
 /** The committed fail fixtures, which drive the routing model with parameters. */
-function routingReport(fixture: string): CorpusReport {
+function routingReport(fixture: string, strictRaw = false): CorpusReport {
   const dir = join(process.cwd(), 'test', 'fixtures', 'tier2', fixture, 'fail');
   return runChecks(discoverSkills({ home: dir, project: dir }), {
     contract,
     routing: resolveRoutingConfig(dir),
+    strictRaw,
   });
 }
 
@@ -182,7 +183,9 @@ describe('levels', () => {
   });
 
   it('keeps them at their raw severity under --strict-raw', () => {
-    const log = sarif(routingReport('routing-health-critical'), true);
+    // Phase 3c: the promotion happens in runChecks, so the report must be built
+    // with the same strictRaw the SARIF emitter receives.
+    const log = sarif(routingReport('routing-health-critical', true), true);
     expect(byRule(log, 'routing-health-critical')[0]?.['level']).toBe('error');
   });
 

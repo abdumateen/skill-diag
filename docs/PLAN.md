@@ -682,6 +682,41 @@ unconditional error — a local install would fail on a field the host accepts.
 `unknown-field` reports it only when `--upload` (or `uploadMode: true` in the
 config) says the corpus is headed for upload, and then as an error. Default off.
 
+### Phase 3c — exit-code semantics, benchmark (shipped)
+
+**Exit codes follow the deduped estimate; estimates are `info` until promoted.**
+The interim worst-of rule from Phase 2c.3 above is superseded: a raw critical
+could fail an otherwise-healthy deduped install, which made the default run on
+this machine red for a scenario the host does not actually load. The `routing`
+exit now follows `status` of the active (deduped) mode only — 0 `ok`, 2
+`at-risk` under `--strict`, 1 `critical` — and the raw scan appears as findings
+at `info` severity. `--strict-raw` (flag > `.skill-diag.json` `strictRaw` >
+default false) promotes the routing-model findings to their natural severity
+(`critical`→`error`, `at-risk`→`warning`); the promoted raw estimate then
+rejoins the gate, so `routing --strict-raw` on this machine exits 1 again. The
+main command follows the same rule through `exitCodeFor`: `info` findings never
+gate, a promoted `error` exits 1, a promoted `warning` exits 2 under `--strict`.
+This is the SARIF precedent from Phase 3b applied to exit codes — estimates are
+`note`/`info` unless the operator asks to be held to them.
+
+**Cold-start benchmark** (`bench/run.mjs`, 5 fresh-process trials per corpus,
+project root pinned to an empty temp dir so the repo's own config cannot leak
+in). Two runs on the same machine, same day:
+
+| Corpus | Run 1 median | Run 2 median | Gate |
+| --- | --- | --- | --- |
+| 100-skill generated | 1,099 ms (min 764, max 1,302) | 714 ms (min 707, max 887) | < 1,000 ms — passed on run 2, missed by 99 ms on run 1 |
+| 1,115-skill Phase 1 corpus | 5,972 ms | 5,157 ms | reported |
+| real home (~/.claude) | 10,360 ms | 9,793 ms | reported |
+
+The 100-skill gate passes but with a thin margin and real run-to-run variance
+(±40% between runs on a loaded desktop). The Phase 2a figure (544 ms median on
+100 skills) predates the routing model's integration into the main command;
+these runs include it. Against the incumbent's 18.3 s median on 1,115 skills
+(claude-skills-doctor v0.7.0), skill-diag is 3.1–3.5× faster on the same
+corpus. The real-home cold runtime (~10 s on 1,084 deduped / 2,290 raw skills)
+is a known limitation for v0.1.0, not a gate.
+
 ## Non-goals
 
 Per spec §23 — no description grading by default, no security scanning, no

@@ -200,9 +200,16 @@ describe.skipIf(!existsSync('dist/cli.js'))('routing exit codes', () => {
     };
     expect(validate(json)).toBe(true);
     const critical = json.findings.find((f) => f.checkId === 'routing-health-critical');
-    expect(critical?.severity).toBe('error');
+    // Phase 3c: model estimates are info until --strict-raw promotes them.
+    expect(critical?.severity).toBe('info');
     expect(critical?.tier).toBe(2);
     expect(critical?.message).toContain('estimated top-1');
+    const promoted = JSON.parse(
+      runCli(['routing', '--json', '--strict-raw', '--home', home]).stdout,
+    ) as { findings: Array<{ checkId: string; severity: string }> };
+    expect(promoted.findings.find((f) => f.checkId === 'routing-health-critical')?.severity).toBe(
+      'error',
+    );
   });
 
   it('warns on --why for a skill that only a cached older version contains', () => {

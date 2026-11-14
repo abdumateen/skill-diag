@@ -4,7 +4,7 @@
  *
  * Implemented: default lint (Tier 1 + Tier 2), `budget`, `routing`, `--why`,
  * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`,
- * `--dedupe`, `--upload`, `--sarif`.
+ * `--dedupe`, `--upload`, `--sarif`, `--strict-raw`.
  * Not implemented on purpose: runtime, MCP, --fix, --llm, graph. Those are later
  * phases, and a stub that prints nothing would be worse than no command at all.
  */
@@ -21,6 +21,7 @@ import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery
 import {
   resolveDedupeMode,
   resolveRoutingConfig,
+  resolveStrictRaw,
   resolveUploadMode,
   writeDefaultConfig,
 } from './model/config.js';
@@ -117,12 +118,14 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
 
   const routing = resolveRoutingConfig(project, { routingParams: opts.routingParams });
   const uploadMode = resolveUploadMode(project, { upload: opts.upload });
+  const strictRaw = resolveStrictRaw(project, { strictRaw: opts.strictRaw });
   const report = runChecks(skills, {
     contract,
     ...budgetOptions,
     commands,
     routing,
     uploadMode,
+    strictRaw,
   });
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
@@ -134,7 +137,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
     const log = buildSarif(report, {
       version: pkg.version,
       root: project,
-      strictRaw: opts.strictRaw === true,
+      strictRaw,
     });
     writeFileSync(opts.sarif, `${JSON.stringify(log, null, 2)}\n`);
   }
@@ -219,12 +222,15 @@ program
   .version(pkg.version);
 
 addCommonOptions(program);
-// Declared on the lint command alone: SARIF describes the corpus report, and the
-// `budget` and `routing` subcommands emit their own shapes. Accepting the flag
-// there and writing nothing would be worse than rejecting it.
+// Declared on the program so every surface shares it: the main lint and the
+// `routing` subcommand both gate on it, and SARIF mirrors the resolved value.
+// `budget` accepts it harmlessly — its report has no exit gate of its own.
 program
   .option('--sarif <path>', 'write a SARIF v2.1.0 report for GitHub Code Scanning')
-  .option('--strict-raw', 'keep routing estimates at their raw severity in SARIF');
+  .option(
+    '--strict-raw',
+    'promote routing-model findings from info to their natural severity; they then affect exit codes and SARIF levels',
+  );
 program.action(() => {
   process.exitCode = execute(mergedOpts(program), 'lint');
 });
@@ -235,23 +241,11 @@ budgetCommand.action(() => {
   process.exitCode = execute(mergedOpts(budgetCommand), 'budget');
 });
 
-const STATUS_RANK: Record<RoutingReport['status'], number> = {
-  ok: 0,
-  'at-risk': 1,
-  critical: 2,
-};
-
-function worstStatus(
-  a: RoutingReport['status'],
-  b: RoutingReport['status'],
-): RoutingReport['status'] {
-  return STATUS_RANK[a] >= STATUS_RANK[b] ? a : b;
-}
-
 /**
- * `critical` always fails, `at-risk` fails only under `--strict`. The caller
- * passes the worst of the active and raw estimates, so a machine whose raw scan
- * is critical cannot exit 0 just because the deduped scan is healthy.
+ * Phase 3c exit semantics: the gate follows the deduped (active) estimate —
+ * `critical` always fails, `at-risk` fails only under `--strict`. The raw scan
+ * no longer drags the exit code down on its own; under `--strict-raw` its
+ * promoted findings rejoin the gate, so a raw critical fails the run again.
  */
 function routingExitCode(status: RoutingReport['status'], strict: boolean): 0 | 1 | 2 {
   if (status === 'critical') return 1;
@@ -271,10 +265,16 @@ function executeRouting(opts: CommonOpts): number {
   const raw = rawOnly ? null : analyzeRouting(discoverSkills({ home, project, dedupe: 'all' }), config);
 
   const strict = opts.strict === true;
-  const exitCode = routingExitCode(
-    raw ? worstStatus(report.status, raw.status) : report.status,
-    strict,
-  );
+  const strictRaw = resolveStrictRaw(project, { strictRaw: opts.strictRaw });
+  let exitCode = routingExitCode(report.status, strict);
+  if (strictRaw && raw) {
+    // A promoted raw finding enters the gate at its natural severity: an error
+    // fails outright, a warning only under --strict — the same rule the main
+    // command applies through exitCodeFor.
+    const rawExit = routingExitCode(raw.status, strict);
+    if (rawExit === 1 || exitCode === 1) exitCode = 1;
+    else if (rawExit === 2 || exitCode === 2) exitCode = 2;
+  }
 
   if (opts.why) {
     const target = matchSkills(active.skills, opts.why)[0];
@@ -314,10 +314,11 @@ function executeRouting(opts: CommonOpts): number {
 
   // The routing subcommand reports both estimates' findings; the main report
   // stays active-only so a deduped install is not alarmed by its own cache.
+  // Both estimates' findings carry `info` until --strict-raw promotes them.
   const seen = new Set<string>();
   const findings = [
-    ...routingHealthFindings(report),
-    ...(raw ? routingHealthFindings(raw) : []),
+    ...routingHealthFindings(report, strictRaw),
+    ...(raw ? routingHealthFindings(raw, strictRaw) : []),
   ].filter((f) => (seen.has(f.checkId) ? false : (seen.add(f.checkId), true)));
 
   if (opts.quiet) return exitCode;

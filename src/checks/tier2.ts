@@ -78,14 +78,19 @@ export const contextPressure: Check = {
  *
  * One helper feeds both checks and `routing --json`, so the two surfaces cannot
  * disagree about the same estimate.
+ *
+ * These are model estimates, not facts about a file. Phase 3c: they default to
+ * `info` so an estimate never fails a run on its own; `--strict-raw` promotes
+ * them to their natural severity (`error`/`warning`), which is also what makes
+ * them count toward exit codes.
  */
-export function routingHealthFindings(routing: RoutingReport): Finding[] {
+export function routingHealthFindings(routing: RoutingReport, strictRaw = false): Finding[] {
   if (routing.adjustedTop1 < ROUTING_CRITICAL_THRESHOLD) {
     return [
       finding(
         'routing-health-critical',
         null,
-        'error',
+        strictRaw ? 'error' : 'info',
         `estimated top-1 ${routing.adjustedTop1.toFixed(3)} at N_eff=${routing.nEff.toLocaleString('en-US')} is below the ${ROUTING_CRITICAL_THRESHOLD.toFixed(2)} floor; the router is guessing more often than routing`,
       ),
     ];
@@ -95,7 +100,7 @@ export function routingHealthFindings(routing: RoutingReport): Finding[] {
       finding(
         'routing-health-at-risk',
         null,
-        'warning',
+        strictRaw ? 'warning' : 'info',
         `estimated top-1 ${routing.adjustedTop1.toFixed(3)} at N_eff=${routing.nEff.toLocaleString('en-US')} is below the ${ROUTING_WARNING_THRESHOLD.toFixed(2)} warning line; the line is crossed at N ≈ ${routing.breakPoints.warning.nStar.toLocaleString('en-US')}`,
       ),
     ];
@@ -106,15 +111,19 @@ export function routingHealthFindings(routing: RoutingReport): Finding[] {
 export const routingHealthAtRisk: Check = {
   id: 'routing-health-at-risk',
   tier: 2,
-  run: ({ routing }: CheckContext) =>
-    routing ? routingHealthFindings(routing).filter((f) => f.checkId === 'routing-health-at-risk') : [],
+  run: ({ routing, strictRaw }: CheckContext) =>
+    routing
+      ? routingHealthFindings(routing, strictRaw === true).filter((f) => f.checkId === 'routing-health-at-risk')
+      : [],
 };
 
 export const routingHealthCritical: Check = {
   id: 'routing-health-critical',
   tier: 2,
-  run: ({ routing }: CheckContext) =>
-    routing ? routingHealthFindings(routing).filter((f) => f.checkId === 'routing-health-critical') : [],
+  run: ({ routing, strictRaw }: CheckContext) =>
+    routing
+      ? routingHealthFindings(routing, strictRaw === true).filter((f) => f.checkId === 'routing-health-critical')
+      : [],
 };
 
 /**

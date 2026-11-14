@@ -36,6 +36,8 @@ export interface RunOptions extends BudgetOptions {
   routing?: RoutingConfig;
   /** Findings destined for a claude.ai upload path (Phase 3a). */
   uploadMode?: boolean;
+  /** Promote routing-model findings from `info` to their natural severity (Phase 3c). */
+  strictRaw?: boolean;
 }
 
 export function runChecks(skills: readonly Skill[], options: RunOptions): CorpusReport {
@@ -51,6 +53,7 @@ export function runChecks(skills: readonly Skill[], options: RunOptions): Corpus
     contextWindow,
     routing,
     uploadMode: options.uploadMode === true,
+    strictRaw: options.strictRaw === true,
   };
   const checks = options.checks ?? ALL_CHECKS;
   const findings: Finding[] = [];

@@ -23,6 +23,8 @@ export interface ConfigFile {
   dedupe?: 'enabled-latest' | 'all';
   /** Treat `rejectedOnUploadPath` frontmatter fields as errors (Phase 3a). */
   uploadMode?: boolean;
+  /** Promote routing-model findings from `info` to their natural severity (Phase 3c). */
+  strictRaw?: boolean;
   routing?: {
     r?: number;
     p?: number;
@@ -37,6 +39,7 @@ export interface ConfigFile {
 export const DEFAULT_CONFIG_FILE = {
   dedupe: 'enabled-latest',
   uploadMode: false,
+  strictRaw: false,
   routing: {
     r: DEFAULT_SURVIVAL_PARAMS.r,
     p: DEFAULT_SURVIVAL_PARAMS.p,
@@ -128,6 +131,16 @@ export function resolveDedupeMode(
 export function resolveUploadMode(projectDir: string, opts: { upload?: boolean } = {}): boolean {
   if (opts.upload === true) return true;
   return readConfig(projectDir).uploadMode === true;
+}
+
+/**
+ * Strict-raw follows the upload-mode shape: the flag can only turn it on, the
+ * config can turn it on for a repository whose CI wants the model estimates
+ * gated, and the default leaves them at `info` so estimates never fail a run.
+ */
+export function resolveStrictRaw(projectDir: string, opts: { strictRaw?: boolean } = {}): boolean {
+  if (opts.strictRaw === true) return true;
+  return readConfig(projectDir).strictRaw === true;
 }
 
 export function writeDefaultConfig(projectDir: string): { path: string; created: boolean } {
