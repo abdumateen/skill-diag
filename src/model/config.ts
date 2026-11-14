@@ -21,6 +21,8 @@ export const CONFIG_FILENAME = '.skill-diag.json';
 export interface ConfigFile {
   /** Discovery dedupe mode (Phase 2c.3). */
   dedupe?: 'enabled-latest' | 'all';
+  /** Treat `rejectedOnUploadPath` frontmatter fields as errors (Phase 3a). */
+  uploadMode?: boolean;
   routing?: {
     r?: number;
     p?: number;
@@ -34,6 +36,7 @@ export interface ConfigFile {
 
 export const DEFAULT_CONFIG_FILE = {
   dedupe: 'enabled-latest',
+  uploadMode: false,
   routing: {
     r: DEFAULT_SURVIVAL_PARAMS.r,
     p: DEFAULT_SURVIVAL_PARAMS.p,
@@ -115,6 +118,16 @@ export function resolveDedupeMode(
   const file = readConfig(projectDir).dedupe;
   if (file === 'enabled-latest' || file === 'all') return file;
   return 'enabled-latest';
+}
+
+/**
+ * Upload mode is opt-in: the flag can only turn it on (there is no `--no-upload`),
+ * and the config can turn it on for a repository whose skills ship to claude.ai.
+ * Default off, because a locally installed corpus tolerates the rejected fields.
+ */
+export function resolveUploadMode(projectDir: string, opts: { upload?: boolean } = {}): boolean {
+  if (opts.upload === true) return true;
+  return readConfig(projectDir).uploadMode === true;
 }
 
 export function writeDefaultConfig(projectDir: string): { path: string; created: boolean } {

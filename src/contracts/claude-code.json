@@ -3,6 +3,9 @@
   "versionRange": ">=2.0.70",
   "skillRoots": ["~/.claude/skills", ".claude/skills"],
   "commandRoots": [".claude/commands", "~/.claude/commands"],
+  "severity": {
+    "description-capped": "error"
+  },
   "frontmatter": {
     "required": [],
     "recommended": ["description"],

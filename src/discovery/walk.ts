@@ -47,7 +47,7 @@ export interface DiscoverOptions {
   dedupe?: DedupeMode;
 }
 
-interface PluginEntry {
+export interface PluginEntry {
   file: string;
   plugin: string;
   marketplace: string | null;
@@ -115,7 +115,7 @@ function pluginSkillsIn(pluginsRoot: string): PluginEntry[] {
   return out.sort((a, b) => a.file.localeCompare(b.file));
 }
 
-function pluginIdentity(rel: string[]): Omit<PluginEntry, 'file'> {
+export function pluginIdentity(rel: string[]): Omit<PluginEntry, 'file'> {
   if (rel[0] === 'cache' && rel.length >= 4) {
     return {
       marketplace: rel[1] ?? null,

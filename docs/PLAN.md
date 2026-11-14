@@ -203,6 +203,24 @@ their tool checks fully, where matching them is the bar) **plus coverage on the
 `skill-diag` must be strictly better rather than equal). Parity alone is not
 acceptance; it is the floor.
 
+**8. Phase 3a closes the Tier 2 half of the gap.** Seven checks ship, each keyed
+on a behaviour the incumbent withholds from plugin skills. All seven run over
+every skill regardless of source.
+
+| Check id | Severity | Detects | Incumbent position | Gap |
+|---|---|---|---|---|
+| `description-collision` | warning | token-shingle Jaccard ≥ 0.72 between two skills' listing text | `description-collision` exists but is called with `[s for s in skills if s.source != SOURCE_PLUGIN]` | unreachable for 1,102 of 1,115 skills |
+| `trigger-overlap` | warning | two skills claim the same trigger clause ("Use when…") in near-identical words | no equivalent — the incumbent never extracts trigger clauses | no incumbent signal at all |
+| `allowed-tools-mismatch` | warning | body names a host tool that the declared `allowed-tools` does not cover | `allowed-tools-body`, inside the withheld `full` block | withheld from plugins |
+| `body-oversized` | warning | body exceeds 5,000 chars | `body-too-large`, withheld | withheld from plugins |
+| `reference-missing` | warning | a relative path or link in the body does not resolve on disk | `reference-chain`, explicitly skipped for plugins | withheld; ours is single-hop, theirs chains |
+| `absolute-path` | warning | a filesystem-absolute path in the body | same id, withheld | withheld from plugins |
+| `docs-in-skill-folder` | warning | `README.md`/`CHANGELOG.md`/`CONTRIBUTING.md` inside a skill folder | `human-docs`, withheld | withheld from plugins |
+
+Six of the seven are the incumbent's own checks finally reaching plugin skills;
+`trigger-overlap` has no incumbent equivalent. Every one is a warning, so none of
+them changes an exit code unless `--strict` is passed.
+
 #### Classification of the 22 silent finding ids
 
 The baseline run left 22 of their 28 ids silent. Silent is not the same as
@@ -297,6 +315,10 @@ one of those phases exercise real scale on real data rather than on fixtures.
 State it as *the corpus this benchmark runs against* and always with its
 derivation (live skills = enabled plugins at latest version + `~/.claude/skills`),
 never as a claim about Claude Code at large.
+
+#### Discovery correction — 1,084 vs 1,115
+
+Discovery correction — 1,084 vs 1,115. The Phase 0 corpus contains 1,115 skills because `mattpocock-skills` was re-rooted from `skills/<category>/<name>/SKILL.md` to `skills/<name>/SKILL.md` during corpus construction. That re-rooting was a workaround for the earlier discovery glob. The Phase 2c.3 dedupe uses the exact host glob and correctly excludes nested skills that the host itself would exclude. On the real `~/.claude`, discovery now finds 1,084 live skills (1,069 plugin + 15 user). That is the honest number for what the host actually loads. The 1,115 figure remains valid only for the synthetic corpus. All future marketing and PLAN.md claims use 1,084 as the real-home number.
 
 **At N = 1,115 the model already predicts degradation.** With the spec defaults
 `r = 0.867`, `p = 2.83 × 10⁻⁴`:
@@ -638,13 +660,27 @@ the use site.
 
 ### Phase 3 pre-requisites
 
-**Cached plugin versions are counted for commands but deduplicated for skills.**
-Command discovery matches the incumbent: every cached plugin version counts (905
-on this machine, not one per enabled plugin). Skill discovery is deduplicated to
-live/enabled installs (1,115). The inconsistency is deliberate for now — matching
-the incumbent's command count is what makes those numbers comparable — and is a
-Phase 3 pre-requisite. Routing health depends on `N` (the skill count), not on
-the command count, so it does not block 2b.
+**Command discovery now dedupes like skill discovery (Phase 3a).** Before 3a,
+command discovery matched the incumbent: every cached plugin version counted
+(905 on this machine), while skills were deduplicated to live/enabled installs.
+`discoverCommands` now defaults to the same `enabled-latest` mode, so the corpus
+is costed as the host loads it; `--dedupe all` restores the raw every-file count,
+which is what the 905-comparison test pins. The 905 / 75,073 figures remain the
+incumbent-comparison baseline and nothing else.
+
+**`description-capped` is pinned to `error`.** A host-truncated description is a
+load-breaker, not a style warning: the skill still lists, but the router never
+sees the text that would have selected it. Anything past the per-entry cap is
+unreachable, so a warning would understate a skill that is functionally
+unrouteable. The pin lives in `src/contracts/claude-code.json` under `severity`,
+not in code, so a host that truncates differently can be re-pinned without
+touching the check.
+
+**`--upload` and `.skill-diag.json` `uploadMode`.** `argument-hint` is legal
+frontmatter locally and rejected on a claude.ai upload path, so it cannot be an
+unconditional error — a local install would fail on a field the host accepts.
+`unknown-field` reports it only when `--upload` (or `uploadMode: true` in the
+config) says the corpus is headed for upload, and then as an error. Default off.
 
 ## Non-goals
 

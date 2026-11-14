@@ -21,10 +21,18 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { PER_ENTRY_CAP } from '../types.js';
 import type { SkillSource, SlashCommand } from '../types.js';
+import {
+  dedupePluginEntries,
+  pluginIdentity,
+  type DedupeMode,
+  type PluginEntry,
+} from './walk.js';
 
 export interface CommandDiscoverOptions {
   home: string;
   project: string;
+  /** Discovery dedupe mode; defaults to `enabled-latest`, the same rule skills use. */
+  dedupe?: DedupeMode;
 }
 
 function isDir(p: string): boolean {
@@ -81,8 +89,10 @@ function commandName(root: string, file: string): string {
 }
 
 /** All `.md` files below a `commands` directory inside a plugin checkout. */
-function pluginCommandFiles(pluginsRoot: string): Array<{ file: string; plugin: string; stem: string }> {
-  const out: Array<{ file: string; plugin: string; stem: string }> = [];
+function pluginCommandFiles(
+  pluginsRoot: string,
+): Array<{ file: string; plugin: string; stem: string; identity: PluginEntry }> {
+  const out: Array<{ file: string; plugin: string; stem: string; identity: PluginEntry }> = [];
   const walk = (dir: string, depth: number): void => {
     if (depth > 12) return;
     let entries;
@@ -105,7 +115,11 @@ function pluginCommandFiles(pluginsRoot: string): Array<{ file: string; plugin: 
           .slice(idx + 1)
           .join(':')
           .replace(/\.md$/i, '');
-        out.push({ file: full, plugin, stem });
+        const rel = resolve(full)
+          .slice(resolve(pluginsRoot).length)
+          .split(/[\\/]/)
+          .filter(Boolean);
+        out.push({ file: full, plugin, stem, identity: { file: full, ...pluginIdentity(rel) } });
       }
     }
   };
@@ -164,7 +178,19 @@ export function discoverCommands(options: CommandDiscoverOptions): SlashCommand[
     push({ key, source, name, stem: name });
   }
 
-  for (const { file, plugin, stem } of pluginCommandFiles(join(home, '.claude', 'plugins'))) {
+  // Dedupe by install identity, the same rule skills use: a host keeps every
+  // cached plugin version and a marketplace checkout while loading exactly one
+  // copy. `plugin` is the directory the walk found; identity comes from the
+  // cache/marketplace layout, which is what `enabledPlugins` keys address.
+  const pluginCommands = pluginCommandFiles(join(home, '.claude', 'plugins'));
+  const { kept } = dedupePluginEntries(
+    pluginCommands.map((c) => c.identity),
+    options.dedupe ?? 'enabled-latest',
+    home,
+  );
+  const keep = new Set(kept.map((e) => e.file));
+  for (const { file, plugin, stem } of pluginCommands) {
+    if (!keep.has(file)) continue;
     push({ key: resolve(file), source: 'plugin', name: `${plugin}:${stem}`, stem, plugin });
   }
 

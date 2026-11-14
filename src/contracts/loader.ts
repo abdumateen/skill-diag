@@ -11,6 +11,14 @@ export interface Contract {
   versionRange: string;
   skillRoots: readonly string[];
   commandRoots: readonly string[];
+  /**
+   * Severity pins, keyed by check id. A check reads its own id; an absent key
+   * means the check's own default stands. `description-capped` is pinned to
+   * `error` because a host-truncated description is a load-breaker, not a style
+   * warning: the skill still lists, but the router never sees the text that
+   * would have selected it.
+   */
+  severity: Readonly<Record<string, 'error' | 'warning' | 'info'>>;
   frontmatter: {
     required: readonly string[];
     recommended: readonly string[];

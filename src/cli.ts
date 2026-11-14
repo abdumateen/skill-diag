@@ -17,7 +17,12 @@ import { routingHealthFindings } from './checks/tier2.js';
 import { loadContract } from './contracts/loader.js';
 import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery/walk.js';
-import { resolveDedupeMode, resolveRoutingConfig, writeDefaultConfig } from './model/config.js';
+import {
+  resolveDedupeMode,
+  resolveRoutingConfig,
+  resolveUploadMode,
+  writeDefaultConfig,
+} from './model/config.js';
 import { analyzeRouting, type RoutingReport } from './model/routing.js';
 import {
   exitCodeFor,
@@ -51,6 +56,7 @@ interface CommonOpts {
   host?: string;
   routingParams?: string;
   dedupe?: string;
+  upload?: boolean;
 }
 
 /**
@@ -82,6 +88,7 @@ function addCommonOptions(cmd: Command): Command {
     .option('--no-color', 'disable colour')
     .option('--routing-params <r,p>', 'override the published survival parameters (e.g. 0.867,0.000283)')
     .option('--dedupe <mode>', 'discovery dedupe: enabled-latest (default), all, off')
+    .option('--upload', 'the corpus ships to claude.ai: fail on upload-rejected frontmatter fields')
     .option('--host <host>', 'host contract to use', 'claude-code');
 }
 
@@ -93,7 +100,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const skills = discoverSkills({ home, project, dedupe });
   // Commands share the listing budget, so they are discovered and counted even
   // though Phase 1/2a does not lint them.
-  const commands = discoverCommands({ home, project });
+  const commands = discoverCommands({ home, project, dedupe });
 
   const budgetOptions = {
     ...(numberOrUndefined(opts.budget) !== undefined
@@ -105,7 +112,14 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   };
 
   const routing = resolveRoutingConfig(project, { routingParams: opts.routingParams });
-  const report = runChecks(skills, { contract, ...budgetOptions, commands, routing });
+  const uploadMode = resolveUploadMode(project, { upload: opts.upload });
+  const report = runChecks(skills, {
+    contract,
+    ...budgetOptions,
+    commands,
+    routing,
+    uploadMode,
+  });
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
 

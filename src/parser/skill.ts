@@ -51,6 +51,7 @@ export function parseSkillFile(input: ParseInput): Skill {
         frontmatter: {},
         body: lines.slice(1).join('\n'),
         yamlError: { line: 1, column: 1, message: 'frontmatter is never closed with `---`' },
+        bodyStartLine: 2,
         keyLines: {},
       };
     }
@@ -87,6 +88,7 @@ export function parseSkillFile(input: ParseInput): Skill {
         frontmatter: {},
         body: lines.slice(bodyStart).join('\n'),
         yamlError: failure,
+        bodyStartLine: bodyStart + 1,
         keyLines,
       };
     }
@@ -131,6 +133,7 @@ export function parseSkillFile(input: ParseInput): Skill {
     frontmatter: fm,
     body: lines.slice(bodyStart).join('\n'),
     ...(yamlError ? { yamlError } : {}),
+    bodyStartLine: bodyStart + 1,
     keyLines,
   };
   return skill;

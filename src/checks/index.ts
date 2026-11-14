@@ -34,6 +34,8 @@ export interface RunOptions extends BudgetOptions {
   checks?: readonly Check[];
   /** Routing parameters for the Phase 2b warnings; defaults are published values. */
   routing?: RoutingConfig;
+  /** Findings destined for a claude.ai upload path (Phase 3a). */
+  uploadMode?: boolean;
 }
 
 export function runChecks(skills: readonly Skill[], options: RunOptions): CorpusReport {
@@ -42,7 +44,14 @@ export function runChecks(skills: readonly Skill[], options: RunOptions): Corpus
   const budget = computeBudget(skills, contract, options);
   const contextWindow = resolveContextWindow(contract, options);
   const routing = analyzeRouting(skills, options.routing ?? DEFAULT_ROUTING_CONFIG);
-  const ctx: CheckContext = { skills, contract, budget, contextWindow, routing };
+  const ctx: CheckContext = {
+    skills,
+    contract,
+    budget,
+    contextWindow,
+    routing,
+    uploadMode: options.uploadMode === true,
+  };
   const checks = options.checks ?? ALL_CHECKS;
   const findings: Finding[] = [];
   for (const check of checks) findings.push(...check.run(ctx));

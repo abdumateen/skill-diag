@@ -34,6 +34,8 @@ export interface Skill {
   readonly yamlError?: YamlFailure;
   /** 1-based line of a frontmatter key, for precise findings. */
   readonly keyLines: Readonly<Record<string, number>>;
+  /** 1-based line where the body starts, so body findings point at a line. */
+  readonly bodyStartLine?: number;
 }
 
 /**

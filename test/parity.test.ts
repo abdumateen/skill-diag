@@ -43,6 +43,9 @@ const INCUMBENT_TO_OURS: Record<string, string> = {
   'budget-exceeded': 'budget-exceeded',
   'duplicate-name': 'exact-name-collision',
   'unexpected-frontmatter-key': 'unknown-field',
+  // Phase 3a kept these two incumbent ids verbatim, so they map one-to-one.
+  'description-collision': 'description-collision',
+  'absolute-path': 'absolute-path',
 };
 
 /**
@@ -50,21 +53,19 @@ const INCUMBENT_TO_OURS: Record<string, string> = {
  * fails the test below, so this list is the whole acknowledged gap.
  */
 const EXCLUDED: Record<string, string> = {
-  'body-too-large': 'Tier 2 (spec §7.2) — Phase 3',
-  'reference-chain': 'Tier 2 (spec §7.2) — Phase 3',
+  'body-too-large': 'implemented as body-oversized (Phase 3a) — ids not mapped',
+  'reference-chain': 'partially covered by reference-missing (Phase 3a) — chain traversal not implemented',
   'script-network-call': 'security — explicitly out of scope (§23)',
   'hidden-instruction': 'security — explicitly out of scope (§23)',
-  'budget-near': 'Tier 2 (spec §7.2) — Phase 3',
-  'description-collision': 'Tier 2 (spec §7.2) — Phase 3',
+  'budget-near': 'not implemented — proximity to the budget is not checked',
   'description-vague': 'Tier 3 semantic (spec §7.3) — skill-issue territory',
   'description-is-workflow': 'Tier 3 semantic (spec §7.3) — skill-issue territory',
-  'description-angle-brackets': 'not in spec §7.1 Tier 1 set — Phase 3',
-  'compatibility-too-long': 'Tier 2 (spec §7.2) — Phase 3',
-  'body-empty': 'Tier 2 (spec §7.2) — Phase 3',
-  'absolute-path': 'Tier 2 (spec §7.2) — Phase 3',
-  'human-docs': 'Tier 2 (spec §7.2) — Phase 3',
-  'allowed-tools-body': 'Tier 2 (spec §7.2) — Phase 3',
-  'yaml-truthy-key': 'Tier 2 parity gap — Phase 3 (parser strictness)',
+  'description-angle-brackets': 'not in spec §7.1 Tier 1 set — not implemented',
+  'compatibility-too-long': 'not implemented — compatibility length is not checked',
+  'body-empty': 'not implemented — an empty body is not checked',
+  'human-docs': 'implemented as docs-in-skill-folder (Phase 3a) — ids not mapped',
+  'allowed-tools-body': 'implemented as allowed-tools-mismatch (Phase 3a) — ids not mapped',
+  'yaml-truthy-key': 'parser strictness — not implemented',
   'internal-error': 'tool-internal crash sentinel, not a skill property',
 };
 

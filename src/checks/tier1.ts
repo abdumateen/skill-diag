@@ -18,6 +18,11 @@ export interface CheckContext {
   contextWindow: number;
   /** Routing analysis (Phase 2b); absent only for checks run outside the runner. */
   routing?: import('../model/routing.js').RoutingReport;
+  /**
+   * True when the corpus is headed for a claude.ai upload path. Only there do
+   * the contract's `rejectedOnUploadPath` fields actually fail.
+   */
+  uploadMode?: boolean;
 }
 
 export interface Check {
@@ -211,9 +216,10 @@ export const descriptionTooLong: Check = {
 export const descriptionCapped: Check = {
   id: 'description-capped',
   tier: 1,
-  run: ({ skills, budget }) => {
+  run: ({ skills, budget, contract }) => {
     const out: Finding[] = [];
     const f = make('description-capped', 1);
+    const severity = contract.severity['description-capped'] ?? 'error';
     const cap = budget.perEntryCapChars;
     for (const skill of skills) {
       if (skill.yamlError) continue;
@@ -222,6 +228,7 @@ export const descriptionCapped: Check = {
       out.push(
         f({
           skill,
+          severity,
           line: skill.keyLines['description'] ?? 1,
           message: `${len - cap} chars will never reach the model (cap ${cap.toLocaleString('en-US')})`,
         }),
@@ -286,25 +293,42 @@ export const exactNameCollision: Check = {
 export const unknownField: Check = {
   id: 'unknown-field',
   tier: 1,
-  run: ({ skills, contract }) => {
+  run: ({ skills, contract, uploadMode }) => {
     const out: Finding[] = [];
     const f = make('unknown-field', 1);
     const allowed = new Set(contract.frontmatter.allowedFields);
     for (const skill of skills) {
       if (skill.yamlError) continue;
-      const unknown = Object.keys(skill.frontmatter).filter((k) => !allowed.has(k));
+      const keys = Object.keys(skill.frontmatter);
+      const unknown = keys.filter((k) => !allowed.has(k));
+      const rejected = keys.filter((k) => contract.frontmatter.rejectedOnUploadPath.includes(k));
+
+      if (uploadMode === true && rejected.length > 0) {
+        // A field the host accepts locally and claude.ai refuses. Inert on a
+        // local install, fatal the moment the corpus is uploaded — which is why
+        // it is reported only under `--upload`. `argument-hint` is exactly this:
+        // present in both `allowedFields` and `rejectedOnUploadPath`.
+        const others =
+          unknown.length > 0 ? `; other unknown fields: ${unknown.sort().join(', ')}` : '';
+        out.push(
+          f({
+            skill,
+            severity: 'error',
+            line: skill.keyLines[rejected[0] ?? ''] ?? 1,
+            message: `${rejected.join(', ')} ${rejected.length === 1 ? 'is' : 'are'} rejected on claude.ai upload paths${others}`,
+            fix: { kind: 'remove-frontmatter-field', confidence: 'likely' },
+          }),
+        );
+        continue;
+      }
+
       if (unknown.length === 0) continue;
-      const rejected = unknown.filter((k) => contract.frontmatter.rejectedOnUploadPath.includes(k));
-      const fields = unknown.sort().join(', ');
       out.push(
         f({
           skill,
-          severity: rejected.length > 0 ? 'error' : 'warning',
+          severity: 'warning',
           line: skill.keyLines[unknown[0] ?? ''] ?? 1,
-          message:
-            rejected.length > 0
-              ? `${rejected.join(', ')} is rejected on claude.ai upload paths; other unknown fields: ${fields}`
-              : `${fields} ${unknown.length === 1 ? 'is' : 'are'} not part of the host contract and will be ignored`,
+          message: `${unknown.sort().join(', ')} ${unknown.length === 1 ? 'is' : 'are'} not part of the host contract and will be ignored`,
           fix: { kind: 'remove-frontmatter-field', confidence: 'heuristic' },
         }),
       );

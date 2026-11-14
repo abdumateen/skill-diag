@@ -22,6 +22,14 @@ import { describe, expect, it } from 'vitest';
 import { computeBudget } from '../src/budget.js';
 import { loadContract } from '../src/contracts/loader.js';
 import { discoverCommands } from '../src/discovery/commands.js';
+import type { DedupeMode } from '../src/discovery/walk.js';
+
+/**
+ * `all` on purpose. The incumbent's 905 is an every-markdown-file-on-disk count,
+ * so comparing against it needs the raw scan. Deduped discovery is a different
+ * question and is measured by the corpus tests instead.
+ */
+const RAW: { dedupe: DedupeMode } = { dedupe: 'all' };
 
 const HOME = homedir();
 const hasPlugins = existsSync(join(HOME, '.claude', 'plugins'));
@@ -31,7 +39,7 @@ const BASELINE_STEM_CHARS = 75073;
 const DRIFT = 0.05;
 
 describe.skipIf(!hasPlugins)('command discovery on the real home', () => {
-  const commands = discoverCommands({ home: HOME, project: process.cwd() });
+  const commands = discoverCommands({ home: HOME, project: process.cwd(), ...RAW });
   const stemChars = commands.reduce(
     (sum, c) => sum + c.stem.length + Math.min(c.description.length, 1536),
     0,
