@@ -2,14 +2,15 @@
 /**
  * `skill-diag` CLI — Phase 1 surface only.
  *
- * Implemented: default lint (Tier 1 + context-pressure), `budget`, `--why`,
- * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`.
- * Not implemented on purpose: routing, runtime, MCP, SARIF, --fix, --llm, graph.
- * Those are later phases, and a stub that prints nothing would be worse than no
- * command at all.
+ * Implemented: default lint (Tier 1 + Tier 2), `budget`, `routing`, `--why`,
+ * `--json`, `--strict`, `--home`, `--project`, `--context-window`, `--budget`,
+ * `--dedupe`, `--upload`, `--sarif`.
+ * Not implemented on purpose: runtime, MCP, --fix, --llm, graph. Those are later
+ * phases, and a stub that prints nothing would be worse than no command at all.
  */
 
 import { Command } from 'commander';
+import { writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { computeBudget, resolveContextWindow } from './budget.js';
 import { runChecks } from './checks/index.js';
@@ -38,6 +39,7 @@ import {
   renderRoutingWhy,
   toRoutingJson,
 } from './output/routing.js';
+import { buildSarif } from './output/sarif.js';
 import { matchSkills } from './types.js';
 
 const require = createRequire(import.meta.url);
@@ -57,6 +59,8 @@ interface CommonOpts {
   routingParams?: string;
   dedupe?: string;
   upload?: boolean;
+  sarif?: string;
+  strictRaw?: boolean;
 }
 
 /**
@@ -122,6 +126,18 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   });
   const strict = opts.strict === true;
   const exitCode = exitCodeFor(report, strict);
+
+  // Written before any output branch so `--sarif out.sarif --quiet` is the CI
+  // shape. The document never depends on `--strict`: that flag decides the exit
+  // code, and a reviewer reading the SARIF should see the same thing either way.
+  if (opts.sarif) {
+    const log = buildSarif(report, {
+      version: pkg.version,
+      root: project,
+      strictRaw: opts.strictRaw === true,
+    });
+    writeFileSync(opts.sarif, `${JSON.stringify(log, null, 2)}\n`);
+  }
 
   if (mode === 'budget') {
     const b = report.budget;
@@ -203,6 +219,12 @@ program
   .version(pkg.version);
 
 addCommonOptions(program);
+// Declared on the lint command alone: SARIF describes the corpus report, and the
+// `budget` and `routing` subcommands emit their own shapes. Accepting the flag
+// there and writing nothing would be worse than rejecting it.
+program
+  .option('--sarif <path>', 'write a SARIF v2.1.0 report for GitHub Code Scanning')
+  .option('--strict-raw', 'keep routing estimates at their raw severity in SARIF');
 program.action(() => {
   process.exitCode = execute(mergedOpts(program), 'lint');
 });
