@@ -8,7 +8,7 @@ health for crowded skill lists with a survival model and dual-N reporting
 2.1.0 for CI — nothing leaves the machine, and routing-model estimates are
 labeled `info` unless you ask to be held to them.
 
-## Install
+## Installation
 
 ```bash
 npx skill-diag
@@ -18,6 +18,24 @@ Or add it to a project:
 
 ```bash
 npm install --save-dev skill-diag
+```
+
+Homebrew (macOS/Linux) and Scoop (Windows) packages, plus a standalone
+binary, land with the first release — the stubs in this repo
+(`Formula/skill-diag.rb`, `bucket/skill-diag.json`) are their definitions:
+
+```bash
+brew install skill-diag    # once the formula is published
+scoop install skill-diag   # once the bucket manifest is published
+```
+
+No Node.js on the target machine? The standalone binary has the CLI and its
+dependencies compiled in. Build it from source with
+[bun](https://bun.sh):
+
+```bash
+npm run build:binary       # writes dist/skill-diag(.exe) for this OS
+./dist/skill-diag --version
 ```
 
 ## Usage

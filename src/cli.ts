@@ -12,7 +12,6 @@
 
 import { Command } from 'commander';
 import { writeFileSync } from 'node:fs';
-import { createRequire } from 'node:module';
 import { computeBudget, resolveContextWindow } from './budget.js';
 import { runChecks } from './checks/index.js';
 import { routingHealthFindings } from './checks/tier2.js';
@@ -55,8 +54,9 @@ import { buildSarif } from './output/sarif.js';
 import { runMcpServer } from './mcp.js';
 import { matchSkills } from './types.js';
 
-const require = createRequire(import.meta.url);
-const pkg = require('../package.json') as { version: string };
+// Static import: works under tsup, vitest, and bun --compile (a runtime
+// createRequire('../package.json') cannot resolve inside a compiled binary).
+import pkg from '../package.json' with { type: 'json' };
 
 interface CommonOpts {
   json?: boolean;

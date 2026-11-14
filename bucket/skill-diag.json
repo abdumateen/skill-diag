@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/ScoopInstaller/Scoop/main/schema.json",
+  "version": "0.2.0",
+  "description": "Diagnose why AI coding agent skills fail to load, route, or scale.",
+  "homepage": "https://github.com/OWNER/skill-diag",
+  "license": "MIT",
+  "url": "https://github.com/OWNER/skill-diag/releases/download/v0.2.0/skill-diag.exe",
+  "hash": "PLACEHOLDER-SHA256",
+  "bin": "skill-diag.exe",
+  "checkver": "github",
+  "autoupdate": {
+    "url": "https://github.com/OWNER/skill-diag/releases/download/v$version/skill-diag.exe",
+    "hash": {
+      "url": "$url.sha256"
+    }
+  }
+}
