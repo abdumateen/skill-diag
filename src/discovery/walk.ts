@@ -45,6 +45,12 @@ export interface DiscoverOptions {
   project?: string;
   /** Discovery dedupe mode; defaults to `enabled-latest`. */
   dedupe?: DedupeMode;
+  /**
+   * Phase 4c: host contract key (`claude-code` default, `cursor`, `codex`,
+   * `gemini-cli`). Decides which roots are walked and how file names map to
+   * skill identities.
+   */
+  host?: string;
 }
 
 export interface PluginEntry {
@@ -84,6 +90,22 @@ function skillsIn(root: string): string[] {
     const file = join(root, entry.name, 'SKILL.md');
     if (isFile(file)) out.push(file);
   }
+  return out.sort();
+}
+
+/** Cursor rules: every `.mdc` file below a rules root, nested dirs included. */
+function mdcFilesIn(root: string): string[] {
+  if (!isDir(root)) return [];
+  const out: string[] = [];
+  const walk = (dir: string, depth: number): void => {
+    if (depth > 8) return;
+    for (const entry of safeReaddir(dir)) {
+      const full = join(dir, entry.name);
+      if (entry.isDirectory()) walk(full, depth + 1);
+      else if (entry.isFile() && entry.name.toLowerCase().endsWith('.mdc')) out.push(full);
+    }
+  };
+  walk(root, 0);
   return out.sort();
 }
 
@@ -299,21 +321,76 @@ export function discoverSkillsDetailed(options: DiscoverOptions = {}): {
   skills: Skill[];
   dedupe: DedupeReport;
 } {
+  const host = options.host ?? 'claude-code';
   const home = resolve(options.home ?? defaultHome());
   const project = resolve(options.project ?? process.cwd());
-  const claude = join(home, '.claude');
   const mode = options.dedupe ?? 'enabled-latest';
 
   const found: Skill[] = [];
   const seen = new Set<string>();
 
-  const add = (file: string, source: SkillSource, plugin?: string): void => {
+  const add = (file: string, source: SkillSource, plugin?: string, folderName?: string): void => {
     const key = resolve(file);
     if (seen.has(key)) return;
     seen.add(key);
-    const skill = parseSkillFile({ path: key, text: read(key), source, ...(plugin ? { plugin } : {}) });
+    const skill = parseSkillFile({
+      path: key,
+      text: read(key),
+      source,
+      ...(plugin ? { plugin } : {}),
+      ...(folderName ? { folderName } : {}),
+    });
     found.push(skill);
   };
+
+  /**
+   * Phase 4c: non-claude hosts have no plugin cache, so dedupe is a no-op
+   * report rather than the settings.json machinery.
+   */
+  const noPluginReport = (why: string): DedupeReport => ({
+    mode,
+    source: why,
+    pluginsEnabled: null,
+    pluginSkillsBefore: 0,
+    pluginSkillsAfter: 0,
+    removed: { disabledPlugins: 0, oldVersions: 0, marketplaceCopies: 0, duplicateContent: 0 },
+  });
+
+  // Cursor rules: .cursor/rules/**/*.mdc in the project and the home directory.
+  // A rule's identity is its filename stem; cursor has no `name` frontmatter.
+  if (host === 'cursor') {
+    for (const file of mdcFilesIn(join(home, '.cursor', 'rules'))) {
+      add(file, 'user', undefined, basename(file).replace(/\.mdc$/i, ''));
+    }
+    for (const file of mdcFilesIn(join(project, '.cursor', 'rules'))) {
+      add(file, 'project', undefined, basename(file).replace(/\.mdc$/i, ''));
+    }
+    return { skills: found, dedupe: noPluginReport('disabled (cursor has no plugin cache)') };
+  }
+
+  // Gemini CLI: GEMINI.md context files. The host merges global and project
+  // files instead of shadowing one another, so each scope gets a distinct
+  // synthetic name — identical names would false-positive exact-name-collision.
+  if (host === 'gemini-cli') {
+    const scopes: Array<[string, SkillSource, string]> = [
+      [join(project, 'GEMINI.md'), 'project', 'gemini'],
+      [join(project, '.gemini', 'GEMINI.md'), 'project', 'gemini-project'],
+      [join(home, '.gemini', 'GEMINI.md'), 'user', 'gemini-user'],
+    ];
+    for (const [file, source, name] of scopes) {
+      if (isFile(file)) add(file, source, undefined, name);
+    }
+    return { skills: found, dedupe: noPluginReport('disabled (gemini-cli has no plugin cache)') };
+  }
+
+  // Codex: SKILL.md under .codex/skills, same <name>/SKILL.md shape as claude.
+  if (host === 'codex') {
+    for (const file of skillsIn(join(home, '.codex', 'skills'))) add(file, 'user');
+    for (const file of skillsIn(join(project, '.codex', 'skills'))) add(file, 'project');
+    return { skills: found, dedupe: noPluginReport('disabled (codex has no plugin cache)') };
+  }
+
+  const claude = join(home, '.claude');
 
   // User skills: ~/.claude/skills/<name>/SKILL.md
   for (const file of skillsIn(join(claude, 'skills'))) add(file, 'user');

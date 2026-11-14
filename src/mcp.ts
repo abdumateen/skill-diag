@@ -104,8 +104,8 @@ function buildReport(opts: McpOptions): { report: CorpusReport; skills: ReturnTy
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
   const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe });
-  const commands = discoverCommands({ home, project, dedupe });
+  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
+  const commands = discoverCommands({ home, project, dedupe, host: opts.host });
   const budgetChars = numberOrUndefined(opts.budget);
   const contextWindow = numberOrUndefined(opts.contextWindow);
   const report = runChecks(skills, {

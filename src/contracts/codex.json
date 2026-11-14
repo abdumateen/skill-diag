@@ -1,0 +1,75 @@
+{
+  "host": "codex",
+  "versionRange": "unknown",
+  "skillRoots": ["~/.codex/skills", ".codex/skills"],
+  "commandRoots": [],
+  "severity": {},
+  "frontmatter": {
+    "required": [],
+    "recommended": ["description"],
+    "namePattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+    "nameMaxLength": 64,
+    "nameMustMatchDirectory": true,
+    "descriptionMaxLength": 1024,
+    "allowedFields": [
+      "name",
+      "description",
+      "when_to_use",
+      "argument-hint",
+      "arguments",
+      "disable-model-invocation",
+      "user-invocable",
+      "allowed-tools",
+      "disallowed-tools",
+      "model",
+      "effort",
+      "context",
+      "agent",
+      "background",
+      "hooks",
+      "paths",
+      "shell",
+      "license",
+      "compatibility",
+      "metadata",
+      "version"
+    ],
+    "openStandardFields": [
+      "name",
+      "description",
+      "license",
+      "compatibility",
+      "metadata",
+      "allowed-tools"
+    ],
+    "rejectedOnUploadPath": []
+  },
+  "listingBudget": {
+    "mode": "absolute_with_context_override",
+    "fraction": 0.01,
+    "absoluteDefaultChars": 15000,
+    "envOverride": "SLASH_COMMAND_TOOL_CHAR_BUDGET",
+    "perEntryCapChars": 1536,
+    "defaultContextWindow": 200000,
+    "charsPerToken": 4,
+    "overheadCharsPerEntry": 0,
+    "overheadCalibrated": false,
+    "overheadNote": "UNcalibrated for codex. Codex publishes no listing budget; the claude-code calibration shape is reused as a conservative estimate until a codex-specific harness runs.",
+    "calibrationUnavailableReason": "codex publishes no listing budget or truncation documentation; the claude-code numbers stand in as a conservative estimate and every codex limit here is unverified.",
+    "limitVerification": {
+      "measured": false,
+      "competingValue": 8000,
+      "competingSource": "claude-skills-doctor 0.7.0: 1% of a 200,000-token window at 4 chars/token (claude-code figure, reused)"
+    }
+  },
+  "dropBehavior": {
+    "namesAlwaysListed": true,
+    "dropTarget": "descriptions",
+    "dropOrder": "unknown",
+    "confidence": "none",
+    "calibrationMethod": "unverified",
+    "evidence": "calibration/drop-order-result.json",
+    "reason": "codex drop order unobserved"
+  },
+  "priorityOrder": ["user", "project"]
+}

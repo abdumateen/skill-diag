@@ -106,7 +106,7 @@ function addCommonOptions(cmd: Command): Command {
     .option('--routing-params <r,p>', 'override the published survival parameters (e.g. 0.867,0.000283)')
     .option('--dedupe <mode>', 'discovery dedupe: enabled-latest (default), all, off')
     .option('--upload', 'the corpus ships to claude.ai: fail on upload-rejected frontmatter fields')
-    .option('--host <host>', 'host contract to use', 'claude-code');
+    .option('--host <host>', 'host contract: claude-code (default), cursor, codex, gemini-cli', 'claude-code');
 }
 
 function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
@@ -114,10 +114,10 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
   const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe });
+  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
   // Commands share the listing budget, so they are discovered and counted even
-  // though Phase 1/2a does not lint them.
-  const commands = discoverCommands({ home, project, dedupe });
+  // though Phase 1/2a does not lint them. Non-claude hosts have no commands.
+  const commands = discoverCommands({ home, project, dedupe, host: opts.host });
 
   const budgetOptions = {
     ...(numberOrUndefined(opts.budget) !== undefined
@@ -193,7 +193,7 @@ function execute(opts: CommonOpts, mode: 'lint' | 'budget'): number {
     // A skill that only exists in a cached older plugin version is not in the
     // active set; say so plainly instead of "no skill matches".
     if (matchSkills(skills, opts.why).length === 0) {
-      const raw = discoverSkills({ home, project, dedupe: 'all' });
+      const raw = discoverSkills({ home, project, dedupe: 'all', host: opts.host });
       if (matchSkills(raw, opts.why).length > 0) {
         process.stdout.write(
           'this skill is a cached older version; it is not in your active skill set.\n',
@@ -278,10 +278,12 @@ function executeRouting(opts: CommonOpts): number {
   const mode = resolveDedupeMode(project, { dedupe: opts.dedupe });
   const config = resolveRoutingConfig(project, { routingParams: opts.routingParams });
 
-  const active = discoverSkillsDetailed({ home, project, dedupe: mode });
+  const active = discoverSkillsDetailed({ home, project, dedupe: mode, host: opts.host });
   const report = analyzeRouting(active.skills, config);
   const rawOnly = mode === 'all' || mode === 'off';
-  const raw = rawOnly ? null : analyzeRouting(discoverSkills({ home, project, dedupe: 'all' }), config);
+  const raw = rawOnly
+    ? null
+    : analyzeRouting(discoverSkills({ home, project, dedupe: 'all', host: opts.host }), config);
 
   const strict = opts.strict === true;
   const strictRaw = resolveStrictRaw(project, { strictRaw: opts.strictRaw });
@@ -299,7 +301,7 @@ function executeRouting(opts: CommonOpts): number {
     const target = matchSkills(active.skills, opts.why)[0];
     if (!target) {
       const older = matchSkills(
-        rawOnly ? active.skills : discoverSkills({ home, project, dedupe: 'all' }),
+        rawOnly ? active.skills : discoverSkills({ home, project, dedupe: 'all', host: opts.host }),
         opts.why,
       );
       if (older.length > 0) {
@@ -422,7 +424,7 @@ function executeRuntimeReport(opts: CommonOpts): number {
   const home = opts.home ?? defaultHome();
   const project = opts.project ?? process.cwd();
   const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe });
+  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
   const storePath = opts.store ?? DEFAULT_STORE_PATH;
   const join = analyzeRuntimeJoin(skills, loadRuntimeStore(storePath));
   if (opts.json) {

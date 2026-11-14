@@ -3,7 +3,10 @@
  * from here and never hard-codes a host's numbers.
  */
 
-import raw from './claude-code.json';
+import rawClaude from './claude-code.json';
+import rawCursor from './cursor.json';
+import rawCodex from './codex.json';
+import rawGemini from './gemini-cli.json';
 import type { DropCalibrationMethod, DropConfidence, DropOrder } from '../types.js';
 
 export interface Contract {
@@ -63,13 +66,27 @@ export interface Contract {
   priorityOrder: readonly string[];
 }
 
-export const CLAUDE_CODE: Contract = raw as Contract;
+export const CLAUDE_CODE: Contract = rawClaude as Contract;
+
+/**
+ * Phase 4c: one contract per supported host. The imports stay static because
+ * the bundler (tsup/esbuild) inlines them into dist/cli.js — a runtime
+ * `await import()` of a JSON path would not survive bundling, and loadContract
+ * must stay synchronous for every caller.
+ */
+const CONTRACTS: Readonly<Record<string, Contract>> = {
+  'claude-code': CLAUDE_CODE,
+  cursor: rawCursor as Contract,
+  codex: rawCodex as Contract,
+  'gemini-cli': rawGemini as Contract,
+};
 
 export function loadContract(host = 'claude-code'): Contract {
-  if (host !== 'claude-code') {
+  const contract = CONTRACTS[host];
+  if (!contract) {
     throw new Error(
-      `unsupported host contract: ${host} (only claude-code ships in v0.1; cross-host is Phase 7)`,
+      `unsupported host contract: ${host} (known hosts: ${Object.keys(CONTRACTS).join(', ')})`,
     );
   }
-  return CLAUDE_CODE;
+  return contract;
 }

@@ -15,6 +15,12 @@ export interface ParseInput {
   text: string;
   source: SkillSource;
   plugin?: string;
+  /**
+   * Phase 4c: name override for flat-file hosts (cursor `.mdc`, GEMINI.md)
+   * where the identity comes from the filename or scope, not a parent
+   * directory. Absent → the directory two segments up, as for SKILL.md.
+   */
+  folderName?: string;
 }
 
 const KEY_LINE = /^([A-Za-z0-9_.-]+)\s*:/;
@@ -27,7 +33,7 @@ function stripAnsi(s: string): string {
 
 export function parseSkillFile(input: ParseInput): Skill {
   const lines = input.text.split(/\r?\n/);
-  const folderName = input.path.split(/[\\/]/).slice(-2)[0] ?? '';
+  const folderName = input.folderName ?? input.path.split(/[\\/]/).slice(-2)[0] ?? '';
 
   let frontmatterText = '';
   let bodyStart = 0;

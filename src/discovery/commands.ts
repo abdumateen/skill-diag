@@ -33,6 +33,11 @@ export interface CommandDiscoverOptions {
   project: string;
   /** Discovery dedupe mode; defaults to `enabled-latest`, the same rule skills use. */
   dedupe?: DedupeMode;
+  /**
+   * Phase 4c: host contract. Slash commands are a claude-code concept; every
+   * other host returns an empty list so the listing budget counts skills only.
+   */
+  host?: string;
 }
 
 function isDir(p: string): boolean {
@@ -128,6 +133,7 @@ function pluginCommandFiles(
 }
 
 export function discoverCommands(options: CommandDiscoverOptions): SlashCommand[] {
+  if (options.host !== undefined && options.host !== 'claude-code') return [];
   const home = resolve(options.home);
   const project = resolve(options.project);
   const roots: Array<{ root: string; source: SkillSource }> = [
