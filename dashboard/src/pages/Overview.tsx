@@ -1,25 +1,9 @@
-import type { ReactNode } from 'react';
+import { Card, pct, STATUS } from '../components/bits';
 import type { Summary } from '../types';
-
-const STATUS: Record<string, { label: string; badge: string; dot: string }> = {
-  ok: { label: 'Healthy', badge: 'bg-emerald-100 text-emerald-800', dot: 'bg-emerald-500' },
-  'at-risk': { label: 'Needs Attention', badge: 'bg-amber-100 text-amber-800', dot: 'bg-amber-500' },
-  critical: { label: 'Critical', badge: 'bg-red-100 text-red-800', dot: 'bg-red-500' },
-};
-
-function Card({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="rounded-lg bg-white p-5 shadow">
-      <div className="text-sm text-slate-500">{title}</div>
-      <div className="mt-2">{children}</div>
-    </div>
-  );
-}
 
 export default function Overview({ summary }: { summary: Summary | null }) {
   if (!summary) return <p className="text-slate-500">Loading…</p>;
   const status = STATUS[summary.routing.status] ?? STATUS.ok;
-  const pct = (v: number): string => `${(v * 100).toFixed(1)}%`;
   return (
     <div>
       <div className="mb-6 flex items-center gap-3">

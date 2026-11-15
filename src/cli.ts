@@ -561,7 +561,12 @@ const dashboardCommand = program
   .command('dashboard')
   .description('Serve the governance dashboard on localhost and open it in a browser');
 addCommonOptions(dashboardCommand);
-dashboardCommand.option('--no-open', 'do not open the browser after startup');
+dashboardCommand
+  .option('--no-open', 'do not open the browser after startup')
+  .option(
+    '--store <path>',
+    'runtime store path override (default ~/.cache/skill-diag/runtime.jsonl)',
+  );
 dashboardCommand.action(async () => {
   const opts = mergedOpts(dashboardCommand);
   const staticDir = fileURLToPath(new URL('./dashboard', import.meta.url));

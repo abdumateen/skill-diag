@@ -23,12 +23,15 @@ import {
   resolveUploadMode,
 } from '../model/config.js';
 import { analyzeRouting } from '../model/routing.js';
+import { DEFAULT_CLUSTER_OPTIONS, detectClusters } from '../model/clusters.js';
 import {
   analyzeRuntimeJoin,
   DEFAULT_STORE_PATH,
   loadRuntimeStore,
   MIN_SESSIONS,
 } from '../model/runtime.js';
+import { descriptionOf } from '../parser/skill.js';
+import { displayName } from '../types.js';
 import pkg from '../../package.json' with { type: 'json' };
 
 export interface DashboardOptions {
@@ -53,6 +56,11 @@ function numberOrUndefined(value: string | undefined): number | undefined {
   if (value === undefined) return undefined;
   const n = Number.parseInt(value, 10);
   return Number.isFinite(n) && n > 0 ? n : undefined;
+}
+
+/** Unordered pair key so a similarity lookup survives either endpoint order. */
+function pairKey(a: string, b: string): string {
+  return a < b ? `${a}|${b}` : `${b}|${a}`;
 }
 
 /**
@@ -217,6 +225,38 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
       }
       const { skills } = corpus(opts);
       const join = analyzeRuntimeJoin(skills, store);
+      // The join knows victim → thief by name; the cluster pairs hold the
+      // similarity score. One extra detection pass buys the numbers for the
+      // theft table without a second discovery + checks run.
+      const pathOf = new Map(skills.map((skill) => [displayName(skill), skill.path]));
+      const similarityOf = new Map(
+        detectClusters(
+          skills.map((skill) => ({
+            id: skill.path,
+            name: displayName(skill),
+            description: descriptionOf(skill),
+            plugin: skill.plugin ?? null,
+          })),
+          DEFAULT_CLUSTER_OPTIONS,
+        ).clusters.flatMap((cluster) =>
+          cluster.pairs.map((pair) => [pairKey(pair.a, pair.b), pair.similarity] as const),
+        ),
+      );
+      const theft = join.skills.flatMap((row) => {
+        if (!row.theftSuspect || row.thiefNeighbor === null) return [];
+        const thiefPath = pathOf.get(row.thiefNeighbor.name);
+        return [
+          {
+            victim: row.name,
+            thief: row.thiefNeighbor.name,
+            similarity:
+              thiefPath === undefined
+                ? null
+                : (similarityOf.get(pairKey(row.path, thiefPath)) ?? null),
+            thiefActivations: row.thiefNeighbor.activations,
+          },
+        ];
+      });
       res.json({
         ...base,
         hasData: true,
@@ -225,6 +265,7 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
         zeroActivation: join.zeroActivation,
         theftSuspects: join.theftSuspects,
         topFiring: join.topFiring,
+        theft,
       });
     }),
   );

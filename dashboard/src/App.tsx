@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Activity, LayoutDashboard, Route, Stethoscope, type LucideIcon } from 'lucide-react';
 import Overview from './pages/Overview';
+import Routing from './pages/Routing';
+import Runtime from './pages/Runtime';
 import type { Summary } from './types';
 
 type View = 'overview' | 'routing' | 'runtime';
@@ -10,15 +12,6 @@ const NAV: { id: View; label: string; icon: LucideIcon }[] = [
   { id: 'routing', label: 'Routing Health', icon: Route },
   { id: 'runtime', label: 'Runtime Telemetry', icon: Activity },
 ];
-
-function Placeholder({ label }: { label: string }) {
-  return (
-    <div>
-      <h1 className="text-2xl font-semibold text-slate-900">{label}</h1>
-      <p className="mt-2 text-slate-500">Deep-dive view lands in Phase 6c.</p>
-    </div>
-  );
-}
 
 export default function App() {
   const [view, setView] = useState<View>('overview');
@@ -31,8 +24,6 @@ export default function App() {
       .then((data) => setSummary(data as Summary))
       .catch((e: Error) => setError(e.message));
   }, []);
-
-  const current = NAV.find((n) => n.id === view);
 
   return (
     <div className="flex h-screen bg-slate-100">
@@ -52,7 +43,7 @@ export default function App() {
               key={id}
               type="button"
               onClick={() => setView(id)}
-              className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm ${
+              className={`flex w-full items-center gap-2 rounded-md px-3 py-2 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-400 ${
                 view === id ? 'bg-slate-700 text-white' : 'text-slate-300 hover:bg-slate-800'
               }`}
             >
@@ -68,9 +59,11 @@ export default function App() {
           <p className="text-red-600">Failed to load /api/summary: {error}</p>
         ) : view === 'overview' ? (
           <Overview summary={summary} />
-        ) : current ? (
-          <Placeholder label={current.label} />
-        ) : null}
+        ) : view === 'routing' ? (
+          <Routing />
+        ) : (
+          <Runtime />
+        )}
       </main>
     </div>
   );
