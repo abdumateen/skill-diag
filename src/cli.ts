@@ -11,11 +11,14 @@
  */
 
 import { Command } from 'commander';
+import { spawn } from 'node:child_process';
 import { writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { computeBudget, resolveContextWindow } from './budget.js';
 import { runChecks } from './checks/index.js';
 import { routingHealthFindings } from './checks/tier2.js';
 import { loadContract } from './contracts/loader.js';
+import { startDashboard } from './dashboard/server.js';
 import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery/walk.js';
 import { applyMechanicalFixes } from './fix.js';
@@ -78,6 +81,7 @@ interface CommonOpts {
   store?: string;
   fix?: boolean;
   llm?: boolean;
+  open?: boolean;
 }
 
 /**
@@ -528,6 +532,47 @@ initCommand.action(() => {
   process.stdout.write(
     result.created ? `wrote ${result.path}\n` : `${result.path} already exists — left unchanged\n`,
   );
+});
+
+/** Best-effort browser open: the URL is already printed if this fails. */
+function openBrowser(url: string): void {
+  const spec =
+    process.platform === 'win32'
+      ? { cmd: 'cmd', args: ['/c', 'start', '', url] }
+      : process.platform === 'darwin'
+        ? { cmd: 'open', args: [url] }
+        : { cmd: 'xdg-open', args: [url] };
+  try {
+    const child = spawn(spec.cmd, spec.args, {
+      detached: true,
+      stdio: 'ignore',
+      windowsHide: true,
+    });
+    child.on('error', () => {
+      // best effort only — the URL is already printed
+    });
+    child.unref();
+  } catch {
+    // best effort only
+  }
+}
+
+const dashboardCommand = program
+  .command('dashboard')
+  .description('Serve the governance dashboard on localhost and open it in a browser');
+addCommonOptions(dashboardCommand);
+dashboardCommand.option('--no-open', 'do not open the browser after startup');
+dashboardCommand.action(async () => {
+  const opts = mergedOpts(dashboardCommand);
+  const staticDir = fileURLToPath(new URL('./dashboard', import.meta.url));
+  try {
+    const { port } = await startDashboard({ ...opts, version: pkg.version, staticDir });
+    process.stdout.write(`Dashboard running at http://localhost:${port}\n`);
+    if (opts.open !== false) openBrowser(`http://localhost:${port}`);
+  } catch (error) {
+    process.stderr.write(`${(error as Error).message}\n`);
+    process.exitCode = 1;
+  }
 });
 
 try {
