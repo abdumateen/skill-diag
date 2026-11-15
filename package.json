@@ -1,6 +1,6 @@
 {
   "name": "skill-diag",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Capability surface observability for agent skills: will a skill load, will it fire, can the router still find it at scale",
   "type": "module",
   "license": "MIT",
