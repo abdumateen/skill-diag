@@ -1,8 +1,7 @@
-import { cpSync, mkdirSync } from 'node:fs';
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/cli.ts', 'src/dashboard/server.ts'],
+  entry: ['src/cli.ts'],
   format: ['esm'],
   target: 'node20',
   outDir: 'dist',
@@ -23,10 +22,4 @@ export default defineConfig({
   },
   // No banner: src/cli.ts already carries the shebang and esbuild hoists it to
   // line 1. A second one here lands on line 2 and breaks the ESM parse.
-  // dist/dashboard/index.html is authored in src/dashboard/public so `clean: true`
-  // cannot wipe it; copy it into place after the bundle.
-  onSuccess: async () => {
-    mkdirSync('dist/dashboard', { recursive: true });
-    cpSync('src/dashboard/public', 'dist/dashboard', { recursive: true });
-  },
 });

@@ -185,7 +185,7 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
   app.get('/', (_req, res) => {
     const index = join(opts.staticDir, 'index.html');
     if (existsSync(index)) res.sendFile(index);
-    else res.status(404).send('dashboard frontend missing — run `npm run build`');
+    else res.status(404).send('dashboard frontend missing — run `npm run build:dashboard`');
   });
 
   app.get('/api/summary', (_req, res) =>

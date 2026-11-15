@@ -18,6 +18,7 @@
   "scripts": {
     "build": "tsup",
     "build:binary": "node build-binary.mjs",
+    "build:dashboard": "cd dashboard && npm run build",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
