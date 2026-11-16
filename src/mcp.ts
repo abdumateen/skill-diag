@@ -29,15 +29,10 @@ import {
   resolveStrictRaw,
   resolveUploadMode,
 } from './model/config.js';
-import { DEFAULT_CLUSTER_OPTIONS, detectClusters, jaccard, shingles, tokenize } from './model/clusters.js';
-import {
-  analyzeRouting,
-  effectiveN,
-  ROUTING_CRITICAL_THRESHOLD,
-  ROUTING_WARNING_THRESHOLD,
-} from './model/routing.js';
+import { DEFAULT_CLUSTER_OPTIONS, jaccard, shingles, tokenize } from './model/clusters.js';
+import { analyzeRouting } from './model/routing.js';
 import { analyzeRuntimeJoin, loadRuntimeStore } from './model/runtime.js';
-import { top1 } from './model/survival.js';
+import { simulateSkillAdd } from './model/simulate.js';
 import { stringify, toJsonFinding, toJsonReport } from './output/json.js';
 import { descriptionOf } from './parser/skill.js';
 import { displayName, matchSkills, type CorpusReport, type Finding } from './types.js';
@@ -94,9 +89,6 @@ export const SIMULATE_TOOL_INPUT_SCHEMA = {
   },
   required: ['description'],
 } as const;
-
-/** Id the simulated skill takes in the cluster pass; never a real path. */
-const SIMULATED_ID = '__simulated__';
 
 export interface McpOptions {
   readonly version: string;
@@ -286,70 +278,21 @@ export function routeSkill(opts: McpOptions, prompt: string): Record<string, unk
 }
 
 /**
- * Phase 7b: routing cost of one more skill. The new skill joins the cluster
- * pass as one more input, so N_eff reflects the duplicates it would actually
- * create instead of assuming the corpus density holds.
+ * Phase 7b: routing cost of one more skill. The projection itself lives in
+ * `src/model/simulate.ts` so the dashboard's `POST /api/simulate` answers the
+ * same way from the same code.
  */
 export function simulateAdd(opts: McpOptions, description: string): Record<string, unknown> {
   const text = description.trim();
   if (text === '') throw new Error('description is required');
   const { skills, project } = loadSkills(opts);
-  const config = resolveRoutingConfig(project, { routingParams: opts.routingParams });
-  const routing = analyzeRouting(skills, config);
-
-  const clusterOptions = {
-    shingleSize: config.shingleSize,
-    threshold: config.similarityThreshold,
-    minTokens: config.minTokens,
-  };
-  // ponytail: analyzeRouting already ran detectClusters; running it again with
-  // the extra input is the only way to get the projected N_eff from the same
-  // code path. Corpus sizes are small; hoist if that ever shows.
-  const projectedClusters = detectClusters(
-    [
-      ...skills.map((skill) => ({
-        id: skill.path,
-        name: displayName(skill),
-        description: descriptionOf(skill),
-        plugin: skill.plugin ?? null,
-      })),
-      { id: SIMULATED_ID, name: 'simulated-skill', description: text, plugin: null },
-    ],
-    clusterOptions,
-  );
-
-  const nameOf = new Map(skills.map((skill) => [skill.path, displayName(skill)]));
-  const newN = skills.length + 1;
-  const newNEff = effectiveN(
-    newN,
-    projectedClusters.clusters.map((cluster) => cluster.size),
-    config.collisionWeight,
-  );
-  const projectedTop1 = top1(newNEff, config.params);
-  const warnings: string[] = [];
-  if (projectedTop1 < ROUTING_WARNING_THRESHOLD) {
-    warnings.push(
-      `projected top-1 ${(projectedTop1 * 100).toFixed(1)}% falls below the ${ROUTING_WARNING_THRESHOLD.toFixed(2)} warning threshold`,
-    );
-  }
-  if (projectedTop1 < ROUTING_CRITICAL_THRESHOLD) {
-    warnings.push(
-      `projected top-1 ${(projectedTop1 * 100).toFixed(1)}% falls below the ${ROUTING_CRITICAL_THRESHOLD.toFixed(2)} critical threshold`,
-    );
-  }
-
   return {
     description: text,
-    current: { n: routing.n, nEff: routing.nEff, top1: routing.adjustedTop1 },
-    projected: { n: newN, nEff: newNEff, top1: projectedTop1 },
-    /** Accuracy lost by adding the skill; negative means the corpus got denser. */
-    delta: routing.adjustedTop1 - projectedTop1,
-    collidesWith: projectedClusters.clusters
-      .filter((cluster) => cluster.members.includes(SIMULATED_ID))
-      .flatMap((cluster) =>
-        cluster.members.filter((id) => id !== SIMULATED_ID).map((id) => nameOf.get(id) ?? id),
-      ),
-    warnings,
+    ...simulateSkillAdd(
+      skills,
+      text,
+      resolveRoutingConfig(project, { routingParams: opts.routingParams }),
+    ),
   };
 }
 

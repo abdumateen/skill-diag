@@ -31,6 +31,7 @@ import {
   loadRuntimeStore,
   MIN_SESSIONS,
 } from '../model/runtime.js';
+import { simulateSkillAdd } from '../model/simulate.js';
 import { descriptionOf } from '../parser/skill.js';
 import { displayName } from '../types.js';
 import pkg from '../../package.json' with { type: 'json' };
@@ -65,6 +66,25 @@ function pairKey(a: string, b: string): string {
 }
 
 /**
+ * Phase 7c: discovery without the check suite. The simulation endpoint only
+ * needs descriptions, so it skips runChecks the way the MCP simulation tools do.
+ */
+function discover(opts: DashboardOptions): {
+  project: string;
+  skills: ReturnType<typeof discoverSkills>;
+  commands: ReturnType<typeof discoverCommands>;
+} {
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
+  return {
+    project,
+    skills: discoverSkills({ home, project, dedupe, host: opts.host }),
+    commands: discoverCommands({ home, project, dedupe, host: opts.host }),
+  };
+}
+
+/**
  * The MCP server's pipeline, verbatim: one discovery + one runChecks pass so
  * the dashboard and `skill-diag --json` cannot disagree on the same corpus.
  */
@@ -75,11 +95,7 @@ function corpus(opts: DashboardOptions): {
   report: ReturnType<typeof runChecks>;
 } {
   const contract = loadContract(opts.host ?? 'claude-code');
-  const home = opts.home ?? defaultHome();
-  const project = opts.project ?? process.cwd();
-  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
-  const commands = discoverCommands({ home, project, dedupe, host: opts.host });
+  const { project, skills, commands } = discover(opts);
   const budgetChars = numberOrUndefined(opts.budget);
   const contextWindow = numberOrUndefined(opts.contextWindow);
   const report = runChecks(skills, {
@@ -190,6 +206,7 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
   const app: Express = express();
   app.disable('x-powered-by');
 
+  app.use(express.json({ limit: '32kb' }));
   app.use(express.static(opts.staticDir));
   app.get('/', (_req, res) => {
     const index = join(opts.staticDir, 'index.html');
@@ -278,6 +295,29 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
       res.json(loadHistory(opts.project ?? process.cwd()));
     }),
   );
+
+  // Phase 7c: the same projection `simulate_add` answers over MCP. Local only —
+  // the server binds loopback and the browser is the only client.
+  app.post('/api/simulate', (req, res) => {
+    const body = req.body as { description?: unknown } | undefined;
+    const description = typeof body?.description === 'string' ? body.description.trim() : '';
+    if (description === '') {
+      res.status(400).json({ error: 'description is required' });
+      return;
+    }
+    safe(res, () => {
+      const { project, skills } = discover(opts);
+      res.json({
+        ...envelope,
+        description,
+        ...simulateSkillAdd(
+          skills,
+          description,
+          resolveRoutingConfig(project, { routingParams: opts.routingParams }),
+        ),
+      });
+    });
+  });
 
   const server = createServer(app);
   const port = await listenOn(server, DASHBOARD_PORTS);

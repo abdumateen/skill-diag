@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { Activity, LayoutDashboard, Route, Stethoscope, type LucideIcon } from 'lucide-react';
+import { Activity, FlaskConical, LayoutDashboard, Route, Stethoscope, type LucideIcon } from 'lucide-react';
 import Overview from './pages/Overview';
 import Routing from './pages/Routing';
 import Runtime from './pages/Runtime';
+import Simulation from './pages/Simulation';
 import type { Summary } from './types';
 
-type View = 'overview' | 'routing' | 'runtime';
+type View = 'overview' | 'routing' | 'runtime' | 'simulation';
 
 const NAV: { id: View; label: string; icon: LucideIcon }[] = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
   { id: 'routing', label: 'Routing Health', icon: Route },
   { id: 'runtime', label: 'Runtime Telemetry', icon: Activity },
+  { id: 'simulation', label: 'Simulation', icon: FlaskConical },
 ];
 
 export default function App() {
@@ -61,8 +63,10 @@ export default function App() {
           <Overview summary={summary} />
         ) : view === 'routing' ? (
           <Routing />
-        ) : (
+        ) : view === 'runtime' ? (
           <Runtime />
+        ) : (
+          <Simulation />
         )}
       </main>
     </div>

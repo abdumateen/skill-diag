@@ -78,6 +78,25 @@ export interface TheftRow {
   thiefActivations: number;
 }
 
+/** One description overlap the hypothetical skill would create. */
+export interface SimulationCollision {
+  name: string;
+  similarity: number;
+}
+
+/** Shape of POST /api/simulate — see src/model/simulate.ts SimulationReport. */
+export interface SimulationResponse {
+  version: string;
+  tool: { name: string; version: string };
+  description: string;
+  current: { n: number; nEff: number; top1: number };
+  projected: { n: number; nEff: number; top1: number };
+  delta: number;
+  collidesWith: string[];
+  collisions: SimulationCollision[];
+  warnings: string[];
+}
+
 /** Shape of GET /api/runtime — see src/dashboard/server.ts. */
 export interface RuntimeResponse {
   version: string;
