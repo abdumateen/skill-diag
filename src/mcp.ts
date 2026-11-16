@@ -29,10 +29,18 @@ import {
   resolveStrictRaw,
   resolveUploadMode,
 } from './model/config.js';
-import { analyzeRouting } from './model/routing.js';
+import { DEFAULT_CLUSTER_OPTIONS, detectClusters, jaccard, shingles, tokenize } from './model/clusters.js';
+import {
+  analyzeRouting,
+  effectiveN,
+  ROUTING_CRITICAL_THRESHOLD,
+  ROUTING_WARNING_THRESHOLD,
+} from './model/routing.js';
 import { analyzeRuntimeJoin, loadRuntimeStore } from './model/runtime.js';
+import { top1 } from './model/survival.js';
 import { stringify, toJsonFinding, toJsonReport } from './output/json.js';
-import { matchSkills, type CorpusReport, type Finding } from './types.js';
+import { descriptionOf } from './parser/skill.js';
+import { displayName, matchSkills, type CorpusReport, type Finding } from './types.js';
 
 export const TOOL_NAME = 'diagnose_skills';
 export const TOOL_DESCRIPTION =
@@ -58,6 +66,37 @@ export const TOOL_INPUT_SCHEMA = {
     },
   },
 } as const;
+
+export const ROUTE_TOOL_NAME = 'route_skill';
+export const ROUTE_TOOL_DESCRIPTION =
+  'Score a draft prompt against every listed skill description by lexical 3-shingle Jaccard similarity. Returns the top 5 collisions so the agent sees what a new skill would compete with.';
+export const ROUTE_TOOL_INPUT_SCHEMA = {
+  type: 'object',
+  properties: {
+    prompt: {
+      type: 'string',
+      description: 'Draft user prompt or skill description to score against the corpus.',
+    },
+  },
+  required: ['prompt'],
+} as const;
+
+export const SIMULATE_TOOL_NAME = 'simulate_add';
+export const SIMULATE_TOOL_DESCRIPTION =
+  'Project routing top-1 accuracy if one more skill with this description were added. Recomputes N_eff with the duplicate clusters the new skill would join and applies the survival model.';
+export const SIMULATE_TOOL_INPUT_SCHEMA = {
+  type: 'object',
+  properties: {
+    description: {
+      type: 'string',
+      description: 'Description of the skill that would be added.',
+    },
+  },
+  required: ['description'],
+} as const;
+
+/** Id the simulated skill takes in the cluster pass; never a real path. */
+const SIMULATED_ID = '__simulated__';
 
 export interface McpOptions {
   readonly version: string;
@@ -100,12 +139,9 @@ function numberOrUndefined(value: string | undefined): number | undefined {
 }
 
 function buildReport(opts: McpOptions): { report: CorpusReport; skills: ReturnType<typeof discoverSkills> } {
+  const { skills, project } = loadSkills(opts);
   const contract = loadContract(opts.host ?? 'claude-code');
-  const home = opts.home ?? defaultHome();
-  const project = opts.project ?? process.cwd();
-  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
-  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
-  const commands = discoverCommands({ home, project, dedupe, host: opts.host });
+  const commands = discoverCommands({ home: opts.home ?? defaultHome(), project, dedupe: resolveDedupeMode(project, { dedupe: opts.dedupe }), host: opts.host });
   const budgetChars = numberOrUndefined(opts.budget);
   const contextWindow = numberOrUndefined(opts.contextWindow);
   const report = runChecks(skills, {
@@ -195,6 +231,128 @@ export function diagnose(opts: McpOptions, args: DiagnoseArgs): Record<string, u
   return payload;
 }
 
+/** Discovery only — the simulation tools need the corpus, not the check suite. */
+function loadSkills(opts: McpOptions): {
+  skills: ReturnType<typeof discoverSkills>;
+  project: string;
+} {
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
+  return { skills: discoverSkills({ home, project, dedupe, host: opts.host }), project };
+}
+
+function readTextArg(raw: unknown, key: string): string {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    throw new Error(`${key} is required`);
+  }
+  const value = (raw as Record<string, unknown>)[key];
+  if (typeof value !== 'string' || value.trim() === '') throw new Error(`${key} is required`);
+  return value.trim();
+}
+
+/**
+ * Phase 7b: what a draft prompt would collide with. Same tokenisation and
+ * shingle size the duplicate-cluster pass uses, so a high score here is the
+ * same signal that would cluster the two skills together.
+ */
+export function routeSkill(opts: McpOptions, prompt: string): Record<string, unknown> {
+  const text = prompt.trim();
+  if (text === '') throw new Error('prompt is required');
+  const { skills } = loadSkills(opts);
+  const size = DEFAULT_CLUSTER_OPTIONS.shingleSize;
+  const promptShingles = shingles(tokenize(text), size);
+  const matches = skills
+    .map((skill) => {
+      const description = descriptionOf(skill);
+      return {
+        name: displayName(skill),
+        description,
+        similarity: Number(
+          jaccard(promptShingles, shingles(tokenize(description), size)).toFixed(4),
+        ),
+      };
+    })
+    .filter((row) => row.similarity > 0)
+    .sort((a, b) => b.similarity - a.similarity || a.name.localeCompare(b.name))
+    .slice(0, 5);
+
+  const payload: Record<string, unknown> = { prompt: text, shingleSize: size, matches };
+  if (matches.length === 0) {
+    payload['note'] =
+      'no skill description shares a 3-shingle with this prompt — lexical similarity is 0 across the corpus';
+  }
+  return payload;
+}
+
+/**
+ * Phase 7b: routing cost of one more skill. The new skill joins the cluster
+ * pass as one more input, so N_eff reflects the duplicates it would actually
+ * create instead of assuming the corpus density holds.
+ */
+export function simulateAdd(opts: McpOptions, description: string): Record<string, unknown> {
+  const text = description.trim();
+  if (text === '') throw new Error('description is required');
+  const { skills, project } = loadSkills(opts);
+  const config = resolveRoutingConfig(project, { routingParams: opts.routingParams });
+  const routing = analyzeRouting(skills, config);
+
+  const clusterOptions = {
+    shingleSize: config.shingleSize,
+    threshold: config.similarityThreshold,
+    minTokens: config.minTokens,
+  };
+  // ponytail: analyzeRouting already ran detectClusters; running it again with
+  // the extra input is the only way to get the projected N_eff from the same
+  // code path. Corpus sizes are small; hoist if that ever shows.
+  const projectedClusters = detectClusters(
+    [
+      ...skills.map((skill) => ({
+        id: skill.path,
+        name: displayName(skill),
+        description: descriptionOf(skill),
+        plugin: skill.plugin ?? null,
+      })),
+      { id: SIMULATED_ID, name: 'simulated-skill', description: text, plugin: null },
+    ],
+    clusterOptions,
+  );
+
+  const nameOf = new Map(skills.map((skill) => [skill.path, displayName(skill)]));
+  const newN = skills.length + 1;
+  const newNEff = effectiveN(
+    newN,
+    projectedClusters.clusters.map((cluster) => cluster.size),
+    config.collisionWeight,
+  );
+  const projectedTop1 = top1(newNEff, config.params);
+  const warnings: string[] = [];
+  if (projectedTop1 < ROUTING_WARNING_THRESHOLD) {
+    warnings.push(
+      `projected top-1 ${(projectedTop1 * 100).toFixed(1)}% falls below the ${ROUTING_WARNING_THRESHOLD.toFixed(2)} warning threshold`,
+    );
+  }
+  if (projectedTop1 < ROUTING_CRITICAL_THRESHOLD) {
+    warnings.push(
+      `projected top-1 ${(projectedTop1 * 100).toFixed(1)}% falls below the ${ROUTING_CRITICAL_THRESHOLD.toFixed(2)} critical threshold`,
+    );
+  }
+
+  return {
+    description: text,
+    current: { n: routing.n, nEff: routing.nEff, top1: routing.adjustedTop1 },
+    projected: { n: newN, nEff: newNEff, top1: projectedTop1 },
+    /** Accuracy lost by adding the skill; negative means the corpus got denser. */
+    delta: routing.adjustedTop1 - projectedTop1,
+    collidesWith: projectedClusters.clusters
+      .filter((cluster) => cluster.members.includes(SIMULATED_ID))
+      .flatMap((cluster) =>
+        cluster.members.filter((id) => id !== SIMULATED_ID).map((id) => nameOf.get(id) ?? id),
+      ),
+    warnings,
+  };
+}
+
 /** Runs the stdio server until stdin closes. Resolves once the transport is up. */
 export async function runMcpServer(opts: McpOptions): Promise<number> {
   const server = new Server(
@@ -209,18 +367,39 @@ export async function runMcpServer(opts: McpOptions): Promise<number> {
         description: TOOL_DESCRIPTION,
         inputSchema: TOOL_INPUT_SCHEMA,
       },
+      {
+        name: ROUTE_TOOL_NAME,
+        description: ROUTE_TOOL_DESCRIPTION,
+        inputSchema: ROUTE_TOOL_INPUT_SCHEMA,
+      },
+      {
+        name: SIMULATE_TOOL_NAME,
+        description: SIMULATE_TOOL_DESCRIPTION,
+        inputSchema: SIMULATE_TOOL_INPUT_SCHEMA,
+      },
     ],
   }));
 
   server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    if (request.params.name !== TOOL_NAME) {
-      return {
-        content: [{ type: 'text' as const, text: `unknown tool ${request.params.name}` }],
-        isError: true,
-      };
-    }
     try {
-      const payload = diagnose(opts, readArgs(request.params.arguments));
+      const args = request.params.arguments;
+      let payload: Record<string, unknown>;
+      switch (request.params.name) {
+        case TOOL_NAME:
+          payload = diagnose(opts, readArgs(args));
+          break;
+        case ROUTE_TOOL_NAME:
+          payload = routeSkill(opts, readTextArg(args, 'prompt'));
+          break;
+        case SIMULATE_TOOL_NAME:
+          payload = simulateAdd(opts, readTextArg(args, 'description'));
+          break;
+        default:
+          return {
+            content: [{ type: 'text' as const, text: `unknown tool ${request.params.name}` }],
+            isError: true,
+          };
+      }
       return { content: [{ type: 'text' as const, text: stringify(payload) }] };
     } catch (error) {
       return {

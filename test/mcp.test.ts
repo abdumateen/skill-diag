@@ -11,6 +11,7 @@ import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import pkg from '../package.json' with { type: 'json' };
+import { top1 } from '../src/model/survival.js';
 
 interface JsonRpcResponse {
   jsonrpc: string;
@@ -153,7 +154,7 @@ describe.skipIf(!hasCli)('skill-diag mcp', () => {
     }
   });
 
-  it('lists exactly one tool, diagnose_skills, with the required schema', async () => {
+  it('lists diagnose_skills, route_skill, and simulate_add with their schemas', async () => {
     const client = new McpClient(['--home', homeDir, '-p', projectDir, '--store', storePath]);
     try {
       await client.request('initialize', {
@@ -166,18 +167,123 @@ describe.skipIf(!hasCli)('skill-diag mcp', () => {
       const result = response.result as {
         tools: { name: string; description: string; inputSchema: Record<string, unknown> }[];
       };
-      expect(result.tools).toHaveLength(1);
-      const tool = result.tools[0]!;
-      expect(tool.name).toBe('diagnose_skills');
-      expect(tool.description).toBe(
+      expect(result.tools.map((tool) => tool.name).sort()).toEqual([
+        'diagnose_skills',
+        'route_skill',
+        'simulate_add',
+      ]);
+
+      const diagnoseTool = result.tools.find((tool) => tool.name === 'diagnose_skills')!;
+      expect(diagnoseTool.description).toBe(
         'Diagnose why an agent skill is not loading, routing, or scaling. Returns structured findings for a named skill or the whole library.',
       );
-      expect(tool.inputSchema.type).toBe('object');
-      expect(Object.keys(tool.inputSchema.properties as Record<string, unknown>).sort()).toEqual([
-        'includeRouting',
-        'includeRuntime',
-        'skill',
+      expect(diagnoseTool.inputSchema.type).toBe('object');
+      expect(
+        Object.keys(diagnoseTool.inputSchema.properties as Record<string, unknown>).sort(),
+      ).toEqual(['includeRouting', 'includeRuntime', 'skill']);
+
+      const routeTool = result.tools.find((tool) => tool.name === 'route_skill')!;
+      expect(routeTool.inputSchema.type).toBe('object');
+      expect(routeTool.inputSchema.required).toEqual(['prompt']);
+      expect(Object.keys(routeTool.inputSchema.properties as Record<string, unknown>)).toEqual([
+        'prompt',
       ]);
+
+      const simulateTool = result.tools.find((tool) => tool.name === 'simulate_add')!;
+      expect(simulateTool.inputSchema.type).toBe('object');
+      expect(simulateTool.inputSchema.required).toEqual(['description']);
+      expect(
+        Object.keys(simulateTool.inputSchema.properties as Record<string, unknown>),
+      ).toEqual(['description']);
+    } finally {
+      client.stop();
+    }
+  });
+
+  it('route_skill ranks the overlapping description and scores non-overlap at zero', async () => {
+    const client = new McpClient(['--home', homeDir, '-p', projectDir, '--store', storePath]);
+    try {
+      await client.request('initialize', {
+        protocolVersion: '2024-11-05',
+        capabilities: {},
+        clientInfo: { name: 'vitest', version: '0' },
+      });
+      client.notify('notifications/initialized', {});
+      const overlapping = await client.request('tools/call', {
+        name: 'route_skill',
+        arguments: { prompt: 'reviews pull requests for security' },
+      });
+      const hit = JSON.parse(
+        (overlapping.result as { content: { text: string }[] }).content[0]!.text,
+      ) as { matches: { name: string; description: string; similarity: number }[] };
+      expect(hit.matches).toHaveLength(1);
+      expect(hit.matches[0]!.name).toBe('my-skill');
+      expect(hit.matches[0]!.description).toContain('Reviews pull requests');
+      expect(hit.matches[0]!.similarity).toBeCloseTo(0.2, 2);
+
+      const unrelated = await client.request('tools/call', {
+        name: 'route_skill',
+        arguments: { prompt: 'quarterly invoice reconciliation' },
+      });
+      const miss = JSON.parse(
+        (unrelated.result as { content: { text: string }[] }).content[0]!.text,
+      ) as { matches: unknown[]; note?: string };
+      expect(miss.matches).toEqual([]);
+      expect(miss.note).toContain('lexical similarity is 0');
+    } finally {
+      client.stop();
+    }
+  });
+
+  it('simulate_add projects N_eff and the top-1 drop from the survival formula', async () => {
+    const client = new McpClient(['--home', homeDir, '-p', projectDir, '--store', storePath]);
+    try {
+      await client.request('initialize', {
+        protocolVersion: '2024-11-05',
+        capabilities: {},
+        clientInfo: { name: 'vitest', version: '0' },
+      });
+      client.notify('notifications/initialized', {});
+
+      const call = async (description: string) => {
+        const response = await client.request('tools/call', {
+          name: 'simulate_add',
+          arguments: { description },
+        });
+        return JSON.parse(
+          (response.result as { content: { text: string }[] }).content[0]!.text,
+        ) as {
+          current: { n: number; nEff: number; top1: number };
+          projected: { n: number; nEff: number; top1: number };
+          delta: number;
+          collidesWith: string[];
+          warnings: string[];
+        };
+      };
+
+      // Distinct description: no cluster, so N_eff grows by exactly one.
+      const distinct = await call(
+        'Generates quarterly financial spreadsheets from invoices with currency normalization and audit trail',
+      );
+      expect(distinct.current).toEqual({ n: 1, nEff: 1, top1: top1(1) });
+      expect(distinct.projected.n).toBe(2);
+      expect(distinct.collidesWith).toEqual([]);
+      expect(distinct.projected.nEff).toBe(2);
+      expect(distinct.projected.top1).toBeCloseTo(top1(2), 10);
+      expect(distinct.delta).toBeCloseTo(top1(1) - top1(2), 10);
+      expect(distinct.delta).toBeGreaterThan(0);
+      expect(distinct.warnings).toEqual([]);
+
+      // Same description as the listed skill: it joins that cluster, so the
+      // collision weight pushes N_eff to 3 for N = 2.
+      const duplicate = await call(
+        'Reviews pull requests for correctness and security then writes a summary',
+      );
+      expect(duplicate.collidesWith).toEqual(['my-skill']);
+      expect(duplicate.projected.n).toBe(2);
+      expect(duplicate.projected.nEff).toBe(3);
+      expect(duplicate.projected.top1).toBeCloseTo(top1(3), 10);
+      expect(duplicate.delta).toBeGreaterThan(top1(1) - top1(2));
     } finally {
       client.stop();
     }
