@@ -11,7 +11,7 @@ import {
   YAxis,
 } from 'recharts';
 import { pct, Panel, STATUS, useReducedMotion } from '../components/bits';
-import type { RoutingResponse } from '../types';
+import type { HistorySnapshot, RoutingResponse } from '../types';
 
 /**
  * The survival curve in closed form: top1(N) = r · e^(−p·(N−1)). The params
@@ -21,6 +21,8 @@ import type { RoutingResponse } from '../types';
 export default function Routing() {
   const [report, setReport] = useState<RoutingResponse['routing'] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [history, setHistory] = useState<HistorySnapshot[]>([]);
+  const [historyError, setHistoryError] = useState<string | null>(null);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
@@ -28,6 +30,13 @@ export default function Routing() {
       .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
       .then((data) => setReport((data as RoutingResponse).routing))
       .catch((e: Error) => setError(e.message));
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/history')
+      .then((res) => (res.ok ? res.json() : Promise.reject(new Error(`HTTP ${res.status}`))))
+      .then((rows) => setHistory(rows as HistorySnapshot[]))
+      .catch((e: Error) => setHistoryError(e.message));
   }, []);
 
   const curve = useMemo(() => {
@@ -40,6 +49,16 @@ export default function Routing() {
     if (points[points.length - 1].n !== xMax) points.push({ n: xMax, top1: r * Math.exp(-p * (xMax - 1)) });
     return points;
   }, [report]);
+
+  // Timestamps parse to epoch millis so recharts can put a real time axis under them.
+  const historyPoints = useMemo(
+    () =>
+      history
+        .map((snapshot) => ({ t: Date.parse(snapshot.timestamp), top1: snapshot.routingTop1 }))
+        .filter((point) => Number.isFinite(point.t))
+        .sort((a, z) => a.t - z.t),
+    [history],
+  );
 
   if (error) return <p className="text-red-600">Failed to load /api/routing: {error}</p>;
   if (!report) return <p className="text-slate-500">Loading…</p>;
@@ -72,6 +91,71 @@ export default function Routing() {
         N_eff / N = {report.density.toFixed(2)} — duplicate clusters inflate the effective corpus by{' '}
         {((report.density - 1) * 100).toFixed(1)}%.
       </p>
+
+      <div className="mt-6">
+        <Panel title="Routing history — top-1 accuracy over time">
+          {historyError !== null ? (
+            <p className="text-sm text-red-600">Failed to load /api/history: {historyError}</p>
+          ) : historyPoints.length < 2 ? (
+            <p className="text-sm text-slate-500">
+              Run{' '}
+              <code className="rounded bg-slate-100 px-1.5 py-0.5 text-xs">skill-diag snapshot</code>{' '}
+              in CI to track history over time.
+            </p>
+          ) : (
+            <ResponsiveContainer width="100%" height={240}>
+              <LineChart data={historyPoints} margin={{ top: 24, right: 16, bottom: 4, left: 8 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
+                <XAxis
+                  dataKey="t"
+                  type="number"
+                  scale="time"
+                  domain={['dataMin', 'dataMax']}
+                  tickFormatter={(v: number) =>
+                    new Date(v).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+                  }
+                  stroke="#94a3b8"
+                  fontSize={12}
+                  minTickGap={24}
+                />
+                <YAxis
+                  domain={[0.4, 0.9]}
+                  tickFormatter={(v: number) => pct(v)}
+                  stroke="#94a3b8"
+                  fontSize={12}
+                  width={52}
+                />
+                <Tooltip
+                  formatter={(value) => pct(value as number)}
+                  labelFormatter={(label) => new Date(Number(label)).toLocaleString()}
+                />
+                <ReferenceLine
+                  y={0.6}
+                  stroke="#f59e0b"
+                  strokeDasharray="6 4"
+                  label={{ value: 'warning 0.60', position: 'insideTopRight', fill: '#92400e', fontSize: 12 }}
+                />
+                <ReferenceLine
+                  y={0.5}
+                  stroke="#ef4444"
+                  strokeDasharray="6 4"
+                  label={{ value: 'critical 0.50', position: 'insideBottomRight', fill: '#991b1b', fontSize: 12 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="top1"
+                  name="Top-1"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  dot={{ r: 3, fill: '#10b981' }}
+                  activeDot={{ r: 4 }}
+                  isAnimationActive={!reducedMotion}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
+        </Panel>
+      </div>
 
       <div className="mt-6">
         <Panel title="Survival curve — top-1 accuracy as the corpus grows">

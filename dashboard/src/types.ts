@@ -50,6 +50,15 @@ export interface RoutingResponse {
   routing: RoutingReport;
 }
 
+/** One line of .skill-diag/history.jsonl — see src/history.ts HistorySnapshot. */
+export interface HistorySnapshot {
+  timestamp: string;
+  totalSkills: number;
+  routingTop1: number;
+  errors: number;
+  warnings: number;
+}
+
 /** One per-skill row of the runtime join — see src/model/runtime.ts SkillRuntime. */
 export interface RuntimeSkillRow {
   name: string;

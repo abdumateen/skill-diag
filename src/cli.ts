@@ -22,6 +22,7 @@ import { startDashboard } from './dashboard/server.js';
 import { discoverCommands } from './discovery/commands.js';
 import { defaultHome, discoverSkills, discoverSkillsDetailed } from './discovery/walk.js';
 import { applyMechanicalFixes } from './fix.js';
+import { appendSnapshot, type HistorySnapshot } from './history.js';
 import {
   resolveDedupeMode,
   resolveRoutingConfig,
@@ -534,6 +535,74 @@ initCommand.action(() => {
   );
 });
 
+/**
+ * Phase 7a: one history point — today's routing health in the shape the
+ * dashboard history chart reads back. Same pipeline as the dashboard's live
+ * summary, so a snapshot and the UI cannot disagree on the same corpus.
+ */
+function computeSnapshot(opts: CommonOpts): HistorySnapshot {
+  const contract = loadContract(opts.host ?? 'claude-code');
+  const home = opts.home ?? defaultHome();
+  const project = opts.project ?? process.cwd();
+  const dedupe = resolveDedupeMode(project, { dedupe: opts.dedupe });
+  const skills = discoverSkills({ home, project, dedupe, host: opts.host });
+  const commands = discoverCommands({ home, project, dedupe, host: opts.host });
+  const budgetChars = numberOrUndefined(opts.budget);
+  const contextWindow = numberOrUndefined(opts.contextWindow);
+  const report = runChecks(skills, {
+    contract,
+    ...(budgetChars !== undefined ? { overrideChars: budgetChars } : {}),
+    ...(contextWindow !== undefined ? { contextWindow } : {}),
+    commands,
+    routing: resolveRoutingConfig(project, { routingParams: opts.routingParams }),
+    uploadMode: resolveUploadMode(project, { upload: opts.upload }),
+    strictRaw: resolveStrictRaw(project, { strictRaw: opts.strictRaw }),
+  });
+  const routing = analyzeRouting(
+    skills,
+    resolveRoutingConfig(project, { routingParams: opts.routingParams }),
+  );
+  return {
+    timestamp: new Date().toISOString(),
+    totalSkills: skills.length,
+    routingTop1: routing.adjustedTop1,
+    errors: report.findings.filter((f) => f.severity === 'error').length,
+    warnings: report.findings.filter((f) => f.severity === 'warning').length,
+  };
+}
+
+function executeSnapshot(opts: CommonOpts): number {
+  const project = opts.project ?? process.cwd();
+  try {
+    const snapshot = computeSnapshot(opts);
+    const file = appendSnapshot(project, snapshot);
+    if (opts.json) {
+      process.stdout.write(stringify(snapshot));
+      return 0;
+    }
+    if (opts.quiet) return 0;
+    process.stdout.write(
+      `snapshot recorded: top-1 ${(snapshot.routingTop1 * 100).toFixed(1)}% · ${snapshot.totalSkills} skills · ${snapshot.errors} errors · ${snapshot.warnings} warnings\n${file}\n`,
+    );
+    return 0;
+  } catch (error) {
+    process.stderr.write(`${(error as Error).message}\n`);
+    return 1;
+  }
+}
+
+/**
+ * Phase 7a: `snapshot` appends one JSON line to .skill-diag/history.jsonl so
+ * CI can track routing health over time; the dashboard reads the same file.
+ */
+const snapshotCommand = program
+  .command('snapshot')
+  .description('Append the current routing health to .skill-diag/history.jsonl');
+addCommonOptions(snapshotCommand);
+snapshotCommand.action(() => {
+  process.exitCode = executeSnapshot(mergedOpts(snapshotCommand));
+});
+
 /** Best-effort browser open: the URL is already printed if this fails. */
 function openBrowser(url: string): void {
   const spec =
@@ -569,10 +638,21 @@ dashboardCommand
   );
 dashboardCommand.action(async () => {
   const opts = mergedOpts(dashboardCommand);
+  const project = opts.project ?? process.cwd();
   const staticDir = fileURLToPath(new URL('./dashboard', import.meta.url));
   try {
     const { port } = await startDashboard({ ...opts, version: pkg.version, staticDir });
     process.stdout.write(`Dashboard running at http://localhost:${port}\n`);
+    // Phase 7a: seed today's point once the server is up, so the history chart
+    // always has at least one sample. Background convenience only — a failing
+    // snapshot must never take the dashboard down with it.
+    setImmediate(() => {
+      try {
+        appendSnapshot(project, computeSnapshot(opts));
+      } catch {
+        // ignored by design
+      }
+    });
     if (opts.open !== false) openBrowser(`http://localhost:${port}`);
   } catch (error) {
     process.stderr.write(`${(error as Error).message}\n`);

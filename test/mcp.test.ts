@@ -10,6 +10,7 @@ import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import pkg from '../package.json' with { type: 'json' };
 
 interface JsonRpcResponse {
   jsonrpc: string;
@@ -144,7 +145,7 @@ describe.skipIf(!hasCli)('skill-diag mcp', () => {
       };
       expect(typeof result.protocolVersion).toBe('string');
       expect(result.serverInfo.name).toBe('skill-diag');
-      expect(result.serverInfo.version).toBe('0.2.0');
+      expect(result.serverInfo.version).toBe(pkg.version);
       expect(result.capabilities.tools).toBeDefined();
       client.notify('notifications/initialized', {});
     } finally {

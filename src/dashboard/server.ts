@@ -16,6 +16,7 @@ import { runChecks } from '../checks/index.js';
 import { loadContract } from '../contracts/loader.js';
 import { discoverCommands } from '../discovery/commands.js';
 import { defaultHome, discoverSkills } from '../discovery/walk.js';
+import { loadHistory } from '../history.js';
 import {
   resolveDedupeMode,
   resolveRoutingConfig,
@@ -267,6 +268,14 @@ export async function startDashboard(opts: DashboardOptions): Promise<DashboardH
         topFiring: join.topFiring,
         theft,
       });
+    }),
+  );
+
+  // Phase 7a: the history file `skill-diag snapshot` appends to. A missing
+  // file is an empty history, not an error — the chart shows its hint instead.
+  app.get('/api/history', (_req, res) =>
+    safe(res, () => {
+      res.json(loadHistory(opts.project ?? process.cwd()));
     }),
   );
 
